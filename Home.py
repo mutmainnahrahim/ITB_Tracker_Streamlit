@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from streamlit_option_menu import option_menu
+from grapher import GrapherTracer, GrapherUser
 
 st.set_page_config(page_title="Dashboard",page_icon="🌍",layout="wide")
 st.subheader("📊  Data")
@@ -9,6 +10,42 @@ st.markdown("##")
 
 #side bar
 st.sidebar.image("logo.jpeg",caption="ITB Tracer Study")
+
+
+######################################################################################################################
+# Init Pandas dataframe, execute onetime only
+
+
+@st.cache_data
+def load_dataset():
+    df2018 = pd.read_excel(
+        'Data Mentah Sortir_Analisis Tren_v3.xlsx', sheet_name="2018")
+    df2019 = pd.read_excel(
+        'Data Mentah Sortir_Analisis Tren_v3.xlsx', sheet_name="2019")
+    df2020 = pd.read_excel(
+        'Data Mentah Sortir_Analisis Tren_v3.xlsx', sheet_name="2020")
+    df2021 = pd.read_excel(
+        'Data Mentah Sortir_Analisis Tren_v3.xlsx', sheet_name="2021")
+    df2022 = pd.read_excel(
+        'Data Mentah Sortir_Analisis Tren_v3.xlsx', sheet_name="2022")
+
+    dfUser2018 = pd.read_excel(
+        'Data Mentah Kuesioner User Survey_Analisis Tren_v3.xlsx', sheet_name="User Survey 2018")
+    dfUser2019 = pd.read_excel(
+        'Data Mentah Kuesioner User Survey_Analisis Tren_v3.xlsx', sheet_name="User Survey 2019")
+    dfUser2020 = pd.read_excel(
+        'Data Mentah Kuesioner User Survey_Analisis Tren_v3.xlsx', sheet_name="User Survey 2020")
+    dfUser2021 = pd.read_excel(
+        'Data Mentah Kuesioner User Survey_Analisis Tren_v3.xlsx', sheet_name="User Survey 2021")
+    dfUser2022 = pd.read_excel(
+        'Data Mentah Kuesioner User Survey_Analisis Tren_v3.xlsx', sheet_name="User Survey 2022")
+    return df2018, df2019, df2020, df2021, df2022, dfUser2018, dfUser2019, dfUser2020, dfUser2021, dfUser2022
+
+
+df2018, df2019, df2020, df2021, df2022, dfUser2018, dfUser2019, dfUser2020, dfUser2021, dfUser2022 = load_dataset()
+
+
+##################################################################################################################################
 
 # List Fakultas
 fakultas = ["All", "Fakultas Ilmu dan Teknologi Kebumian",
@@ -85,42 +122,46 @@ elif inputFakultas == fakultas[11]:
 elif inputFakultas == fakultas[12]:
     inputProdi = st.sidebar.selectbox('Program Studi', prodiSTEI)
 
-years_2018=st.sidebar.checkbox(
-    "2018",
-)
-years_2019=st.sidebar.checkbox(
-    "2019",
-)
-years_2020=st.sidebar.checkbox(
-    "2020",
-)
-years_2021=st.sidebar.checkbox(
-    "2021",
-)
-years_2022=st.sidebar.checkbox(
-    "2022",
-)
+inputTahun = st.sidebar.radio("Tahun", (2018,2019,2020,2021,2022))
 
-def sideBar():
+with st.sidebar:
+    requestGraph=option_menu(
+            menu_title="Tampilan",
+            options=["Data Responden","Status Pekerjaan", "Kompetensi Alumni", "Tren Kompetensi Alumni", "Tingkat Kepentingan dan Kepuasan User", "Tren Penilaian Tingkat Kepentingan dan Kepuasan User", "Waktu Tunggu", "Jenis Perusahaan", "Kategori Perusahaan", "Kategori Bidang Usaha", "Kesesuaian Kuliah dengan Pekerjaan", "Penghasilan"],
+            menu_icon="cast",
+            default_index=0
+        )
 
- with st.sidebar:
-    selected=option_menu(
-        menu_title="Tampilan",
-        options=["Data Responden","Status Pekerjaan", "Kompetensi Alumni", "Tren Kompetensi Alumni", "Tingkat Kepentingan dan Kepuasan User", "Tren Penilaian Tingkat Kepentingan dan Kepuasan User", "Waktu Tunggu", "Jenis Perusahaan", "Kategori Perusahaan", "Kategori Bidang Usaha", "Kesesuaian Kuliah dengan Pekerjaan", "Penghasilan"],
-        menu_icon="cast",
-        default_index=0
-    )
- #if selected=="Home":
-    #st.subheader(f"Page: {selected}")
-    #Home()
-    #graphs()
- #if selected=="Progress":
-    #st.subheader(f"Page: {selected}")
-    #Progressbar()
-    #graphs()
+gt = GrapherTracer(df2018, df2019, df2020, df2021,
+                   df2022, inputProdi, inputFakultas)
+gu = GrapherUser(dfUser2018, dfUser2019, dfUser2020,
+                 dfUser2021, dfUser2022, inputProdi)
+gt.cleanse_tracer_data()
+gu.cleanse_user_data()
 
-sideBar()
-
-
+if requestGraph == "Data Responden":
+    gt.init_respondent_data()
+    gt.draw_respondent_data()
+elif requestGraph == "Kompetensi Alumni":
+    gt.init_competence_data()
+    gt.draw_competence_data(year=inputTahun)
+elif requestGraph == "Status Pekerjaan":
+    gt.init_jobstatus_data()
+    gt.draw_jobstatus_data()
+elif requestGraph == "7 Kompetensi Alumni (Tren)":
+    gt.init_competence_data()
+    gt.draw_competence_trend_data()
+elif requestGraph == "Waktu Tunggu Mendapatkan Pekerjaan (Sebelum Lulus)":
+    gt.init_timetogetwork_data()
+    gt.draw_timetogetwork_data(beforegrad=True)
+elif requestGraph == "Waktu Tunggu Mendapatkan Pekerjaan (Sesudah Lulus)":
+    gt.init_timetogetwork_data()
+    gt.draw_timetogetwork_data()
+elif requestGraph == "Kategori Perusahaan":
+    gt.init_company_category_data()
+    gt.draw_company_category_data()
+elif requestGraph == "Kompetensi Alumni (User)":
+    gu.init_competence_data()
+    gu.draw_competence_data(year=inputTahun)
 
 
