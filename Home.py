@@ -11,37 +11,44 @@ st.markdown("##")
 st.sidebar.image("data/logo.jpeg",caption="ITB Tracer Study")
 
 # List Fakultas
-fakultas = ["Fakultas Ilmu dan Teknologi Kebumian (FITB)",
-            "Fakultas Matematika dan Ilmu Pengetahuan Alam (FMIPA)",
-            "Fakultas Seni Rupa dan Desain (FSRD)",
-            "Fakultas Teknologi Industri (FTI)",
-            "Fakultas Teknik Sipil dan Lingkungan (FTSL)",
-            "Fakultas Teknik Mesin dan Dirgantara (FTMD)",
-            "Fakultas Teknik Pertambangan dan Perminyakan (FTTM)",
-            "Sekolah Arsitektur, Perencanaan dan Pengembangan Kebijakan (SAPPK)",
-            "Sekolah Bisnis dan Manajemen (SBM)",
-            "Sekolah Farmasi (SF)",
-            "Sekolah Ilmu dan Teknologi Hayati (SITH)",
-            "Sekolah Teknik Elektro dan Informatika (STEI)"]
+fakultas = ["All", "Fakultas Ilmu dan Teknologi Kebumian",
+            "Fakultas Matematika dan Ilmu Pengetahuan Alam",
+            "Fakultas Seni Rupa dan Desain",
+            "Fakultas Teknologi Industri",
+            "Fakultas Teknik Sipil dan Lingkungan",
+            "Fakultas Teknik Mesin dan Dirgantara",
+            "Fakultas Teknik Pertambangan dan Perminyakan",
+            "Sekolah Arsitektur, Perencanaan dan Pengembangan Kebijakan",
+            "Sekolah Bisnis dan Manajemen",
+            "Sekolah Farmasi",
+            "Sekolah Ilmu dan Teknologi Hayati",
+            "Sekolah Teknik Elektro dan Informatika"]
 
 # List Prodi
-prodiFITB = ["Teknik Geologi", "Teknik Geodesi dan Geomatika",
+prodiAll = ["All", "Teknik Geologi", "Teknik Geodesi dan Geomatika",
+             "Meteorologi", "Oseanografi","Matematika", "Fisika", "Astronomi", "Kimia","Seni Rupa", "Desain Interior",
+             "Desain Komunikasi Visual", "Desain Produk","Teknik Kimia", "Teknik Industri",
+            "Teknik Fisika", "Manajemen Rekayasa Industri","Teknik Sipil", "Teknik Lingkungan", "Teknik Kelautan","Teknik Mesin", "Teknik Dirgantara", "Teknik Material","Teknik Pertambangan", "Teknik Perminyakan",
+             "Teknik Geofisika", "Teknik Metalurgi","Arsitektur", "Perencanaan Wilayah dan Kota","Manajemen", "Kewirausahaan","Sains dan Teknologi Farmasi, Farmasi Klinik dan Komunitas","Biologi", "Mikrobiologi", "Rekayasa Hayati",
+             "Rekayasa Pertanian", "Rekayasa Kehutanan", "Teknologi Pasca Panen","Teknik Elektro", "Teknik Tenaga Listrik", "Teknik Telekomunikasi",
+             "Teknik Biomedis", "Teknik Informatika", "Sistem dan Teknologi Informasi"]
+prodiFITB = ["All", "Teknik Geologi", "Teknik Geodesi dan Geomatika",
              "Meteorologi", "Oseanografi"]
-prodiFMIPA = ["Matematika", "Fisika", "Astronomi", "Kimia"]
-prodiFSRD = ["Seni Rupa", "Desain Interior",
+prodiFMIPA = ["All","Matematika", "Fisika", "Astronomi", "Kimia"]
+prodiFSRD = ["All","Seni Rupa", "Desain Interior",
              "Desain Komunikasi Visual", "Desain Produk"]
-prodiFTI = ["Teknik Kimia", "Teknik Industri",
+prodiFTI = ["All","Teknik Kimia", "Teknik Industri",
             "Teknik Fisika", "Manajemen Rekayasa Industri"]
-prodiFTSL = ["Teknik Sipil", "Teknik Lingkungan", "Teknik Kelautan"]
-prodiFTMD = ["Teknik Mesin", "Teknik Dirgantara", "Teknik Material"]
-prodiFTTM = ["Teknik Pertambangan", "Teknik Perminyakan",
+prodiFTSL = ["All","Teknik Sipil", "Teknik Lingkungan", "Teknik Kelautan"]
+prodiFTMD = ["All","Teknik Mesin", "Teknik Dirgantara", "Teknik Material"]
+prodiFTTM = ["All","Teknik Pertambangan", "Teknik Perminyakan",
              "Teknik Geofisika", "Teknik Metalurgi"]
-prodiSAPPK = ["Arsitektur", "Perencanaan Wilayah dan Kota"]
-prodiSBM = ["Manajemen", "Kewirausahaan"]
-prodiSF = ["Sains dan Teknologi Farmasi, Farmasi Klinik dan Komunitas"]
-prodiSITH = ["Biologi", "Mikrobiologi", "Rekayasa Hayati",
+prodiSAPPK = ["All","Arsitektur", "Perencanaan Wilayah dan Kota"]
+prodiSBM = ["All","Manajemen", "Kewirausahaan"]
+prodiSF = ["All","Sains dan Teknologi Farmasi, Farmasi Klinik dan Komunitas"]
+prodiSITH = ["All","Biologi", "Mikrobiologi", "Rekayasa Hayati",
              "Rekayasa Pertanian", "Rekayasa Kehutanan", "Teknologi Pasca Panen"]
-prodiSTEI = ["Teknik Elektro", "Teknik Tenaga Listrik", "Teknik Telekomunikasi",
+prodiSTEI = ["All","Teknik Elektro", "Teknik Tenaga Listrik", "Teknik Telekomunikasi",
              "Teknik Biomedis", "Teknik Informatika", "Sistem dan Teknologi Informasi"]
 
 #switcher
@@ -52,29 +59,31 @@ inputFakultas=st.sidebar.selectbox(
 )
 
 if inputFakultas == fakultas[0]:
-    inputProdi = st.sidebar.multiselect('Program Studi', prodiFITB)
+    inputProdi = st.sidebar.selectbox('Program Studi', prodiAll)
 elif inputFakultas == fakultas[1]:
-    inputProdi = st.sidebar.multiselect('Program Studi', prodiFMIPA)
+    inputProdi = st.sidebar.selectbox('Program Studi', prodiFITB)
 elif inputFakultas == fakultas[2]:
-    inputProdi = st.sidebar.multiselect('Program Studi', prodiFSRD)
+    inputProdi = st.sidebar.selectbox('Program Studi', prodiFMIPA)
 elif inputFakultas == fakultas[3]:
-    inputProdi = st.sidebar.multiselect('Program Studi', prodiFTI)
+    inputProdi = st.sidebar.selectbox('Program Studi', prodiFSRD)
 elif inputFakultas == fakultas[4]:
-    inputProdi = st.sidebar.multiselect('Program Studi', prodiFTSL)
+    inputProdi = st.sidebar.selectbox('Program Studi', prodiFTI)
 elif inputFakultas == fakultas[5]:
-    inputProdi = st.sidebar.multiselect('Program Studi', prodiFTMD)
+    inputProdi = st.sidebar.selectbox('Program Studi', prodiFTSL)
 elif inputFakultas == fakultas[6]:
-    inputProdi = st.sidebar.multiselect('Program Studi', prodiFTTM)
+    inputProdi = st.sidebar.selectbox('Program Studi', prodiFTMD)
 elif inputFakultas == fakultas[7]:
-    inputProdi = st.sidebar.multiselect('Program Studi', prodiSAPPK)
+    inputProdi = st.sidebar.selectbox('Program Studi', prodiFTTM)
 elif inputFakultas == fakultas[8]:
-    inputProdi = st.sidebar.multiselect('Program Studi', prodiSBM)
+    inputProdi = st.sidebar.selectbox('Program Studi', prodiSAPPK)
 elif inputFakultas == fakultas[9]:
-    inputProdi = st.sidebar.multiselect('Program Studi', prodiSF)
+    inputProdi = st.sidebar.selectbox('Program Studi', prodiSBM)
 elif inputFakultas == fakultas[10]:
-    inputProdi = st.sidebar.multiselect('Program Studi', prodiSITH)
+    inputProdi = st.sidebar.selectbox('Program Studi', prodiSF)
 elif inputFakultas == fakultas[11]:
-    inputProdi = st.sidebar.multiselect('Program Studi', prodiSTEI)
+    inputProdi = st.sidebar.selectbox('Program Studi', prodiSITH)
+elif inputFakultas == fakultas[12]:
+    inputProdi = st.sidebar.selectbox('Program Studi', prodiSTEI)
 
 years_2018=st.sidebar.checkbox(
     "2018",
@@ -97,8 +106,7 @@ def sideBar():
  with st.sidebar:
     selected=option_menu(
         menu_title="Tampilan",
-        options=["Data Responden","Status Pekerjaan"],
-        icons=["house","eye"],
+        options=["Data Responden","Status Pekerjaan", "Kompetensi Alumni", "Tren Kompetensi Alumni", "Tingkat Kepentingan dan Kepuasan User", "Tren Penilaian Tingkat Kepentingan dan Kepuasan User", "Waktu Tunggu", "Jenis Perusahaan", "Kategori Perusahaan", "Kategori Bidang Usaha", "Kesesuaian Kuliah dengan Pekerjaan", "Penghasilan"],
         menu_icon="cast",
         default_index=0
     )
