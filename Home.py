@@ -8,7 +8,7 @@ st.subheader("📊  Data")
 st.markdown("##")
 
 #side bar
-st.sidebar.image("data/logo.jpeg",caption="ITB Tracer Study")
+st.sidebar.image("logo.jpeg",caption="ITB Tracer Study")
 
 # List Fakultas
 fakultas = ["All", "Fakultas Ilmu dan Teknologi Kebumian",
