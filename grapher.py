@@ -3,15 +3,18 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
-from dataframeinitializer import DataframeInitializer
+from dataframeinitializer import DataframeTracerInitializer, DataframeUserInitializer
 import plotly.express as px
 # matplotlib.use('TkAgg')  # or any other GUI backend of your choice
 
 
-class GrapherTracer(DataframeInitializer):
-    def __init__(self, df2018, df2019, df2020, df2021, df2022, prodi):
-        super().__init__(df2018, df2019, df2020, df2021, df2022, prodi)
+class GrapherTracer(DataframeTracerInitializer):
+    def __init__(self, df2018, df2019, df2020, df2021, df2022, prodi,fakultas):
+        super().__init__(df2018, df2019, df2020, df2021, df2022, prodi,fakultas)
         # self.graph = graph
+        self.modeProdi = True
+        if prodi == "All":
+            self.modeProdi = False
 
     def draw_respondent_data(self):
         year = np.array(['2018', '2019', '2020', '2021', '2022'])
@@ -56,31 +59,58 @@ class GrapherTracer(DataframeInitializer):
 
     def draw_competence_data(self, year):
 
-        if year == 2018:
-            competenceA = self.df2018_competenceA_Prodi
-            competenceB = self.df2018_competenceB_Prodi
-            competenceC = self.df2018_competenceC_Prodi
-            competenciesLabel = self.competencies2018
-        elif year == 2019:
-            competenceA = self.df2019_competenceA_Prodi
-            competenceB = self.df2019_competenceB_Prodi
-            competenceC = self.df2019_competenceC_Prodi
-            competenciesLabel = self.competencies2019
-        elif year == 2020:
-            competenceA = self.df2020_competenceA_Prodi
-            competenceB = self.df2020_competenceB_Prodi
-            competenceC = self.df2020_competenceC_Prodi
-            competenciesLabel = self.competencies2020
-        elif year == 2021:
-            competenceA = self.df2021_competenceA_Prodi
-            competenceB = self.df2021_competenceB_Prodi
-            competenceC = self.df2021_competenceC_Prodi
-            competenciesLabel = self.competencies2021
-        elif year == 2022:
-            competenceA = self.df2022_competenceA_Prodi
-            competenceB = self.df2022_competenceB_Prodi
-            competenceC = self.df2022_competenceC_Prodi
-            competenciesLabel = self.competencies2022
+        if self.modeProdi:
+            if year == 2018:
+                competenceA = self.df2018_competenceA_Prodi
+                competenceB = self.df2018_competenceB_Prodi
+                competenceC = self.df2018_competenceC_Prodi
+                competenciesLabel = self.competencies2018
+            elif year == 2019:
+                competenceA = self.df2019_competenceA_Prodi
+                competenceB = self.df2019_competenceB_Prodi
+                competenceC = self.df2019_competenceC_Prodi
+                competenciesLabel = self.competencies2019
+            elif year == 2020:
+                competenceA = self.df2020_competenceA_Prodi
+                competenceB = self.df2020_competenceB_Prodi
+                competenceC = self.df2020_competenceC_Prodi
+                competenciesLabel = self.competencies2020
+            elif year == 2021:
+                competenceA = self.df2021_competenceA_Prodi
+                competenceB = self.df2021_competenceB_Prodi
+                competenceC = self.df2021_competenceC_Prodi
+                competenciesLabel = self.competencies2021
+            elif year == 2022:
+                competenceA = self.df2022_competenceA_Prodi
+                competenceB = self.df2022_competenceB_Prodi
+                competenceC = self.df2022_competenceC_Prodi
+                competenciesLabel = self.competencies2022
+        else:
+            if year == 2018:
+                competenceA = self.df2018_competenceA_fakultas
+                competenceB = self.df2018_competenceB_fakultas
+                competenceC = self.df2018_competenceC_fakultas
+                competenciesLabel = self.competencies2018
+            elif year == 2019:
+                competenceA = self.df2019_competenceA_fakultas
+                competenceB = self.df2019_competenceB_fakultas
+                competenceC = self.df2019_competenceC_fakultas
+                competenciesLabel = self.competencies2019
+            elif year == 2020:
+                competenceA = self.df2020_competenceA_fakultas
+                competenceB = self.df2020_competenceB_fakultas
+                competenceC = self.df2020_competenceC_fakultas
+                competenciesLabel = self.competencies2020
+            elif year == 2021:
+                competenceA = self.df2021_competenceA_fakultas
+                competenceB = self.df2021_competenceB_fakultas
+                competenceC = self.df2021_competenceC_fakultas
+                competenciesLabel = self.competencies2021
+            elif year == 2022:
+                competenceA = self.df2022_competenceA_fakultas
+                competenceB = self.df2022_competenceB_fakultas
+                competenceC = self.df2022_competenceC_fakultas
+                competenciesLabel = self.competencies2022
 
         # Extract Mean Of Competence Values
         arr_meanA = np.array(competenceA.mean())
@@ -375,11 +405,19 @@ class GrapherTracer(DataframeInitializer):
         years = ['2018', '2019', '2020', '2021', '2022']
 
         # Still manually  for value_counts
-        valuesLokal = self.valueCompanyCat_Prodi.T[0]
-        valuesInternasional = self.valueCompanyCat_Prodi.T[1]
-        valuesNasional = self.valueCompanyCat_Prodi.T[2]
-        valuesLokal, valuesNasional, valuesInternasional = valuesLokal[::-
-                                                                       1], valuesNasional[::-1], valuesInternasional[::-1]
+        if self.prodi != "All":
+            valuesLokal = self.valueCompanyCat_Prodi.T[0]
+            valuesInternasional = self.valueCompanyCat_Prodi.T[1]
+            valuesNasional = self.valueCompanyCat_Prodi.T[2]
+            valuesLokal, valuesNasional, valuesInternasional = valuesLokal[::-
+                                                                        1], valuesNasional[::-1], valuesInternasional[::-1]
+        else:
+            valuesLokal = self.valueCompanyCat_fakultas.T[0]
+            valuesInternasional = self.valueCompanyCat_fakultas.T[1]
+            valuesNasional = self.valueCompanyCat_fakultas.T[2]
+            valuesLokal, valuesNasional, valuesInternasional = valuesLokal[::-
+                                                                        1], valuesNasional[::-1], valuesInternasional[::-1]
+
 
         # Calculate Percentage Relative to ALL CATEGORIES
         pvaluesLokal = []
@@ -422,6 +460,7 @@ class GrapherTracer(DataframeInitializer):
             [0.0, -0.2, 0.9, 0]), loc='lower center', fontsize=20, ncol=3)
 
         st.pyplot(fig)
+    
     def draw_company_field_data(self):
         
         dfcomfield = self.valueCompanyField_Prodi
@@ -435,12 +474,85 @@ class GrapherTracer(DataframeInitializer):
         st.plotly_chart(fig, use_container_width=True) 
         st.plotly_chart(fig2, use_container_width=True) 
         
-# class GrapherUser(DataframeInitializer):
-#     def __init__(self, dfUser2018, dfUser2019, dfUser2020, dfUser2021, dfUser2022, prodi):
-#         super().__init__(dfUser2018=dfUser2018,
-#                          dfUser2019=dfUser2019,
-#                          dfUser2020=dfUser2020,
-#                          dfUser2021=dfUser2021,
-#                          dfUser2022=dfUser2022,
-#                          prodi=prodi)
-#         # self.graph = graph
+        
+class GrapherUser(DataframeUserInitializer):
+    def __init__(self, dfUser2018, dfUser2019, dfUser2020, dfUser2021, dfUser2022, prodi):
+        super().__init__(dfUser2018=dfUser2018,
+                         dfUser2019=dfUser2019,
+                         dfUser2020=dfUser2020,
+                         dfUser2021=dfUser2021,
+                         dfUser2022=dfUser2022,
+                         prodi=prodi)
+        # self.graph = graph
+
+    def draw_competence_data(self, year):
+        # Extract Mean Of Competence Values
+        if year == 2018:
+            kepentingan = self.dfUser2018_Kepentingan_Prodi
+            kepuasan = self.dfUser2018_Kepuasan_Prodi
+            competencies = self.competencies2018
+        elif year == 2019:
+            kepentingan = self.dfUser2019_Kepentingan_Prodi
+            kepuasan = self.dfUser2019_Kepuasan_Prodi
+            competencies = self.competencies2019
+        elif year == 2020:
+            kepentingan = self.dfUser2020_Kepentingan_Prodi
+            kepuasan = self.dfUser2020_Kepuasan_Prodi
+            competencies = self.competencies2020
+        elif year == 2021:
+            kepentingan = self.dfUser2021_Kepentingan_Prodi
+            kepuasan = self.dfUser2021_Kepuasan_Prodi
+            competencies = self.competencies2021
+        elif year == 2022:
+            kepentingan = self.dfUser2021_Kepentingan_Prodi
+            kepuasan = self.dfUser2021_Kepuasan_Prodi
+            competencies = self.competencies2022
+
+        arr_meanA = np.array(kepentingan.mean())
+        arr_meanB = np.array(kepuasan.mean())
+
+        # Plotting
+        plt.style.use('ggplot')
+
+        # Create Polar Axis
+        fig = plt.figure(figsize=(30, 15))
+        ax = fig.add_subplot(111, polar=True)
+        ax.set_theta_zero_location("N", offset=15)
+
+        # Set the number of angles/coordinates to be used for the radar plot
+        angles = np.linspace(
+            0, 2*np.pi, len(self.competencies2018[::-1]), endpoint=False)
+        angles = np.concatenate((angles, [angles[0]]))
+
+        # Plot the data
+        arr_meanA = np.concatenate((arr_meanA[::-1], [arr_meanA[::-1][0]]))
+        arr_meanB = np.concatenate((arr_meanB[::-1], [arr_meanB[::-1][0]]))
+
+        ax.plot(angles, arr_meanA, 'o-', linewidth=4,
+                label="Kepentingan", color="blue", markersize=12)
+        ax.plot(angles, arr_meanB, 'o-', linewidth=4,
+                label="Kepuasan", color="red", markersize=12)
+
+        # Fill the area inside the plot (optional)
+        # ax.fill(angles, values, alpha=0.25)
+
+        # Set Grids, and other parameters to make graph more neat
+        ax.set_thetagrids(angles[:-1] * 180/np.pi, competencies[::-1])
+        ax.set_xticks(
+            angles[:-1], competencies[::-1], color='black', size=20)
+        ax.tick_params(axis='y', labelcolor='black', labelsize=25, grid_linestyle='--',
+                       grid_color='black', grid_alpha=0.5, grid_linewidth=1.5)
+        plt.yticks([0.0, 1.0, 2.0, 3.0, 4.0, 5.0],)
+        ax.tick_params(axis='x', grid_color='black', grid_alpha=0.4,
+                       grid_linestyle='-.', top=True, direction='out', pad=65)
+
+        # Set the plot title, and its margin y
+        plt.title("Kepentingan dan Kepuasan User - {}\n(N=20)".format(year),
+                  loc='center', y=1.3, fontsize=30)
+
+        # Add a legend, bbox_to_anchor to make custom position
+        plt.legend(bbox_to_anchor=([0.25, 0.75, 0.5, 0.5]),
+                   loc='upper left', fontsize=20, ncol=3)
+
+        # Show the plot
+        st.pyplot(fig)
