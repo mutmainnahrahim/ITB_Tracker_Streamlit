@@ -127,7 +127,7 @@ inputTahun = st.sidebar.radio("Tahun", (2018,2019,2020,2021,2022))
 with st.sidebar:
     requestGraph=option_menu(
             menu_title="Tampilan",
-            options=["Data Responden","Status Pekerjaan", "Kompetensi Alumni", "Tren Kompetensi Alumni", "Tingkat Kepentingan dan Kepuasan User", "Tren Penilaian Tingkat Kepentingan dan Kepuasan User", "Waktu Tunggu", "Jenis Perusahaan", "Kategori Perusahaan", "Kategori Bidang Usaha", "Kesesuaian Kuliah dengan Pekerjaan", "Penghasilan"],
+            options=["Data Responden","Status Pekerjaan", "Kompetensi Alumni", "Tren Kompetensi Alumni", "Tingkat Kepentingan dan Kepuasan User", "Tren Penilaian Tingkat Kepentingan dan Kepuasan User", "Waktu Tunggu Mendapatkan Pekerjaan (Sebelum Lulus)", "Waktu Tunggu Mendapatkan Pekerjaan (Sesudah Lulus)", "Jenis Perusahaan", "Kategori Perusahaan", "Kategori Bidang Usaha", "Kesesuaian Kuliah dengan Pekerjaan", "Penghasilan"],
             menu_icon="cast",
             default_index=0
         )
@@ -148,7 +148,7 @@ elif requestGraph == "Kompetensi Alumni":
 elif requestGraph == "Status Pekerjaan":
     gt.init_jobstatus_data()
     gt.draw_jobstatus_data()
-elif requestGraph == "7 Kompetensi Alumni (Tren)":
+elif requestGraph == "Tren Kompetensi Alumni":
     gt.init_competence_data()
     gt.draw_competence_trend_data()
 elif requestGraph == "Waktu Tunggu Mendapatkan Pekerjaan (Sebelum Lulus)":
@@ -160,7 +160,7 @@ elif requestGraph == "Waktu Tunggu Mendapatkan Pekerjaan (Sesudah Lulus)":
 elif requestGraph == "Kategori Perusahaan":
     gt.init_company_category_data()
     gt.draw_company_category_data()
-elif requestGraph == "Kompetensi Alumni (User)":
+elif requestGraph == "Tingkat Kepentingan dan Kepuasan User":
     gu.init_competence_data()
     gu.draw_competence_data(year=inputTahun)
 

@@ -404,11 +404,18 @@ class GrapherTracer(DataframeTracerInitializer):
         years = ['2018', '2019', '2020', '2021', '2022']
 
         # Still manually  for value_counts
-        valuesLokal = self.valueCompanyCat_Prodi.T[0]
-        valuesInternasional = self.valueCompanyCat_Prodi.T[1]
-        valuesNasional = self.valueCompanyCat_Prodi.T[2]
-        valuesLokal, valuesNasional, valuesInternasional = valuesLokal[::-
-                                                                       1], valuesNasional[::-1], valuesInternasional[::-1]
+        if self.prodi != "All":
+            valuesLokal = self.valueCompanyCat_Prodi.T[0]
+            valuesInternasional = self.valueCompanyCat_Prodi.T[1]
+            valuesNasional = self.valueCompanyCat_Prodi.T[2]
+            valuesLokal, valuesNasional, valuesInternasional = valuesLokal[::-
+                                                                        1], valuesNasional[::-1], valuesInternasional[::-1]
+        else:
+            valuesLokal = self.valueCompanyCat_fakultas.T[0]
+            valuesInternasional = self.valueCompanyCat_fakultas.T[1]
+            valuesNasional = self.valueCompanyCat_fakultas.T[2]
+            valuesLokal, valuesNasional, valuesInternasional = valuesLokal[::-
+                                                                        1], valuesNasional[::-1], valuesInternasional[::-1]
 
         # Calculate Percentage Relative to ALL CATEGORIES
         pvaluesLokal = []

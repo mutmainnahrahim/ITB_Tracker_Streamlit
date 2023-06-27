@@ -303,6 +303,7 @@ class DataframeTracerInitializer():
                 self.df2022['Fakultas/Sekolah'] == self.fakultas]
             self.df2022_competenceC_fakultas = self.df2022_competenceC[
                 self.df2022['Fakultas/Sekolah'] == self.fakultas]
+            
             self.means2018 = np.array([self.df2018_competenceA_fakultas.mean()[21], self.df2018_competenceA_fakultas.mean()[15], self.df2018_competenceA_fakultas.mean()[14],
                                        self.df2018_competenceA_fakultas.mean()[10], self.df2018_competenceA_fakultas.mean()[
                 4], self.df2018_competenceA_fakultas.mean()[19],
@@ -384,16 +385,29 @@ class DataframeTracerInitializer():
         return workstatus_filtered
 
     def init_jobstatus_data(self):
-        arr_workstatus_2018 = self.df2018[self.df2018['4. Program Studi']
-                                          == self.prodi].iloc[:, 75].value_counts(sort=False)
-        arr_workstatus_2019 = self.df2019[self.df2019['4. Program Studi']
-                                          == self.prodi].iloc[:, 76].value_counts(sort=False)
-        arr_workstatus_2020 = self.df2020[self.df2020['4. Program Studi']
-                                          == self.prodi].iloc[:, 76].value_counts(sort=False)
-        arr_workstatus_2021 = self.df2021[self.df2021['Program Studi']
-                                          == self.prodi].iloc[:, 77].value_counts(sort=False)
-        arr_workstatus_2022 = self.df2022[self.df2022['Program Studi']
-                                          == self.prodi].iloc[:, 77].value_counts(sort=False)
+
+        if self.prodi != "All":
+            arr_workstatus_2018 = self.df2018[self.df2018['4. Program Studi']
+                                            == self.prodi].iloc[:, 75].value_counts(sort=False)
+            arr_workstatus_2019 = self.df2019[self.df2019['4. Program Studi']
+                                            == self.prodi].iloc[:, 76].value_counts(sort=False)
+            arr_workstatus_2020 = self.df2020[self.df2020['4. Program Studi']
+                                            == self.prodi].iloc[:, 76].value_counts(sort=False)
+            arr_workstatus_2021 = self.df2021[self.df2021['Program Studi']
+                                            == self.prodi].iloc[:, 77].value_counts(sort=False)
+            arr_workstatus_2022 = self.df2022[self.df2022['Program Studi']
+                                            == self.prodi].iloc[:, 77].value_counts(sort=False)
+        else:
+            arr_workstatus_2018 = self.df2018[self.df2018['Fakultas/Sekolah']
+                                            == self.fakultas].iloc[:, 75].value_counts(sort=False)
+            arr_workstatus_2019 = self.df2019[self.df2019['Fakultas/Sekolah']
+                                            == self.fakultas].iloc[:, 76].value_counts(sort=False)
+            arr_workstatus_2020 = self.df2020[self.df2020['Fakultas/Sekolah']
+                                            == self.fakultas].iloc[:, 76].value_counts(sort=False)
+            arr_workstatus_2021 = self.df2021[self.df2021['Fakultas/Sekolah']
+                                            == self.fakultas].iloc[:, 77].value_counts(sort=False)
+            arr_workstatus_2022 = self.df2022[self.df2022['Fakultas/Sekolah']
+                                            == self.fakultas].iloc[:, 77].value_counts(sort=False)
 
         # try:
         workstatus_2018 = self.__filter_zero_workstatus_data(
@@ -511,50 +525,72 @@ class DataframeTracerInitializer():
         return companycat_filtered
 
     def init_company_category_data(self):
+        self.df2018['Fakultas/Sekolah'] = self.df2018['4. Program Studi'].apply(
+            self.__lookup_faculty_from_major)
+        self.df2019['Fakultas/Sekolah'] = self.df2019['4. Program Studi'].apply(
+            self.__lookup_faculty_from_major)
+        self.df2020['Fakultas/Sekolah'] = self.df2020['4. Program Studi'].apply(
+            self.__lookup_faculty_from_major)
+        
         dfCompanyCat2018_raw = self.df2018[[
-            "4. Program Studi", "A10. Apa kategori perusahaan tempat Anda bekerja?"]]
+            "4. Program Studi","Fakultas/Sekolah","A10. Apa kategori perusahaan tempat Anda bekerja?"]]
         dfCompanyCat2018 = dfCompanyCat2018_raw.dropna(
             subset=["A10. Apa kategori perusahaan tempat Anda bekerja?"])
 
         dfCompanyCat2019_raw = self.df2019[[
-            "4. Program Studi", "A10. Apa kategori perusahaan tempat Anda bekerja?"]]
+            "4. Program Studi","Fakultas/Sekolah","A10. Apa kategori perusahaan tempat Anda bekerja?"]]
         dfCompanyCat2019 = dfCompanyCat2019_raw.dropna(
             subset=["A10. Apa kategori perusahaan tempat Anda bekerja?"])
 
         dfCompanyCat2020_raw = self.df2020[[
-            "4. Program Studi", "A10. Apa kategori perusahaan tempat Anda bekerja?"]]
+            "4. Program Studi","Fakultas/Sekolah", "A10. Apa kategori perusahaan tempat Anda bekerja?"]]
         dfCompanyCat2020 = dfCompanyCat2020_raw.dropna(
             subset=["A10. Apa kategori perusahaan tempat Anda bekerja?"])
 
         dfCompanyCat2021_raw = self.df2021[[
-            "Program Studi", "Apa kategori perusahaan tempat Anda bekerja?"]]
+            "Program Studi","Fakultas/Sekolah", "Apa kategori perusahaan tempat Anda bekerja?"]]
         dfCompanyCat2021 = dfCompanyCat2021_raw.dropna(
             subset=["Apa kategori perusahaan tempat Anda bekerja?"])
 
         dfCompanyCat2022_raw = self.df2022[[
-            "Program Studi", "Apa kategori perusahaan tempat Anda bekerja?"]]
+            "Program Studi","Fakultas/Sekolah", "Apa kategori perusahaan tempat Anda bekerja?"]]
         dfCompanyCat2022 = dfCompanyCat2022_raw.dropna(
             subset=["Apa kategori perusahaan tempat Anda bekerja?"])
 
-        dfCompanyCat2018_Prodi = dfCompanyCat2018[dfCompanyCat2018["4. Program Studi"] == self.prodi]
-        dfCompanyCat2019_Prodi = dfCompanyCat2019[dfCompanyCat2019["4. Program Studi"] == self.prodi]
-        dfCompanyCat2020_Prodi = dfCompanyCat2020[dfCompanyCat2020["4. Program Studi"] == self.prodi]
-        dfCompanyCat2021_Prodi = dfCompanyCat2021[dfCompanyCat2021["Program Studi"] == self.prodi]
-        dfCompanyCat2022_Prodi = dfCompanyCat2022[dfCompanyCat2022["Program Studi"] == self.prodi]
+        if self.prodi != "All":
+            dfCompanyCat2018_Prodi = dfCompanyCat2018[dfCompanyCat2018["4. Program Studi"] == self.prodi]
+            dfCompanyCat2019_Prodi = dfCompanyCat2019[dfCompanyCat2019["4. Program Studi"] == self.prodi]
+            dfCompanyCat2020_Prodi = dfCompanyCat2020[dfCompanyCat2020["4. Program Studi"] == self.prodi]
+            dfCompanyCat2021_Prodi = dfCompanyCat2021[dfCompanyCat2021["Program Studi"] == self.prodi]
+            dfCompanyCat2022_Prodi = dfCompanyCat2022[dfCompanyCat2022["Program Studi"] == self.prodi]
+            
+            valueCompanyCat2018_Prodi = self.__filter_company_category_data(dfCompanyCat2018_Prodi["A10. Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
+            valueCompanyCat2019_Prodi = self.__filter_company_category_data(dfCompanyCat2019_Prodi["A10. Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
+            valueCompanyCat2020_Prodi = self.__filter_company_category_data(dfCompanyCat2020_Prodi["A10. Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
+            valueCompanyCat2021_Prodi = self.__filter_company_category_datav2(dfCompanyCat2021_Prodi["Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
+            valueCompanyCat2022_Prodi = self.__filter_company_category_datav2(dfCompanyCat2022_Prodi["Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
+            self.valueCompanyCat_Prodi = np.array([valueCompanyCat2018_Prodi, valueCompanyCat2019_Prodi,
+                                                valueCompanyCat2020_Prodi, valueCompanyCat2021_Prodi,
+                                                valueCompanyCat2022_Prodi])
+        else:
+            print(dfCompanyCat2018)
+            dfCompanyCat2018_fakultas = dfCompanyCat2018[dfCompanyCat2018["Fakultas/Sekolah"] == self.fakultas]
+            dfCompanyCat2019_fakultas = dfCompanyCat2019[dfCompanyCat2019["Fakultas/Sekolah"] == self.fakultas]
+            dfCompanyCat2020_fakultas = dfCompanyCat2020[dfCompanyCat2020["Fakultas/Sekolah"] == self.fakultas]
+            dfCompanyCat2021_fakultas = dfCompanyCat2021[dfCompanyCat2021["Fakultas/Sekolah"] == self.fakultas]
+            dfCompanyCat2022_fakultas = dfCompanyCat2022[dfCompanyCat2022["Fakultas/Sekolah"] == self.fakultas]
+            
+            valueCompanyCat2018_fakultas = self.__filter_company_category_data(dfCompanyCat2018_fakultas["A10. Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
+            valueCompanyCat2019_fakultas = self.__filter_company_category_data(dfCompanyCat2019_fakultas["A10. Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
+            valueCompanyCat2020_fakultas = self.__filter_company_category_data(dfCompanyCat2020_fakultas["A10. Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
+            valueCompanyCat2021_fakultas = self.__filter_company_category_datav2(dfCompanyCat2021_fakultas["Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
+            valueCompanyCat2022_fakultas = self.__filter_company_category_datav2(dfCompanyCat2022_fakultas["Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
+            self.valueCompanyCat_fakultas = np.array([valueCompanyCat2018_fakultas, valueCompanyCat2019_fakultas,
+                                                valueCompanyCat2020_fakultas, valueCompanyCat2021_fakultas,
+                                                valueCompanyCat2022_fakultas])
 
-        valueCompanyCat2018_Prodi = self.__filter_company_category_data(dfCompanyCat2018_Prodi["A10. Apa kategori perusahaan tempat Anda bekerja?"].value_counts(
-        ).sort_index())
-        valueCompanyCat2019_Prodi = self.__filter_company_category_data(dfCompanyCat2019_Prodi["A10. Apa kategori perusahaan tempat Anda bekerja?"].value_counts(
-        ).sort_index())
-        valueCompanyCat2020_Prodi = self.__filter_company_category_data(dfCompanyCat2020_Prodi["A10. Apa kategori perusahaan tempat Anda bekerja?"].value_counts(
-        ).sort_index())
-        valueCompanyCat2021_Prodi = self.__filter_company_category_datav2(dfCompanyCat2021_Prodi["Apa kategori perusahaan tempat Anda bekerja?"].value_counts(
-        ).sort_index())
-        valueCompanyCat2022_Prodi = self.__filter_company_category_datav2(dfCompanyCat2022_Prodi["Apa kategori perusahaan tempat Anda bekerja?"].value_counts(
-        ).sort_index())
-        self.valueCompanyCat_Prodi = np.array([valueCompanyCat2018_Prodi, valueCompanyCat2019_Prodi,
-                                               valueCompanyCat2020_Prodi, valueCompanyCat2021_Prodi,
-                                               valueCompanyCat2022_Prodi])
+
+
 
         # st.write(valueCompanyCat2021_Prodi)
 
