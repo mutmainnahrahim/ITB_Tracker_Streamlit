@@ -6,6 +6,7 @@ import matplotlib
 from dataframeinitializer import DataframeTracerInitializer, DataframeUserInitializer
 import plotly.express as px
 # matplotlib.use('TkAgg')  # or any other GUI backend of your choice
+import matplotlib.ticker as mtick
 
 
 class GrapherTracer(DataframeTracerInitializer):
@@ -473,6 +474,44 @@ class GrapherTracer(DataframeTracerInitializer):
         fig2 = px.line(percentcomfield, title="Kategori Perusahaan (Bekerja)")
         st.plotly_chart(fig, use_container_width=True) 
         st.plotly_chart(fig2, use_container_width=True) 
+
+    def draw_company_related_study(self):
+        # create sample data
+        categoryCompany = ['Sesuai', 'Tidak Sesuai']
+        years = ['2018', '2019', '2020', '2021', '2022']
+
+    
+        valuesSesuai = self.valueCompanyRelated.T[0]
+        valuesTidakSesuai = self.valueCompanyRelated.T[1]
+        valuesSesuai, valuesTidakSesuai = valuesSesuai[::-1], valuesTidakSesuai[::-1]
+
+        # Calculate Percentage Relative to ALL CATEGORIES
+        pvaluesSesuai = []
+        pvaluesTidakSesuai = []
+        for i, (vs, vn) in enumerate(zip(valuesSesuai, valuesTidakSesuai)):
+            total = vs+vn
+            pvaluesSesuai.append(round(100*vs/total))
+            pvaluesTidakSesuai.append(round(100*vn/total))
+
+        fig, ax = plt.subplots(figsize=(10,4))
+        ax.plot(years, pvaluesSesuai, label="Sesuai", color='#4e81bd')
+        ax.plot(years, pvaluesTidakSesuai, label="Tidak Sesuai", color='#b94a48')
+
+
+        for i, year in enumerate(years):
+            ax.text(year, pvaluesSesuai[i], '[{:,.0f}];'.format(valuesSesuai[i])+'{}%'.format(pvaluesSesuai[i]), ha='center')
+            ax.text(year, pvaluesTidakSesuai[i], '[{:,.0f}];'.format(valuesTidakSesuai[i])+'{}%'.format(pvaluesTidakSesuai[i]), ha='center')
+
+
+
+        # add legend
+        ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1), ncol=2)
+        ax.grid(axis='y', linestyle='-', linewidth=0.3, color='gray', alpha=0.5)
+        ax.yaxis.set_major_formatter(mtick.PercentFormatter())
+
+        # show the plot
+        st.pyplot(fig)
+
         
         
 class GrapherUser(DataframeUserInitializer):
