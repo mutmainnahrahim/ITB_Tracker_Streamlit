@@ -6,7 +6,6 @@ import matplotlib
 from dataframeinitializer import DataframeTracerInitializer, DataframeUserInitializer
 # matplotlib.use('TkAgg')  # or any other GUI backend of your choice
 
-
 class GrapherTracer(DataframeTracerInitializer):
     def __init__(self, df2018, df2019, df2020, df2021, df2022, prodi, fakultas):
         super().__init__(df2018, df2019, df2020, df2021, df2022, prodi, fakultas)
@@ -1083,5 +1082,3 @@ class GrapherUser(DataframeUserInitializer):
 
         # Show the plot
         st.pyplot(fig)
-
-    
