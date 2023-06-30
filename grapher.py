@@ -5,6 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 from dataframeinitializer import DataframeTracerInitializer, DataframeUserInitializer
+import matplotlib.ticker as mtick
+import plotly.express as px
 # matplotlib.use('TkAgg')  # or any other GUI backend of your choice
 
 class GrapherTracer(DataframeTracerInitializer):
@@ -408,14 +410,12 @@ class GrapherTracer(DataframeTracerInitializer):
             valuesLokal = self.valueCompanyCat_Prodi.T[0]
             valuesInternasional = self.valueCompanyCat_Prodi.T[1]
             valuesNasional = self.valueCompanyCat_Prodi.T[2]
-            valuesLokal, valuesNasional, valuesInternasional = valuesLokal[::-
-                                                                        1], valuesNasional[::-1], valuesInternasional[::-1]
+            valuesLokal, valuesNasional, valuesInternasional = valuesLokal[::-1], valuesNasional[::-1], valuesInternasional[::-1]
         else:
             valuesLokal = self.valueCompanyCat_fakultas.T[0]
             valuesInternasional = self.valueCompanyCat_fakultas.T[1]
             valuesNasional = self.valueCompanyCat_fakultas.T[2]
-            valuesLokal, valuesNasional, valuesInternasional = valuesLokal[::-
-                                                                        1], valuesNasional[::-1], valuesInternasional[::-1]
+            valuesLokal, valuesNasional, valuesInternasional = valuesLokal[::-1], valuesNasional[::-1], valuesInternasional[::-1]
 
         # Calculate Percentage Relative to ALL CATEGORIES
         pvaluesLokal = []
@@ -1038,7 +1038,18 @@ class GrapherTracer(DataframeTracerInitializer):
         # show the plot
         st.pyplot(fig)
         
- 
+    def draw_company_field_data(self):
+        
+        dfcomfield = self.valueCompanyField_Prodi
+        dfcomfieldt = dfcomfield.T
+        dfcomfieldt["sum"] =dfcomfieldt.sum(axis =1)
+        #HITUNG PERSEN
+        percentcomfield = dfcomfieldt.div(dfcomfieldt["sum"], axis=0)*100
+        percentcomfield.pop("sum")
+        fig = px.bar(percentcomfield, barmode='stack', title="Kategori Perusahaan (Bekerja)")
+        fig2 = px.line(percentcomfield, title="Kategori Perusahaan (Bekerja)")
+        st.plotly_chart(fig, use_container_width=True) 
+        st.plotly_chart(fig2, use_container_width=True) 
 
 
 class GrapherUser(DataframeUserInitializer):

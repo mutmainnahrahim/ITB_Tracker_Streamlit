@@ -176,6 +176,9 @@ elif requestGraph == "Kesesuaian Kuliah dengan Pekerjaan":
     st.header("Wirausaha")
     gt.init_company_related_study("Wirausaha")
     gt.draw_company_related_study()
+elif requestGraph == "Penghasilan":
+    gt.init_revenue_data()
+    gt.draw_revenue()
 
 
 

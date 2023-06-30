@@ -520,6 +520,8 @@ class DataframeTracerInitializer:
         if "Nasional" in company_category_raw:
             companycat_filtered[2] = company_category_raw['Nasional']
 
+        return companycat_filtered
+
     def init_company_category_data(self):
 
         self.df2018['Fakultas/Sekolah'] = self.df2018['4. Program Studi'].apply(
