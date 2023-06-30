@@ -459,6 +459,548 @@ class GrapherTracer(DataframeTracerInitializer):
 
         st.pyplot(fig)
 
+    
+    def draw_revenue(self):
+        def curr(a, b, c, d, e):
+            if a is None:
+                a = 0
+            else:
+                a = "Rp {:,.2f}".format(float(a))
+            if b is None:
+                b = 0
+            else:
+                b = "Rp {:,.2f}".format(float(b))
+            if c is None:
+                c = 0
+            else:
+                c = "Rp {:,.2f}".format(float(c))
+            if d is None:
+                d = 0
+            else:
+                d = "Rp {:,.2f}".format(float(d))
+            if e is None:
+                e = 0
+            else:
+                e = "Rp {:,.2f}".format(float(e))
+            x = [a, b, c, d, e]
+            return x
+        def curr2(a, b, c, d, e):
+            if a is None:
+                a = 0
+            else:
+                a = "Rp {:,.2f}".format(float(a))
+            if b is None:
+                b = 0
+            else:
+                b = "Rp {:,.2f}".format(float(b))
+            if c is None:
+                c = 0
+            else:
+                c = "Rp {:,.2f}".format(float(c))
+            if d is None:
+                d = 0
+            else:
+                d = "Rp {:,.2f}".format(float(d))
+            if e is None:
+                e = 0
+            else:
+                e = "Rp {:,.2f}".format(float(e))
+            x = [a, b, c, d, e]
+            return x
+        def org(a, b, c, d, e):
+            if a is None:
+                a = 0
+                a = "{} orang".format(a)
+            else:
+                a = "{} orang".format(int(a))
+            if b is None:
+                b = 0
+            else:
+                b = "{} orang".format(int(b))
+            if c is None:
+                c = 0
+            else:
+                c = "{} orang".format(int(c))
+            if d is None:
+                d = 0
+            else:
+                d = "{} orang".format(int(d))
+            if e is None:
+                e = 0
+            else:
+                e = "{} orang".format(int(e))
+            x = [a, b, c, d, e]
+            return x
+        
+        self.pb18 = pd.DataFrame(self.pb18)
+        self.pb19 = pd.DataFrame(self.pb19)
+        self.pb20 = pd.DataFrame(self.pb20)
+        self.pb21 = pd.DataFrame(self.pb21)
+        self.pb22 = pd.DataFrame(self.pb22)
+
+        pbd18 = self.pb18.describe()
+        pbd19 = self.pb19.describe()
+        pbd20 = self.pb20.describe()
+        pbd21 = self.pb21.describe()
+        pbd22 = self.pb22.describe()
+
+        bc_18 = pbd18.loc['count', :]
+        bc_19 = pbd19.loc['count', :]
+        bc_20 = pbd20.loc['count', :]
+        bc_21 = pbd21.loc['count', :]
+        bc_22 = pbd22.loc['count', :]
+
+            # calculate mean
+        mean_pb18 = pbd18.loc['mean', :]
+        mean_pb19 = pbd19.loc['mean', :]
+        mean_pb20 = pbd20.loc['mean', :]
+        mean_pb21 = pbd21.loc['mean', :]
+        mean_pb22 = pbd22.loc['mean', :]
+
+            # calculate the lowest value
+        min_pb18 = pbd18.loc['min', :]
+        min_pb19 = pbd19.loc['min', :]
+        min_pb20 = pbd20.loc['min', :]
+        min_pb21 = pbd21.loc['min', :]
+        min_pb22 = pbd22.loc['min', :]
+
+            # calculate the highest value
+        max_pb18 = pbd18.loc['max', :]
+        max_pb19 = pbd19.loc['max', :]
+        max_pb20 = pbd20.loc['max', :]
+        max_pb21 = pbd21.loc['max', :]
+        max_pb22 = pbd22.loc['max', :]
+
+            # calculate the median
+        med_b18 = pbd18.loc['50%', :]
+        med_b19 = pbd19.loc['50%', :]
+        med_b20 = pbd20.loc['50%', :]
+        med_b21 = pbd21.loc['50%', :]
+        med_b22 = pbd22.loc['50%', :]
+
+            # calculate standard deviation
+        std_b18 = pbd18.loc['std', :]
+        std_b19 = pbd19.loc['std', :]
+        std_b20 = pbd20.loc['std', :]
+        std_b21 = pbd21.loc['std', :]
+        std_b22 = pbd22.loc['std', :]    
+
+        self.pu18 = pd.DataFrame(self.pu18)
+        self.pu19 = pd.DataFrame(self.pu19)
+        self.pu20 = pd.DataFrame(self.pu20)
+        self.pu21 = pd.DataFrame(self.pu21)
+        self.pu22 = pd.DataFrame(self.pu22)
+
+        pud18 = self.pu18.describe()
+        pud19 = self.pu19.describe()
+        pud20 = self.pu20.describe()
+        pud21 = self.pu21.describe()
+        pud22 = self.pu22.describe()
+
+        bu_18 = pud18.loc['count', :]
+        bu_19 = pud19.loc['count', :]
+        bu_20 = pud20.loc['count', :]
+        bu_21 = pud21.loc['count', :]
+        bu_22 = pud22.loc['count', :]
+
+            # calculate mean
+        mean_pu18 = pud18.loc['mean', :]
+        mean_pu19 = pud19.loc['mean', :]
+        mean_pu20 = pud20.loc['mean', :]
+        mean_pu21 = pud21.loc['mean', :]
+        mean_pu22 = pud22.loc['mean', :]
+
+            # calculate the lowest value
+        min_pu18 = pud18.loc['min', :]
+        min_pu19 = pud19.loc['min', :]
+        min_pu20 = pud20.loc['min', :]
+        min_pu21 = pud21.loc['min', :]
+        min_pu22 = pud22.loc['min', :]
+
+            # calculate the highest value
+        max_pu18 = pud18.loc['max', :]
+        max_pu19 = pud19.loc['max', :]
+        max_pu20 = pud20.loc['max', :]
+        max_pu21 = pud21.loc['max', :]
+        max_pu22 = pud22.loc['max', :]
+
+            # calculate the median
+        med_u18 = pud18.loc['50%', :]
+        med_u19 = pud19.loc['50%', :]
+        med_u20 = pud20.loc['50%', :]
+        med_u21 = pud21.loc['50%', :]
+        med_u22 = pud22.loc['50%', :]
+
+            # calculate standard deviation
+        std_u18 = pud18.loc['std', :]
+        std_u19 = pud19.loc['std', :]
+        std_u20 = pud20.loc['std', :]
+        std_u21 = pud21.loc['std', :]
+        std_u22 = pud22.loc['std', :]
+
+        countb = org(bc_18, bc_19, bc_20, bc_21, bc_22)
+        minb = curr(min_pb18, min_pb19, min_pb20, min_pb21, min_pb22)
+        maxb = curr(max_pb18, max_pb19, max_pb20, max_pb21, max_pb22)
+        medb = curr(med_b18, med_b19, med_b20, med_b21, med_b22)
+        meanb = curr(mean_pb18, mean_pb19, mean_pb20, mean_pb21, mean_pb22)
+        stdb = curr(std_b18, std_b19, std_b20, std_b21, std_b22)
+        #make the table
+        df1 = pd.DataFrame(
+        [countb, minb, maxb, medb, meanb, stdb],
+        columns=('2018', '2019', '2020', '2021', '2022'), 
+        index=['Count', 'Min', 'Max', 'Median', 'Mean', 'Standard Deviation'])
+
+        st.table(df1)  
+
+
+        #plot bekerja
+        year = ['2018', '2019', '2020','2021','2022']
+        categories = ['Median','Mean']
+        med_pb = (med_b18,med_b19,med_b20,med_b21,med_b22)
+        mean_pb = (mean_pb18, mean_pb19, mean_pb20, mean_pb21, mean_pb22)
+        fig3,ax3 = plt.subplots(figsize=(11,6))
+        #set the grid and plot background color
+        ax3.set_facecolor("white")
+
+        # Set the border properties
+        ax3.spines['left'].set_visible(True)    # Show left border
+        ax3.spines['bottom'].set_visible(True)  # Show bottom border
+        ax3.spines['right'].set_visible(True)   # Show right border
+        ax3.spines['top'].set_visible(True)     # Show top border
+
+        # Customize the border style
+        border_style = {'linewidth': 0.5, 'edgecolor': 'black'}
+        for spine in ax3.spines.values():
+            spine.set(**border_style)
+            
+        plt.grid(color='black',axis='y',alpha=0.2)
+        #plot the bar
+        plt.plot(year, med_pb, '#4F81BD', marker='o',linewidth=2.0,label = "median")
+        plt.plot(year, mean_pb, '#C0504D', marker='o',linewidth=2.0,label = "mean")
+        plt.grid(color='black',axis='y',alpha=0.2)
+
+
+        
+        #set the y limit
+        val = 2000000
+        plt.ylim((0, 15*val))
+
+        #formatting the y ticks
+        current_values = plt.gca().get_yticks()
+        plt.gca().set_yticklabels(['Rp {:,.2f}'.format(x) for x in current_values])
+
+        #set the data label
+        for i in range(len(med_pb)):
+                plt.text(i+0.1,med_pb[i]-400000,'Rp {:,.2f}'.format(float(med_pb[i])),ha = 'center')
+        for i in range(len(mean_pb)):
+                plt.text(i+0.1,mean_pb[i]+300000,'Rp {:,.2f}'.format(float(mean_pb[i])),ha = 'center')
+
+
+        #setting the legend
+        ax3.legend(categories,fontsize="14",loc='lower left', bbox_to_anchor=(0.25, -0.25),facecolor="white",edgecolor="white",ncol=2)
+
+        plt.title('Pendapatan Bekerja')
+        st.pyplot(fig3)
+
+        countu = org(bu_18, bu_19, bu_20, bu_21, bu_22)
+        minu = curr2(min_pu18, min_pu19, min_pu20, min_pu21, min_pu22)
+        maxu = curr2(max_pu18, max_pu19, max_pu20, max_pu21, max_pu22)
+        medu = curr2(med_u18, med_u19, med_u20, med_u21, med_u22)
+        meanu = curr2(mean_pu18, mean_pu19, mean_pu20, mean_pu21, mean_pu22)
+        stdu = curr2(std_u18, std_u19, std_u20, std_u21, std_u22)
+
+        df2 = pd.DataFrame(
+        [countu, minu, maxu, medu, meanu, stdu],
+        columns=('2018', '2019', '2020', '2021', '2022'), 
+        index=['Count', 'Min', 'Max', 'Median', 'Mean', 'Standard Deviation'])
+
+        st.table(df2)
+
+        #plot wirausaha
+        med_pu = (med_u18, med_u19, med_u20, med_u21, med_u22)
+        mean_pu = (mean_pu18, mean_pu19, mean_pu20, mean_pu21, mean_pu22)
+
+        fig4,ax4 = plt.subplots(figsize=(11,6))
+        #set the grid and plot background color
+        ax4.set_facecolor("white")
+
+        # Set the border properties
+        ax4.spines['left'].set_visible(True)    # Show left border
+        ax4.spines['bottom'].set_visible(True)  # Show bottom border
+        ax4.spines['right'].set_visible(True)   # Show right border
+        ax4.spines['top'].set_visible(True)     # Show top border
+
+        # Customize the border style
+        border_style = {'linewidth': 0.5, 'edgecolor': 'black'}
+        for spine in ax4.spines.values():
+            spine.set(**border_style)
+            
+        plt.grid(color='black',axis='y',alpha=0.2)
+        #plot the bar
+        plt.plot(year, med_pu, '#4F81BD', marker='o',linewidth=2.0,label = "median")
+        plt.plot(year, mean_pu, '#C0504D', marker='o',linewidth=2.0,label = "mean")
+        plt.grid(color='black',axis='y',alpha=0.2)
+
+        #set the y limit
+        val = 2000000
+        max_value = max(meanu)
+        # ax4.set_yticks((0, val, 2*val, 3*val, 4*val, 5*val, 6*val,
+        #             7*val, 8*val, 9*val, 10*val))
+        plt.ylim((0, 15*val))
+
+        #formatting the y ticks
+        current_values = plt.gca().get_yticks()
+        plt.gca().set_yticklabels(['Rp {:,.2f}'.format(x) for x in current_values])
+
+        #set the data label
+        for i in range(len(med_pu)):
+                plt.text(i+0.1,med_pu[i]-500000,'Rp {:,.2f}'.format(float(med_pu[i])),ha = 'center')
+        for i in range(len(mean_pu)):
+                plt.text(i+0.1,mean_pu[i]+500000,'Rp {:,.2f}'.format(float(mean_pu[i])),ha = 'center')
+
+
+        #setting the legend
+        ax4.legend(categories,fontsize="14",loc='lower left', bbox_to_anchor=(0.25, -0.25),facecolor="white",edgecolor="white",ncol=2)
+        plt.title('Pendapatan Wirausaha')
+
+        st.pyplot(fig4)
+        
+
+        #bonus bekerja
+
+        #convert into dataframe
+        self.bb18 = pd.DataFrame(self.bb18)
+        self.bb19 = pd.DataFrame(self.bb19)
+        self.bb20 = pd.DataFrame(self.bb20)
+        self.bb21 = pd.DataFrame(self.bb21)
+        self.bb22 = pd.DataFrame(self.bb22)
+
+        #calculate the statistics descriptive
+        bbd18 = self.bb18.describe()
+        bbd19 = self.bb19.describe()
+        bbd20 = self.bb20.describe()
+        bbd21 = self.bb21.describe()
+        bbd22 = self.bb22.describe()
+
+        #calculation for the table (bekerja)
+        #calculate the count
+        bb_18 = bbd18.loc['count', :]
+        bb_19 = bbd19.loc['count', :]
+        bb_20 = bbd20.loc['count', :]
+        bb_21 = bbd21.loc['count', :]
+        bb_22 = bbd22.loc['count', :]
+
+        #calculate mean
+        mean_bb18 = bbd18.loc['mean', :]
+        mean_bb19 = bbd19.loc['mean', :]
+        mean_bb20 = bbd20.loc['mean', :]
+        mean_bb21 = bbd21.loc['mean', :]
+        mean_bb22 = bbd22.loc['mean', :]
+        #calculate the lbbdest value
+        min_bb18 = bbd18.loc['min', :]
+        min_bb19 = bbd19.loc['min', :]
+        min_bb20 = bbd20.loc['min', :]
+        min_bb21 = bbd21.loc['min', :]
+        min_bb22 = bbd22.loc['min', :]
+
+        #calculate the highest value
+        max_bb18 = bbd18.loc['max', :]
+        max_bb19 = bbd19.loc['max', :]
+        max_bb20 = bbd20.loc['max', :]
+        max_bb21 = bbd21.loc['max', :]
+        max_bb22 = bbd22.loc['max', :]
+
+        #calculate the median
+        med_bb18 = bbd18.loc['50%', :]
+        med_bb19 = bbd19.loc['50%', :]
+        med_bb20 = bbd20.loc['50%', :]
+        med_bb21 = bbd21.loc['50%', :]
+        med_bb22 = bbd22.loc['50%', :]
+        #calculate standard deviation
+        std_bb18 = bbd18.loc['std', :]
+        std_bb19 = bbd19.loc['std', :]
+        std_bb20 = bbd20.loc['std', :]
+        std_bb21 = bbd21.loc['std', :]
+        std_bb22 = bbd22.loc['std', :]
+
+
+        countbb = org(bb_18, bb_19, bb_20, bb_21, bb_22)
+        minbb = curr(min_bb18, min_bb19, min_bb20, min_bb21, min_bb22)
+        maxbb = curr(max_bb18, max_bb19, max_bb20, max_bb21, max_bb22)
+        medbb = curr(med_bb18, med_bb19, med_bb20, med_bb21, med_bb22)
+        meanbb = curr(mean_bb18, mean_bb19, mean_bb20, mean_bb21, mean_bb22)
+        stdbb = curr(std_bb18, std_bb19, std_bb20, std_bb21, std_bb22)
+
+
+        df4 = pd.DataFrame(
+            [countbb, minbb, maxbb, medbb, meanbb, stdbb],
+            columns=('2018', '2019', '2020', '2021', '2022'), 
+            index=['Count', 'Min', 'Max', 'Median', 'Mean', 'Standard Deviation'])
+
+        st.table(df4)
+
+        med_bbb = (med_bb18,med_bb19,med_bb20,med_bb21,med_bb22)
+        mean_bbb = (mean_bb18, mean_bb19, mean_bb20, mean_bb21, mean_bb22)
+
+
+        #plot bekerja
+        fig5,ax5 = plt.subplots(figsize=(11,6))
+        #set the grid and plot background color
+        ax5.set_facecolor("white")
+
+        # Set the border properties
+        ax5.spines['left'].set_visible(True)    # Show left border
+        ax5.spines['bottom'].set_visible(True)  # Show bottom border
+        ax5.spines['right'].set_visible(True)   # Show right border
+        ax5.spines['top'].set_visible(True)     # Show top border
+
+        # Customize the border style
+        border_style = {'linewidth': 0.5, 'edgecolor': 'black'}
+        for spine in ax5.spines.values():
+            spine.set(**border_style)
+            
+        plt.grid(color='black',axis='y',alpha=0.2)
+        #plot the bar
+        plt.plot(year, med_bbb, '#4F81BD', marker='o',linewidth=2.0,label = "median")
+        plt.plot(year, mean_bbb, '#C0504D', marker='o',linewidth=2.0,label = "mean")
+        plt.grid(color='black',axis='y',alpha=0.2)
+
+        #set the y limit
+        val = 2000000
+        plt.ylim((0, 10*val))
+
+        #formatting the y ticks
+        current_values = plt.gca().get_yticks()
+        plt.gca().set_yticklabels(['Rp {:,.2f}'.format(x) for x in current_values])
+
+        #set the data label
+        for i in range(len(med_bbb)):
+                plt.text(i+0.1,med_bbb[i]-400000,'Rp {:,.2f}'.format(float(med_bbb[i])),ha = 'center')
+        for i in range(len(mean_bbb)):
+                plt.text(i+0.1,mean_bbb[i]+300000,'Rp {:,.2f}'.format(float(mean_bbb[i])),ha = 'center')
+
+        #setting the legend
+        ax5.legend(categories,fontsize="14",loc='lower left', bbox_to_anchor=(0.25, -0.25),facecolor="white",edgecolor="white",ncol=2)
+
+        plt.title('Bonus Bekerja')
+        st.pyplot(fig5)
+
+        #calculation for the table (omset)
+        #calculate the count
+        
+        #convert into dataframe
+        self.ow18 = pd.DataFrame(self.ow18)
+        self.ow19 = pd.DataFrame(self.ow19)
+        self.ow20 = pd.DataFrame(self.ow20)
+        self.ow21 = pd.DataFrame(self.ow21)
+        self.ow22 = pd.DataFrame(self.ow22)
+
+        #calculate the statistics descriptive
+        owd18 = self.ow18.describe()
+        owd19 = self.ow19.describe()
+        owd20 = self.ow20.describe()
+        owd21 = self.ow21.describe()
+        owd22 = self.ow22.describe()
+        
+        cow_18 = owd18.loc['count', :]
+        cow_19 = owd19.loc['count', :]
+        cow_20 = owd20.loc['count', :]
+        cow_21 = owd21.loc['count', :]
+        cow_22 = owd22.loc['count', :]
+
+        #calculate mean
+        mean_ow18 = owd18.loc['mean', :]
+        mean_ow19 = owd19.loc['mean', :]
+        mean_ow20 = owd20.loc['mean', :]
+        mean_ow21 = owd21.loc['mean', :]
+        mean_ow22 = owd22.loc['mean', :]
+        #calculate the lowdest value
+        min_ow18 = owd18.loc['min', :]
+        min_ow19 = owd19.loc['min', :]
+        min_ow20 = owd20.loc['min', :]
+        min_ow21 = owd21.loc['min', :]
+        min_ow22 = owd22.loc['min', :]
+
+        #calculate the highest value
+        max_ow18 = owd18.loc['max', :]
+        max_ow19 = owd19.loc['max', :]
+        max_ow20 = owd20.loc['max', :]
+        max_ow21 = owd21.loc['max', :]
+        max_ow22 = owd22.loc['max', :]
+
+        #calculate the median
+        med_ow18 = owd18.loc['50%', :]
+        med_ow19 = owd19.loc['50%', :]
+        med_ow20 = owd20.loc['50%', :]
+        med_ow21 = owd21.loc['50%', :]
+        med_ow22 = owd22.loc['50%', :]
+        #calculate standard deviation
+        std_ow18 = owd18.loc['std', :]
+        std_ow19 = owd19.loc['std', :]
+        std_ow20 = owd20.loc['std', :]
+        std_ow21 = owd21.loc['std', :]
+        std_ow22 = owd22.loc['std', :]
+
+        countow = org(cow_18, cow_19, cow_20,cow_21, cow_22)
+        minow = curr2(min_ow18, min_ow19, min_ow20, min_ow21, min_ow22)
+        maxow = curr2(max_ow18, max_ow19, max_ow20, max_ow21, max_ow22)
+        medow = curr2(med_ow18, med_ow19, med_ow20, med_ow21, med_ow22)
+        meanow = curr2(mean_ow18, mean_ow19, mean_ow20, mean_ow21, mean_ow22)
+        stdow = curr2(std_ow18, std_ow19, std_ow20, std_ow21, std_ow22)
+
+
+        df5 = pd.DataFrame(
+            [countow, minow, maxow, medow, meanow, stdow],
+            columns=('2018', '2019', '2020', '2021', '2022'), 
+            index=['Count', 'Min', 'Max', 'Median', 'Mean', 'Standard Deviation'])
+
+        st.table(df5)
+
+        med_ow = (med_ow18, med_ow19, med_ow20, med_ow21, med_ow22)
+        mean_ow = (mean_ow18, mean_ow19, mean_ow20, mean_ow21, mean_ow22)
+
+        #plot bekerja
+        fig6,ax6 = plt.subplots(figsize=(11,6))
+        #set the grid and plot background color
+        ax6.set_facecolor("white")
+
+        # Set the border properties
+        ax6.spines['left'].set_visible(True)    # Show left border
+        ax6.spines['bottom'].set_visible(True)  # Show bottom border
+        ax6.spines['right'].set_visible(True)   # Show right border
+        ax6.spines['top'].set_visible(True)     # Show top border
+
+        # Customize the border style
+        border_style = {'linewidth': 0.5, 'edgecolor': 'black'}
+        for spine in ax6.spines.values():
+            spine.set(**border_style)
+            
+        plt.grid(color='black',axis='y',alpha=0.2)
+        #plot the bar
+        plt.plot(year, med_ow, '#4F81BD', marker='o',linewidth=2.0,label = "median")
+        plt.plot(year, mean_ow, '#C0504D', marker='o',linewidth=2.0,label = "mean")
+        plt.grid(color='black',axis='y',alpha=0.2)
+
+        #set the y limit
+        val = 2000000
+        plt.ylim((0, 20*val))
+
+        #formatting the y ticks
+        current_values = plt.gca().get_yticks()
+        plt.gca().set_yticklabels(['Rp {:,.2f}'.format(x) for x in current_values])
+
+        #set the data label
+        for i in range(len(med_ow)):
+                plt.text(i+0.1,med_ow[i]-400000,'Rp {:,.2f}'.format(float(med_ow[i])),ha = 'center')
+        for i in range(len(mean_ow)):
+                plt.text(i+0.1,mean_ow[i]+300000,'Rp {:,.2f}'.format(float(mean_ow[i])),ha = 'center')
+
+        #setting the legend
+        ax6.legend(categories,fontsize="14",loc='lower left', bbox_to_anchor=(0.25, -0.25),facecolor="white",edgecolor="white",ncol=2)
+
+        plt.title('Omset Wirausaha')
+        st.pyplot(fig6)
+
 
 class GrapherUser(DataframeUserInitializer):
     def __init__(self, dfUser2018, dfUser2019, dfUser2020, dfUser2021, dfUser2022, prodi):
@@ -541,3 +1083,5 @@ class GrapherUser(DataframeUserInitializer):
 
         # Show the plot
         st.pyplot(fig)
+
+    
