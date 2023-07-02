@@ -183,6 +183,16 @@ elif requestGraph == "Kategori Bidang Usaha (Bekerja)":
 elif requestGraph == "Kategori Bidang Usaha (Wirausaha)":
     gt.init_company_field_data(status="Wirausaha")
     gt.draw_company_field_data()
+elif requestGraph == "Kesesuaian Kuliah dengan Pekerjaan":
+    st.header("Bekerja")
+    gt.init_company_related_study("Bekerja")
+    gt.draw_company_related_study()
+    st.header("Wirausaha")
+    gt.init_company_related_study("Wirausaha")
+    gt.draw_company_related_study()
+elif requestGraph == "Penghasilan":
+    gt.init_revenue_data()
+    gt.draw_revenue()
 elif requestGraph == "Tren Penilaian Tingkat Kepentingan User":
     gu.init_competence_data()
     gu.draw_competence_trend_data(typeGraph="Kepentingan")
