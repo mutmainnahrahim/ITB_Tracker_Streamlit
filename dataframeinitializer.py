@@ -78,6 +78,65 @@ class DataframeTracerInitializer:
         elif _prodi in prodiSTEI:
             return fakultas[11]
         
+        self.fakultas = fakultas
+
+    def __lookup_faculty_from_major(self, _prodi):
+        prodiFITB = ["Teknik Geologi", "Teknik Geodesi dan Geomatika",
+                     "Meteorologi", "Oseanografi"]
+        prodiFMIPA = ["Matematika", "Fisika", "Astronomi", "Kimia"]
+        prodiFSRD = ["Seni Rupa", "Desain Interior",
+                     "Desain Komunikasi Visual", "Desain Produk"]
+        prodiFTI = ["Teknik Kimia", "Teknik Industri",
+                    "Teknik Fisika", "Manajemen Rekayasa Industri"]
+        prodiFTSL = ["Teknik Sipil", "Teknik Lingkungan", "Teknik Kelautan"]
+        prodiFTMD = ["Teknik Mesin", "Teknik Dirgantara", "Teknik Material"]
+        prodiFTTM = ["Teknik Pertambangan", "Teknik Perminyakan",
+                     "Teknik Geofisika", "Teknik Metalurgi"]
+        prodiSAPPK = ["Arsitektur", "Perencanaan Wilayah dan Kota"]
+        prodiSBM = ["Manajemen", "Kewirausahaan"]
+        prodiSF = ["Sains dan Teknologi Farmasi, Farmasi Klinik dan Komunitas"]
+        prodiSITH = ["Biologi", "Mikrobiologi", "Rekayasa Hayati",
+                     "Rekayasa Pertanian", "Rekayasa Kehutanan", "Teknologi Pasca Panen"]
+        prodiSTEI = ["Teknik Elektro", "Teknik Tenaga Listrik", "Teknik Telekomunikasi",
+                     "Teknik Biomedis", "Teknik Informatika", "Sistem dan Teknologi Informasi"]
+
+        fakultas = ["Fakultas Ilmu dan Teknologi Kebumian",
+                    "Fakultas Matematika dan Ilmu Pengetahuan Alam",
+                    "Fakultas Seni Rupa dan Desain",
+                    "Fakultas Teknologi Industri",
+                    "Fakultas Teknik Sipil dan Lingkungan",
+                    "Fakultas Teknik Mesin dan Dirgantara",
+                    "Fakultas Teknik Pertambangan dan Perminyakan",
+                    "Sekolah Arsitektur, Perencanaan dan Pengembangan Kebijakan",
+                    "Sekolah Bisnis dan Manajemen",
+                    "Sekolah Farmasi",
+                    "Sekolah Ilmu dan Teknologi Hayati",
+                    "Sekolah Teknik Elektro dan Informatika"]
+        if _prodi in prodiFITB:
+            return fakultas[0]
+        elif _prodi in prodiFMIPA:
+            return fakultas[1]
+        elif _prodi in prodiFSRD:
+            return fakultas[2]
+        elif _prodi in prodiFTI:
+            return fakultas[3]
+        elif _prodi in prodiFTSL:
+            return fakultas[4]
+        elif _prodi in prodiFTMD:
+            return fakultas[5]
+        elif _prodi in prodiFTTM:
+            return fakultas[6]
+        elif _prodi in prodiSAPPK:
+            return fakultas[7]
+        elif _prodi in prodiSBM:
+            return fakultas[8]
+        elif _prodi in prodiSF:
+            return fakultas[9]
+        elif _prodi in prodiSITH:
+            return fakultas[10]
+        elif _prodi in prodiSTEI:
+            return fakultas[11]
+        
     def cleanse_tracer_data(self):
         # Adding Faculty Column
         self.df2018['Fakultas/Sekolah'] = self.df2018['4. Program Studi'].apply(
@@ -622,12 +681,11 @@ class DataframeTracerInitializer:
         z =pd.DataFrame(missingdf)
         missing_index = alphabet.index.difference(z.index)
         result = pd.concat([z,alphabet.loc[missing_index, :]]).sort_index(ascending=True).fillna(0)
-        result.pop(0)
+        #result.pop(0)
         return result
 
     def init_company_field_data(self, status="Bekerja"):
         #KARENA DATA 2018-2020 MEMISAHKAN ANTARA KATEGORI A (BEKERJA) DAN B (BEKERJA DAN WIRAUSAHA), MAKA HARUS DIGABUNGKAN
-        if status == "Bekerja":
             dfCompanyField2018_rawA = self.df2018[[
                 "4. Program Studi", "A2. Bidang Usaha"]]
             dfCompanyField2018A = dfCompanyField2018_rawA.dropna(
@@ -659,12 +717,26 @@ class DataframeTracerInitializer:
                 "Program Studi", "Bidang usaha bekerja"]]
             dfCompanyField2021 = dfCompanyField2021_raw.dropna(
                 subset=["Bidang usaha bekerja"])
+            dfCompanyField2020_rawA = self.df2020[[
+                "4. Program Studi", "A2. Bidang Usaha"]]
+            dfCompanyField2020A = dfCompanyField2020_rawA.dropna(
+                subset=["A2. Bidang Usaha"])
+            dfCompanyField2020_rawB = self.df2020[[
+                "4. Program Studi", "B2. Bidang Usaha"]]
+            dfCompanyField2020B = dfCompanyField2020_rawB.dropna(
+                subset= ["B2. Bidang Usaha"])
+            
+            dfCompanyField2021_raw = self.df2021[[
+                "Program Studi", "Bidang usaha bekerja"]]
+            dfCompanyField2021 = dfCompanyField2021_raw.dropna(
+                subset=["Bidang usaha bekerja"])
 
             dfCompanyField2022_raw = self.df2022[[
                 "Program Studi", "Bidang usaha bekerja"]]
             dfCompanyField2022 = dfCompanyField2022_raw.dropna(
                 subset=["Bidang usaha bekerja"])
-
+        
+            
             dfCompanyField2018A_Prodi = dfCompanyField2018A[dfCompanyField2018A["4. Program Studi"] == self.prodi]
             dfCompanyField2018B_Prodi = dfCompanyField2018B[dfCompanyField2018B["4. Program Studi"] == self.prodi]
             dfCompanyField2019A_Prodi = dfCompanyField2019A[dfCompanyField2019A["4. Program Studi"] == self.prodi]
@@ -674,6 +746,7 @@ class DataframeTracerInitializer:
             dfCompanyField2021_Prodi = dfCompanyField2021[dfCompanyField2021["Program Studi"] == self.prodi]
             dfCompanyField2022_Prodi = dfCompanyField2022[dfCompanyField2022["Program Studi"] == self.prodi]
 
+        #valuecounts
             valueCompanyField2018A_Prodi = dfCompanyField2018A_Prodi["A2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
             valueCompanyField2018B_Prodi = dfCompanyField2018B_Prodi["B2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
             valueCompanyField2019A_Prodi = dfCompanyField2019A_Prodi["A2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
@@ -681,24 +754,77 @@ class DataframeTracerInitializer:
             valueCompanyField2020A_Prodi = dfCompanyField2020A_Prodi["A2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
             valueCompanyField2020B_Prodi = dfCompanyField2020B_Prodi["B2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
 
+
             valueCompanyField2018_Prodi = valueCompanyField2018A_Prodi.add(valueCompanyField2018B_Prodi, fill_value = 0 )
             valueCompanyField2019_Prodi = valueCompanyField2019A_Prodi.add(valueCompanyField2019B_Prodi, fill_value = 0 )
             valueCompanyField2020_Prodi = valueCompanyField2020A_Prodi.add(valueCompanyField2020B_Prodi, fill_value = 0 )
+            valueCompanyField2021_Prodi = dfCompanyField2021_Prodi["Bidang usaha bekerja"].value_counts(ascending= True).sort_index(ascending= True)
+            valueCompanyField2022_Prodi = dfCompanyField2022_Prodi["Bidang usaha bekerja"].value_counts(ascending= True).sort_index(ascending= True)
+        #menyamakan indeks dengan insert_missing)_index
+            valueCompanyField2018_Prodi = self.__insert_missing_index(valueCompanyField2018_Prodi.astype(np.int64))
+         
+            valueCompanyField2019_Prodi = self.__insert_missing_index(valueCompanyField2019_Prodi.astype(np.int64))
+          
+            valueCompanyField2020_Prodi = self.__insert_missing_index(valueCompanyField2020_Prodi.astype(np.int64))
+           
+            valueCompanyField2021_Prodi = self.__insert_missing_index(valueCompanyField2021_Prodi.astype(np.int64)).drop(0, axis = 1)
+            valueCompanyField2022_Prodi = self.__insert_missing_index(valueCompanyField2022_Prodi.astype(np.int64)).drop(0, axis = 1)
 
-            valueCompanyField2021_Prodi = dfCompanyField2021_Prodi["Bidang usaha bekerja"].value_counts(
-            ).sort_index()
-            valueCompanyField2022_Prodi = dfCompanyField2022_Prodi["Bidang usaha bekerja"].value_counts(
-            ).sort_index()
-
-            valueCompanyField2018A_Prodi = self.__insert_missing_index(valueCompanyField2018A_Prodi.astype(np.int64))
-            valueCompanyField2019A_Prodi = self.__insert_missing_index(valueCompanyField2019A_Prodi.astype(np.int64))
-            valueCompanyField202A_Prodi = self.__insert_missing_index(valueCompanyField2020A_Prodi.astype(np.int64))
-            valueCompanyField2021_Prodi = self.__insert_missing_index(valueCompanyField2021_Prodi.astype(np.int64))
-            valueCompanyField2022_Prodi = self.__insert_missing_index(valueCompanyField2022_Prodi.astype(np.int64))
+        #baru diadd utk 2018-2020
+            
 
             self.valueCompanyField_Prodi = pd.concat ([valueCompanyField2018_Prodi,valueCompanyField2019_Prodi,valueCompanyField2020_Prodi, valueCompanyField2021_Prodi, valueCompanyField2022_Prodi], axis =1)
             self.valueCompanyField_Prodi.columns = ['2018', '2019', '2020', '2021', '2022']
             
+    def init_bussiness_field_data(self):
+            
+            dfBussinessField2018_raw = self.df2018[[
+                "4. Program Studi", "C2. Bidang Usaha"]]
+            dfBussinessField2018 = dfBussinessField2018_raw.dropna(
+                subset=["C2. Bidang Usaha"])
+            
+            dfBussinessField2019_raw = self.df2019[[
+                "4. Program Studi", "C2. Bidang Usaha"]]
+            dfBussinessField2019 = dfBussinessField2019_raw.dropna(
+                subset=["C2. Bidang Usaha"])
+    
+
+            dfBussinessField2020_raw = self.df2020[[
+                "4. Program Studi", "C2. Bidang Usaha"]]
+            dfBussinessField2020 = dfBussinessField2020_raw.dropna(
+                subset=["C2. Bidang Usaha"])
+            
+            dfBussinessField2021_raw = self.df2021[[
+            "Program Studi", "Bidang usaha wirausaha/wiraswasta"]]
+            dfBussinessField2021 = dfBussinessField2021_raw.dropna(
+                subset=["Bidang usaha wirausaha/wiraswasta"])
+
+            dfBussinessField2022_raw = self.df2022[[
+                "Program Studi", "Bidang usaha wirausaha/wiraswasta"]]
+            dfBussinessField2022 = dfBussinessField2022_raw.dropna(
+                subset=["Bidang usaha wirausaha/wiraswasta"])
+
+            dfBussinessField2018_Prodi = dfBussinessField2018[dfBussinessField2018["4. Program Studi"] == self.prodi]
+            dfBussinessField2019_Prodi = dfBussinessField2019[dfBussinessField2019["4. Program Studi"] == self.prodi]
+            dfBussinessField2020_Prodi = dfBussinessField2020[dfBussinessField2020["4. Program Studi"] == self.prodi]
+            dfBussinessField2021_Prodi = dfBussinessField2021[dfBussinessField2021["Program Studi"] == self.prodi]
+            dfBussinessField2022_Prodi = dfBussinessField2022[dfBussinessField2022["Program Studi"] == self.prodi]
+
+            valueBussinessField2018_Prodi = dfBussinessField2018_Prodi["C2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+            valueBussinessField2019_Prodi = dfBussinessField2019_Prodi["C2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+            valueBussinessField2020_Prodi = dfBussinessField2020_Prodi["C2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+            valueBussinessField2021_Prodi = dfBussinessField2021_Prodi["Bidang usaha wirausaha/wiraswasta"].value_counts(ascending= True).sort_index(ascending= True)
+            valueBussinessField2022_Prodi = dfBussinessField2022_Prodi["Bidang usaha wirausaha/wiraswasta"].value_counts(ascending= True).sort_index(ascending= True)
+
+            valueBussinessField2018_Prodi = self.__insert_missing_index(valueBussinessField2018_Prodi.astype(np.int64)).drop(0, axis = 1)
+            valueBussinessField2019_Prodi = self.__insert_missing_index(valueBussinessField2019_Prodi.astype(np.int64)).drop(0, axis = 1)
+            valueBussinessField2020_Prodi = self.__insert_missing_index(valueBussinessField2020_Prodi.astype(np.int64)).drop(0, axis = 1)
+            valueBussinessField2021_Prodi = self.__insert_missing_index(valueBussinessField2021_Prodi.astype(np.int64)).drop(0, axis = 1)
+            valueBussinessField2022_Prodi = self.__insert_missing_index(valueBussinessField2022_Prodi.astype(np.int64)).drop(0, axis = 1)
+
+            self.valueBussinessField_Prodi = pd.concat ([valueBussinessField2018_Prodi,valueBussinessField2019_Prodi,valueBussinessField2020_Prodi, valueBussinessField2021_Prodi, valueBussinessField2022_Prodi], axis =1)
+            self.valueBussinessField_Prodi.columns = ['2018', '2019', '2020', '2021', '2022']
+
     def init_revenue_data(self):
         # Get the raw data
         dfrevenue2018_raw = self.df2018[['4. Program Studi', '33. Pekerjaan utama saat ini?', 
@@ -752,7 +878,7 @@ class DataframeTracerInitializer:
         pu20 = []
         pu21 = []
         pu22 = []
-
+        
         #grouping for bekerja and wirausaha category
         #year 2018
         for i in range(len(self.dfrevenue2018_Prodi)):
