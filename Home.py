@@ -177,12 +177,6 @@ elif requestGraph == "Kategori Perusahaan":
 elif requestGraph == "Tingkat Kepentingan dan Kepuasan User":
     gu.init_competence_data()
     gu.draw_competence_data(year=inputTahun)
-elif requestGraph == "Kategori Bidang Usaha (Bekerja)":
-    gt.init_company_field_data(status="Bekerja")
-    gt.draw_company_field_data()
-elif requestGraph == "Kategori Bidang Usaha (Wirausaha)":
-    gt.init_company_field_data(status="Wirausaha")
-    gt.draw_company_field_data()
 elif requestGraph == "Kesesuaian Kuliah dengan Pekerjaan":
     st.header("Bekerja")
     gt.init_company_related_study("Bekerja")
@@ -203,6 +197,7 @@ elif requestGraph == "Tren Penilaian Tingkat Kepuasan User":
 elif requestGraph == "Kategori Bidang Usaha (Bekerja)":
     gt.init_company_field_data()
     gt.draw_company_field_data()
+
 elif requestGraph == "Kategori Bidang Usaha (Wirausaha)":
     gt.init_bussiness_field_data()
     gt.draw_bussiness_field_data()

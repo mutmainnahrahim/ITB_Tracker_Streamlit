@@ -1068,6 +1068,20 @@ class GrapherTracer(DataframeTracerInitializer):
 
         # show the plot
         st.pyplot(fig)
+    
+    def draw_bussiness_field_data(self):
+
+        dfbusfield = self.valueBussinessField_Prodi
+        dfbusfieldt = dfbusfield.T
+        dfbusfieldt["sum"] =dfbusfieldt.sum(axis =1)
+        #HITUNG PERSEN
+        percentbusfield = dfbusfieldt.div(dfbusfieldt["sum"], axis=0)*100 
+        percentbusfield.pop("sum")
+        figb = px.bar(percentbusfield, barmode='stack', title="Kategori Perusahaan (Wirausaha)")
+        fig2b = px.line(percentbusfield, title="Kategori Perusahaan (Wirausaha)")
+        st.plotly_chart(figb, use_container_width=True) 
+        st.plotly_chart(fig2b, use_container_width=True) 
+        print("bussiness field data drawn")
         
     def draw_company_field_data(self):
         
@@ -1081,19 +1095,9 @@ class GrapherTracer(DataframeTracerInitializer):
         fig2 = px.line(percentcomfield, title="Kategori Perusahaan (Bekerja)")
         st.plotly_chart(fig, use_container_width=True) 
         st.plotly_chart(fig2, use_container_width=True)
-        
-    def draw_bussiness_field_data(self):
-    
-        dfbusfield = self.valueBussinessField_Prodi
-        dfbusfieldt = dfbusfield.T
-        dfbusfieldt["sum"] =dfbusfieldt.sum(axis =1)
-        #HITUNG PERSEN
-        percentbusfield = dfbusfieldt.div(dfbusfieldt["sum"], axis=0)*100 
-        percentbusfield.pop("sum")
-        fig = px.bar(percentbusfield, barmode='stack', title="Kategori Perusahaan (Wirausaha)")
-        fig2 = px.line(percentbusfield, title="Kategori Perusahaan (Wirausaha)")
-        st.plotly_chart(fig, use_container_width=True) 
-        st.plotly_chart(fig2, use_container_width=True) 
+        print("company field data drawn")
+
+
 
 class GrapherUser(DataframeUserInitializer):
     def __init__(self, dfUser2018, dfUser2019, dfUser2020, dfUser2021, dfUser2022, prodi, fakultas):
