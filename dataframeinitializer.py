@@ -273,7 +273,7 @@ class DataframeTracerInitializer:
                 self.df2022_competenceA_Prodi.mean()[20]])
 
         # Filter Fakultas
-        else:
+        elif self.prodi == "All" and self.fakultas != "All":
             self.df2018_competenceA_fakultas = self.df2018_competenceA[
                 self.df2018['Fakultas/Sekolah'] == self.fakultas]
             self.df2018_competenceB_fakultas = self.df2018_competenceB[
@@ -327,7 +327,31 @@ class DataframeTracerInitializer:
                                        self.df2022_competenceA_fakultas.mean()[10], self.df2022_competenceA_fakultas.mean()[
                 4], self.df2022_competenceA_fakultas.mean()[15],
                 self.df2022_competenceA_fakultas.mean()[20]])
-            
+        
+        else:
+            self.means2018 = np.array([self.df2018_competenceA.mean()[21], self.df2018_competenceA.mean()[15], self.df2018_competenceA.mean()[14],
+                                       self.df2018_competenceA.mean()[10], self.df2018_competenceA.mean()[
+                4], self.df2018_competenceA.mean()[19],
+                self.df2018_competenceA.mean()[19]])
+
+            self.means2019 = np.array([self.df2019_competenceA.mean()[22], self.df2019_competenceA.mean()[16], self.df2019_competenceA.mean()[14],
+                                       self.df2019_competenceA.mean()[10], self.df2019_competenceA.mean()[
+                4], self.df2019_competenceA.mean()[15],
+                self.df2019_competenceA.mean()[20]])
+
+            self.means2020 = np.array([self.df2020_competenceA.mean()[22], self.df2020_competenceA.mean()[16], self.df2020_competenceA.mean()[14],
+                                       self.df2020_competenceA.mean()[10], self.df2020_competenceA.mean()[
+                4], self.df2020_competenceA.mean()[15],
+                self.df2020_competenceA.mean()[20]])
+            self.means2021 = np.array([self.df2021_competenceA.mean()[22], self.df2021_competenceA.mean()[16], self.df2021_competenceA.mean()[14],
+                                       self.df2021_competenceA.mean()[10], self.df2021_competenceA.mean()[
+                4], self.df2021_competenceA.mean()[15],
+                self.df2021_competenceA.mean()[20]])
+            self.means2022 = np.array([self.df2022_competenceA.mean()[22], self.df2022_competenceA.mean()[16], self.df2022_competenceA.mean()[14],
+                                       self.df2022_competenceA.mean()[10], self.df2022_competenceA.mean()[
+                4], self.df2022_competenceA.mean()[15],
+                self.df2022_competenceA.mean()[20]])
+
         self.competencies2018 = ['memecahkan\nmasalah\nkompleks', 'berpikir\nkritis', 'inovasi\ndan/atau\nkreativitas', 'manajemen diri\ndan orang lain',
                                  'bekerja\ntim', 'bekerja\nindividu', 'kecerdasan\nemosional', 'penilaian dan\npengambilan\nkeputusan',
                                  'negosiasi', 'kecerdasan\ndalam\nbertindak', 'kemampuan\nbelajar', 'adaptasi\ndengan\nlingkungan',
@@ -395,7 +419,7 @@ class DataframeTracerInitializer:
                                             == self.prodi].iloc[:, 77].value_counts(sort=False)
             arr_workstatus_2022 = self.df2022[self.df2022['Program Studi']
                                             == self.prodi].iloc[:, 77].value_counts(sort=False)
-        else:
+        elif self.prodi == "All" and self.fakultas != "All":
             arr_workstatus_2018 = self.df2018[self.df2018['Fakultas/Sekolah']
                                             == self.fakultas].iloc[:, 75].value_counts(sort=False)
             arr_workstatus_2019 = self.df2019[self.df2019['Fakultas/Sekolah']
@@ -406,7 +430,13 @@ class DataframeTracerInitializer:
                                             == self.fakultas].iloc[:, 77].value_counts(sort=False)
             arr_workstatus_2022 = self.df2022[self.df2022['Fakultas/Sekolah']
                                             == self.fakultas].iloc[:, 77].value_counts(sort=False)
-
+        else:
+            arr_workstatus_2018 = self.df2018.iloc[:, 75].value_counts(sort=False)
+            arr_workstatus_2019 = self.df2019.iloc[:, 76].value_counts(sort=False)
+            arr_workstatus_2020 = self.df2020.iloc[:, 76].value_counts(sort=False)
+            arr_workstatus_2021 = self.df2021.iloc[:, 77].value_counts(sort=False)
+            arr_workstatus_2022 = self.df2022.iloc[:, 77].value_counts(sort=False)
+            
         # try:
         workstatus_2018 = self.__filter_zero_workstatus_data(
             arr_workstatus_2018)
@@ -519,7 +549,7 @@ class DataframeTracerInitializer:
             companycat_filtered[1] = company_category_raw['Multinasional']
         if "Nasional" in company_category_raw:
             companycat_filtered[2] = company_category_raw['Nasional']
-
+        
         return companycat_filtered
 
     def init_company_category_data(self):
@@ -568,9 +598,7 @@ class DataframeTracerInitializer:
             valueCompanyCat2020_Prodi = self.__filter_company_category_data(dfCompanyCat2020_Prodi["A10. Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
             valueCompanyCat2021_Prodi = self.__filter_company_category_datav2(dfCompanyCat2021_Prodi["Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
             valueCompanyCat2022_Prodi = self.__filter_company_category_datav2(dfCompanyCat2022_Prodi["Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
-            self.valueCompanyCat_Prodi = np.array([valueCompanyCat2018_Prodi, valueCompanyCat2019_Prodi,
-                                                valueCompanyCat2020_Prodi, valueCompanyCat2021_Prodi,
-                                                valueCompanyCat2022_Prodi])
+            self.valueCompanyCat_Prodi = np.array([valueCompanyCat2018_Prodi, valueCompanyCat2019_Prodi, valueCompanyCat2020_Prodi, valueCompanyCat2021_Prodi, valueCompanyCat2022_Prodi])
         else:
             print(dfCompanyCat2018)
             dfCompanyCat2018_fakultas = dfCompanyCat2018[dfCompanyCat2018["Fakultas/Sekolah"] == self.fakultas]
@@ -584,9 +612,7 @@ class DataframeTracerInitializer:
             valueCompanyCat2020_fakultas = self.__filter_company_category_data(dfCompanyCat2020_fakultas["A10. Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
             valueCompanyCat2021_fakultas = self.__filter_company_category_datav2(dfCompanyCat2021_fakultas["Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
             valueCompanyCat2022_fakultas = self.__filter_company_category_datav2(dfCompanyCat2022_fakultas["Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
-            self.valueCompanyCat_fakultas = np.array([valueCompanyCat2018_fakultas, valueCompanyCat2019_fakultas,
-                                                valueCompanyCat2020_fakultas, valueCompanyCat2021_fakultas,
-                                                valueCompanyCat2022_fakultas])
+            self.valueCompanyCat_fakultas = np.array([valueCompanyCat2018_fakultas, valueCompanyCat2019_fakultas, valueCompanyCat2020_fakultas, valueCompanyCat2021_fakultas, valueCompanyCat2022_fakultas])
 
         
     def __insert_missing_index (self,missingdf):
@@ -1061,16 +1087,81 @@ class DataframeTracerInitializer:
         
 
 class DataframeUserInitializer():
-    def __init__(self, dfUser2018, dfUser2019, dfUser2020, dfUser2021, dfUser2022, prodi):
+    def __init__(self, dfUser2018, dfUser2019, dfUser2020, dfUser2021, dfUser2022, prodi,fakultas):
         self.dfUser2018 = dfUser2018
         self.dfUser2019 = dfUser2019
         self.dfUser2020 = dfUser2020
         self.dfUser2021 = dfUser2021
         self.dfUser2022 = dfUser2022
         self.prodi = prodi
+        self.fakultas = fakultas
+
+    def __lookup_faculty_from_major(self, _prodi):
+        prodiFITB = ["Teknik Geologi", "Teknik Geodesi dan Geomatika",
+                     "Meteorologi", "Oseanografi"]
+        prodiFMIPA = ["Matematika", "Fisika", "Astronomi", "Kimia"]
+        prodiFSRD = ["Seni Rupa", "Desain Interior",
+                     "Desain Komunikasi Visual", "Desain Produk"]
+        prodiFTI = ["Teknik Kimia", "Teknik Industri",
+                    "Teknik Fisika", "Manajemen Rekayasa Industri"]
+        prodiFTSL = ["Teknik Sipil", "Teknik Lingkungan", "Teknik Kelautan"]
+        prodiFTMD = ["Teknik Mesin", "Teknik Dirgantara", "Teknik Material"]
+        prodiFTTM = ["Teknik Pertambangan", "Teknik Perminyakan",
+                     "Teknik Geofisika", "Teknik Metalurgi"]
+        prodiSAPPK = ["Arsitektur", "Perencanaan Wilayah dan Kota"]
+        prodiSBM = ["Manajemen", "Kewirausahaan"]
+        prodiSF = ["Sains dan Teknologi Farmasi, Farmasi Klinik dan Komunitas"]
+        prodiSITH = ["Biologi", "Mikrobiologi", "Rekayasa Hayati",
+                     "Rekayasa Pertanian", "Rekayasa Kehutanan", "Teknologi Pasca Panen"]
+        prodiSTEI = ["Teknik Elektro", "Teknik Tenaga Listrik", "Teknik Telekomunikasi",
+                     "Teknik Biomedis", "Teknik Informatika", "Sistem dan Teknologi Informasi"]
+
+        fakultas = ["Fakultas Ilmu dan Teknologi Kebumian",
+                    "Fakultas Matematika dan Ilmu Pengetahuan Alam",
+                    "Fakultas Seni Rupa dan Desain",
+                    "Fakultas Teknologi Industri",
+                    "Fakultas Teknik Sipil dan Lingkungan",
+                    "Fakultas Teknik Mesin dan Dirgantara",
+                    "Fakultas Teknik Pertambangan dan Perminyakan",
+                    "Sekolah Arsitektur, Perencanaan dan Pengembangan Kebijakan",
+                    "Sekolah Bisnis dan Manajemen",
+                    "Sekolah Farmasi",
+                    "Sekolah Ilmu dan Teknologi Hayati",
+                    "Sekolah Teknik Elektro dan Informatika"]
+        if _prodi in prodiFITB:
+            return fakultas[0]
+        elif _prodi in prodiFMIPA:
+            return fakultas[1]
+        elif _prodi in prodiFSRD:
+            return fakultas[2]
+        elif _prodi in prodiFTI:
+            return fakultas[3]
+        elif _prodi in prodiFTSL:
+            return fakultas[4]
+        elif _prodi in prodiFTMD:
+            return fakultas[5]
+        elif _prodi in prodiFTTM:
+            return fakultas[6]
+        elif _prodi in prodiSAPPK:
+            return fakultas[7]
+        elif _prodi in prodiSBM:
+            return fakultas[8]
+        elif _prodi in prodiSF:
+            return fakultas[9]
+        elif _prodi in prodiSITH:
+            return fakultas[10]
+        elif _prodi in prodiSTEI:
+            return fakultas[11]
 
     def cleanse_user_data(self):
-
+        
+        self.dfUser2018['Fakultas'] = self.dfUser2018['Prodi'].apply(
+            self.__lookup_faculty_from_major)
+        self.dfUser2019['Fakultas'] = self.dfUser2019['Program Studi'].apply(
+            self.__lookup_faculty_from_major)
+        self.dfUser2020['Fakultas'] = self.dfUser2020['Program Studi'].apply(
+            self.__lookup_faculty_from_major)
+        
         self.dfUser2018_Kepuasan = self.dfUser2018.iloc[:, 6:29]
         self.dfUser2018_Kepentingan = self.dfUser2018.iloc[:, 29:53]
 
@@ -1101,16 +1192,6 @@ class DataframeUserInitializer():
         self.dfUser2020_Kepuasan = dfUser2020_Dropped.iloc[:, 6:29]
         self.dfUser2020_Kepentingan = dfUser2020_Dropped.iloc[:, 29:53]
 
-        # Filter Electrical Engineering
-        # dfUser2021_EL = dfUser2021[dfUser2021["Program Studi"]=="Teknik Elektro"]
-        # # dfUser2021_EL
-        # If User (Labelled by 1 in Staff Column), Save to Importance Data Data
-        # dfUser2021_EL_Kepentingan = dfUser2021_EL[dfUser2021_EL["Staff"]==1] # N=
-        # dfUser2021_EL_KepentinganF=dfUser2021_EL_Kepentingan.iloc[:,6:29]
-
-        # # If Students (Labelled by Name in Staff Column), Save to Satisfaction Data
-        # dfUser2021_EL_Kepuasan = dfUser2021_EL[dfUser2021_EL["Staff"]!=1]
-        # dfUser2021_EL_KepuasanF = dfUser2021_EL_Kepuasan.iloc[:,29:53]
         dfUser2021_Dropped = self.dfUser2021.dropna()
         self.dfUser2021_Kepentingan = dfUser2021_Dropped.iloc[:, 6:29]
         self.dfUser2021_Kepuasan = dfUser2021_Dropped.iloc[:, 29:53]
@@ -1155,45 +1236,175 @@ class DataframeUserInitializer():
         self.competencies2021 = self.competencies2019
         self.competencies2022 = self.competencies2019
 
-        self.dfUser2018_Kepuasan_Prodi = self.dfUser2018_Kepuasan[
-            self.dfUser2018['Prodi'] == self.prodi]
+        if self.prodi != "All":
+            self.dfUser2018_Kepuasan_Prodi = self.dfUser2018_Kepuasan[
+                self.dfUser2018['Prodi'] == self.prodi]
+            
+            self.dfUser2018_Kepentingan_Prodi = self.dfUser2018_Kepentingan[
+                self.dfUser2018['Prodi'] == self.prodi]
 
-        self.dfUser2018_Kepentingan_Prodi = self.dfUser2018_Kepentingan[
-            self.dfUser2018['Prodi'] == self.prodi]
+            """
+            2019-2022 -> Competences Order Is Same as Raw Data
+            """
+            self.dfUser2019_Kepuasan_Prodi = self.dfUser2019_Kepuasan[
+                self.dfUser2019['Program Studi'] == self.prodi]
+            self.dfUser2019_Kepentingan_Prodi = self.dfUser2019_Kepentingan[
+                self.dfUser2019['Program Studi'] == self.prodi]
 
-        # self.dfUser2018_Kepuasan_Prodi_N = self.dfUser2018_Kepuasan_Prodi
-        # self.dfUser2018_Kepentingan_Prodi_N = self.dfUser2018_Kepentingan_Prodi
+            self.dfUser2020_Kepuasan_Prodi = self.dfUser2020_Kepuasan[
+                self.dfUser2020['Program Studi'] == self.prodi]
+            self.dfUser2020_Kepentingan_Prodi = self.dfUser2020_Kepentingan[
+                self.dfUser2020['Program Studi'] == self.prodi]
 
-        # current_indices = self.dfUser2018_Kepuasan_Prodi.columns.tolist() #check column
+            self.dfUser2021_Kepuasan_Prodi = self.dfUser2021_Kepuasan[
+                self.dfUser2021['Program Studi'] == self.prodi]
+            self.dfUser2021_Kepentingan_Prodi = self.dfUser2021_Kepentingan[
+                self.dfUser2021['Program Studi'] == self.prodi]
 
-        # 2018 dataframe order should be changed as for column orientasi layanan and bekerja individu is changed in the format
-        # new_indices = [0,1,2,3,4,11,5,6,8,9,10,12,13,14,15,16,17,18,19,20,21,22,7]
-        # self.dfUser2018_Kepuasan_Prodi= self.dfUser2018_Kepuasan_Prodi.iloc[:,new_indices]
-        # self.dfUser2018_Kepentingan_Prodi= self.dfUser2018_Kepentingan_Prodi.iloc[:,new_indices]
+            self.dfUser2022_Kepuasan_Prodi = self.dfUser2022_Kepuasan[
+                self.dfUser2022['Program Studi'] == self.prodi]
+            self.dfUser2022_Kepentingan_Prodi = self.dfUser2022_Kepentingan[
+                self.dfUser2022['Program Studi'] == self.prodi]
+            
+            self.meansKepuasan2018 = np.array([self.dfUser2018_Kepuasan_Prodi.mean()[21], self.dfUser2018_Kepuasan_Prodi.mean()[15], self.dfUser2018_Kepuasan_Prodi.mean()[14],
+                                self.dfUser2018_Kepuasan_Prodi.mean()[10], self.dfUser2018_Kepuasan_Prodi.mean()[4], self.dfUser2018_Kepuasan_Prodi.mean()[19],
+                                self.dfUser2018_Kepuasan_Prodi.mean()[19]])
 
-        """
-        2019-2022 -> Competences Order Is Same as Raw Data
-        """
-        self.dfUser2019_Kepuasan_Prodi = self.dfUser2019_Kepuasan[
-            self.dfUser2019['Program Studi'] == self.prodi]
-        self.dfUser2019_Kepentingan_Prodi = self.dfUser2019_Kepentingan[
-            self.dfUser2019['Program Studi'] == self.prodi]
+            self.meansKepuasan2019 = np.array([self.dfUser2019_Kepuasan_Prodi.mean()[22], self.dfUser2019_Kepuasan_Prodi.mean()[16], self.dfUser2019_Kepuasan_Prodi.mean()[14],
+                                self.dfUser2019_Kepuasan_Prodi.mean()[10], self.dfUser2019_Kepuasan_Prodi.mean()[4], self.dfUser2019_Kepuasan_Prodi.mean()[15],
+                                self.dfUser2019_Kepuasan_Prodi.mean()[20]])
 
-        self.dfUser2020_Kepuasan_Prodi = self.dfUser2020_Kepuasan[
-            self.dfUser2020['Program Studi'] == self.prodi]
-        self.dfUser2020_Kepentingan_Prodi = self.dfUser2020_Kepentingan[
-            self.dfUser2020['Program Studi'] == self.prodi]
+            self.meansKepuasan2020 = np.array([self.dfUser2020_Kepuasan_Prodi.mean()[22], self.dfUser2020_Kepuasan_Prodi.mean()[16], self.dfUser2020_Kepuasan_Prodi.mean()[14],
+                                self.dfUser2020_Kepuasan_Prodi.mean()[10], self.dfUser2020_Kepuasan_Prodi.mean()[4], self.dfUser2020_Kepuasan_Prodi.mean()[15],
+                                self.dfUser2020_Kepuasan_Prodi.mean()[20]])
+            self.meansKepuasan2021 = np.array([self.dfUser2021_Kepuasan_Prodi.mean()[22], self.dfUser2021_Kepuasan_Prodi.mean()[16], self.dfUser2021_Kepuasan_Prodi.mean()[14],
+                                self.dfUser2021_Kepuasan_Prodi.mean()[10], self.dfUser2021_Kepuasan_Prodi.mean()[4], self.dfUser2021_Kepuasan_Prodi.mean()[15],
+                                self.dfUser2021_Kepuasan_Prodi.mean()[20]])
+            self.meansKepuasan2022= np.array([self.dfUser2022_Kepuasan_Prodi.mean()[22], self.dfUser2022_Kepuasan_Prodi.mean()[16], self.dfUser2022_Kepuasan_Prodi.mean()[14],
+                                self.dfUser2022_Kepuasan_Prodi.mean()[10], self.dfUser2022_Kepuasan_Prodi.mean()[4], self.dfUser2022_Kepuasan_Prodi.mean()[15],
+                                self.dfUser2022_Kepuasan_Prodi.mean()[20]])
+            
+            self.meansKepentingan2018 = np.array([self.dfUser2018_Kepentingan_Prodi.mean()[21], self.dfUser2018_Kepentingan_Prodi.mean()[15], self.dfUser2018_Kepentingan_Prodi.mean()[14],
+                                self.dfUser2018_Kepentingan_Prodi.mean()[10], self.dfUser2018_Kepentingan_Prodi.mean()[4], self.dfUser2018_Kepentingan_Prodi.mean()[19],
+                                self.dfUser2018_Kepentingan_Prodi.mean()[19]])
 
-        self.dfUser2021_Kepuasan_Prodi = self.dfUser2021_Kepuasan[
-            self.dfUser2021['Program Studi'] == self.prodi]
-        self.dfUser2021_Kepentingan_Prodi = self.dfUser2021_Kepentingan[
-            self.dfUser2021['Program Studi'] == self.prodi]
+            self.meansKepentingan2019 = np.array([self.dfUser2019_Kepentingan_Prodi.mean()[22], self.dfUser2019_Kepentingan_Prodi.mean()[16], self.dfUser2019_Kepentingan_Prodi.mean()[14],
+                                self.dfUser2019_Kepentingan_Prodi.mean()[10], self.dfUser2019_Kepentingan_Prodi.mean()[4], self.dfUser2019_Kepentingan_Prodi.mean()[15],
+                                self.dfUser2019_Kepentingan_Prodi.mean()[20]])
 
-        self.dfUser2022_Kepuasan_Prodi = self.dfUser2022_Kepuasan[
-            self.dfUser2022['Program Studi'] == self.prodi]
-        self.dfUser2022_Kepentingan_Prodi = self.dfUser2022_Kepentingan[
-            self.dfUser2022['Program Studi'] == self.prodi]
+            self.meansKepentingan2020 = np.array([self.dfUser2020_Kepentingan_Prodi.mean()[22], self.dfUser2020_Kepentingan_Prodi.mean()[16], self.dfUser2020_Kepentingan_Prodi.mean()[14],
+                                self.dfUser2020_Kepentingan_Prodi.mean()[10], self.dfUser2020_Kepentingan_Prodi.mean()[4], self.dfUser2020_Kepentingan_Prodi.mean()[15],
+                                self.dfUser2020_Kepentingan_Prodi.mean()[20]])
+            self.meansKepentingan2021 = np.array([self.dfUser2021_Kepentingan_Prodi.mean()[22], self.dfUser2021_Kepentingan_Prodi.mean()[16], self.dfUser2021_Kepentingan_Prodi.mean()[14],
+                                self.dfUser2021_Kepentingan_Prodi.mean()[10], self.dfUser2021_Kepentingan_Prodi.mean()[4], self.dfUser2021_Kepentingan_Prodi.mean()[15],
+                                self.dfUser2021_Kepentingan_Prodi.mean()[20]])
+            self.meansKepentingan2022= np.array([self.dfUser2022_Kepentingan_Prodi.mean()[22], self.dfUser2022_Kepentingan_Prodi.mean()[16], self.dfUser2022_Kepentingan_Prodi.mean()[14],
+                                self.dfUser2022_Kepentingan_Prodi.mean()[10], self.dfUser2022_Kepentingan_Prodi.mean()[4], self.dfUser2022_Kepentingan_Prodi.mean()[15],
+                                self.dfUser2022_Kepentingan_Prodi.mean()[20]])
+    
+        elif self.prodi == "All" and self.fakultas != "All":
+            self.dfUser2018_Kepuasan_fakultas = self.dfUser2018_Kepuasan[
+                self.dfUser2018['Fakultas'] == self.fakultas]
 
-        print("Dijalankan")        
+            self.dfUser2018_Kepentingan_fakultas = self.dfUser2018_Kepentingan[
+                self.dfUser2018['Fakultas'] == self.fakultas]
 
-      
+            """
+            2019-2022 -> Competences Order Is Same as Raw Data
+            """
+            self.dfUser2019_Kepuasan_fakultas = self.dfUser2019_Kepuasan[
+                self.dfUser2019['Fakultas'] == self.fakultas]
+            self.dfUser2019_Kepentingan_fakultas = self.dfUser2019_Kepentingan[
+                self.dfUser2019['Fakultas'] == self.fakultas]
+
+            self.dfUser2020_Kepuasan_fakultas = self.dfUser2020_Kepuasan[
+                self.dfUser2020['Fakultas'] == self.fakultas]
+            self.dfUser2020_Kepentingan_fakultas = self.dfUser2020_Kepentingan[
+                self.dfUser2020['Fakultas'] == self.fakultas]
+
+            self.dfUser2021_Kepuasan_fakultas = self.dfUser2021_Kepuasan[
+                self.dfUser2021['Fakultas'] == self.fakultas]
+            self.dfUser2021_Kepentingan_fakultas = self.dfUser2021_Kepentingan[
+                self.dfUser2021['Fakultas'] == self.fakultas]
+
+            self.dfUser2022_Kepuasan_fakultas = self.dfUser2022_Kepuasan[
+                self.dfUser2022['Fakultas'] == self.fakultas]
+            self.dfUser2022_Kepentingan_fakultas = self.dfUser2022_Kepentingan[
+                self.dfUser2022['Fakultas'] == self.fakultas]
+        
+            self.meansKepuasan2018 = np.array([self.dfUser2018_Kepuasan_fakultas.mean()[21], self.dfUser2018_Kepuasan_fakultas.mean()[15], self.dfUser2018_Kepuasan_fakultas.mean()[14],
+                        self.dfUser2018_Kepuasan_fakultas.mean()[10], self.dfUser2018_Kepuasan_fakultas.mean()[4], self.dfUser2018_Kepuasan_fakultas.mean()[19],
+                        self.dfUser2018_Kepuasan_fakultas.mean()[19]])
+
+            self.meansKepuasan2019 = np.array([self.dfUser2019_Kepuasan_fakultas.mean()[22], self.dfUser2019_Kepuasan_fakultas.mean()[16], self.dfUser2019_Kepuasan_fakultas.mean()[14],
+                                self.dfUser2019_Kepuasan_fakultas.mean()[10], self.dfUser2019_Kepuasan_fakultas.mean()[4], self.dfUser2019_Kepuasan_fakultas.mean()[15],
+                                self.dfUser2019_Kepuasan_fakultas.mean()[20]])
+
+            self.meansKepuasan2020 = np.array([self.dfUser2020_Kepuasan_fakultas.mean()[22], self.dfUser2020_Kepuasan_fakultas.mean()[16], self.dfUser2020_Kepuasan_fakultas.mean()[14],
+                                self.dfUser2020_Kepuasan_fakultas.mean()[10], self.dfUser2020_Kepuasan_fakultas.mean()[4], self.dfUser2020_Kepuasan_fakultas.mean()[15],
+                                self.dfUser2020_Kepuasan_fakultas.mean()[20]])
+            self.meansKepuasan2021 = np.array([self.dfUser2021_Kepuasan_fakultas.mean()[22], self.dfUser2021_Kepuasan_fakultas.mean()[16], self.dfUser2021_Kepuasan_fakultas.mean()[14],
+                                self.dfUser2021_Kepuasan_fakultas.mean()[10], self.dfUser2021_Kepuasan_fakultas.mean()[4], self.dfUser2021_Kepuasan_fakultas.mean()[15],
+                                self.dfUser2021_Kepuasan_fakultas.mean()[20]])
+            self.meansKepuasan2022= np.array([self.dfUser2022_Kepuasan_fakultas.mean()[22], self.dfUser2022_Kepuasan_fakultas.mean()[16], self.dfUser2022_Kepuasan_fakultas.mean()[14],
+                                self.dfUser2022_Kepuasan_fakultas.mean()[10], self.dfUser2022_Kepuasan_fakultas.mean()[4], self.dfUser2022_Kepuasan_fakultas.mean()[15],
+                                self.dfUser2022_Kepuasan_fakultas.mean()[20]])
+            
+            self.meansKepentingan2018 = np.array([self.dfUser2018_Kepentingan_fakultas.mean()[21], self.dfUser2018_Kepentingan_fakultas.mean()[15], self.dfUser2018_Kepentingan_fakultas.mean()[14],
+                            self.dfUser2018_Kepentingan_fakultas.mean()[10], self.dfUser2018_Kepentingan_fakultas.mean()[4], self.dfUser2018_Kepentingan_fakultas.mean()[19],
+                            self.dfUser2018_Kepentingan_fakultas.mean()[19]])
+
+            self.meansKepentingan2019 = np.array([self.dfUser2019_Kepentingan_fakultas.mean()[22], self.dfUser2019_Kepentingan_fakultas.mean()[16], self.dfUser2019_Kepentingan_fakultas.mean()[14],
+                                self.dfUser2019_Kepentingan_fakultas.mean()[10], self.dfUser2019_Kepentingan_fakultas.mean()[4], self.dfUser2019_Kepentingan_fakultas.mean()[15],
+                                self.dfUser2019_Kepentingan_fakultas.mean()[20]])
+
+            self.meansKepentingan2020 = np.array([self.dfUser2020_Kepentingan_fakultas.mean()[22], self.dfUser2020_Kepentingan_fakultas.mean()[16], self.dfUser2020_Kepentingan_fakultas.mean()[14],
+                                self.dfUser2020_Kepentingan_fakultas.mean()[10], self.dfUser2020_Kepentingan_fakultas.mean()[4], self.dfUser2020_Kepentingan_fakultas.mean()[15],
+                                self.dfUser2020_Kepentingan_fakultas.mean()[20]])
+            self.meansKepentingan2021 = np.array([self.dfUser2021_Kepentingan_fakultas.mean()[22], self.dfUser2021_Kepentingan_fakultas.mean()[16], self.dfUser2021_Kepentingan_fakultas.mean()[14],
+                                self.dfUser2021_Kepentingan_fakultas.mean()[10], self.dfUser2021_Kepentingan_fakultas.mean()[4], self.dfUser2021_Kepentingan_fakultas.mean()[15],
+                                self.dfUser2021_Kepentingan_fakultas.mean()[20]])
+            self.meansKepentingan2022= np.array([self.dfUser2022_Kepentingan_fakultas.mean()[22], self.dfUser2022_Kepentingan_fakultas.mean()[16], self.dfUser2022_Kepentingan_fakultas.mean()[14],
+                                self.dfUser2022_Kepentingan_fakultas.mean()[10], self.dfUser2022_Kepentingan_fakultas.mean()[4], self.dfUser2022_Kepentingan_fakultas.mean()[15],
+                                self.dfUser2022_Kepentingan_fakultas.mean()[20]])
+
+        else:
+            self.meansKepuasan2018 = np.array([self.dfUser2018_Kepuasan.mean()[21], self.dfUser2018_Kepuasan.mean()[15], self.dfUser2018_Kepuasan.mean()[14],
+                                self.dfUser2018_Kepuasan.mean()[10], self.dfUser2018_Kepuasan.mean()[4], self.dfUser2018_Kepuasan.mean()[19],
+                                self.dfUser2018_Kepuasan.mean()[19]])
+
+            self.meansKepuasan2019 = np.array([self.dfUser2019_Kepuasan.mean()[22], self.dfUser2019_Kepuasan.mean()[16], self.dfUser2019_Kepuasan.mean()[14],
+                                self.dfUser2019_Kepuasan.mean()[10], self.dfUser2019_Kepuasan.mean()[4], self.dfUser2019_Kepuasan.mean()[15],
+                                self.dfUser2019_Kepuasan.mean()[20]])
+
+            self.meansKepuasan2020 = np.array([self.dfUser2020_Kepuasan.mean()[22], self.dfUser2020_Kepuasan.mean()[16], self.dfUser2020_Kepuasan.mean()[14],
+                                self.dfUser2020_Kepuasan.mean()[10], self.dfUser2020_Kepuasan.mean()[4], self.dfUser2020_Kepuasan.mean()[15],
+                                self.dfUser2020_Kepuasan.mean()[20]])
+            self.meansKepuasan2021 = np.array([self.dfUser2021_Kepuasan.mean()[22], self.dfUser2021_Kepuasan.mean()[16], self.dfUser2021_Kepuasan.mean()[14],
+                                self.dfUser2021_Kepuasan.mean()[10], self.dfUser2021_Kepuasan.mean()[4], self.dfUser2021_Kepuasan.mean()[15],
+                                self.dfUser2021_Kepuasan.mean()[20]])
+            self.meansKepuasan2022= np.array([self.dfUser2022_Kepuasan.mean()[22], self.dfUser2022_Kepuasan.mean()[16], self.dfUser2022_Kepuasan.mean()[14],
+                                self.dfUser2022_Kepuasan.mean()[10], self.dfUser2022_Kepuasan.mean()[4], self.dfUser2022_Kepuasan.mean()[15],
+                                self.dfUser2022_Kepuasan.mean()[20]])
+            
+            self.meansKepentingan2018 = np.array([self.dfUser2018_Kepentingan.mean()[21], self.dfUser2018_Kepentingan.mean()[15], self.dfUser2018_Kepentingan.mean()[14],
+                                self.dfUser2018_Kepentingan.mean()[10], self.dfUser2018_Kepentingan.mean()[4], self.dfUser2018_Kepentingan.mean()[19],
+                                self.dfUser2018_Kepentingan.mean()[19]])
+
+            self.meansKepentingan2019 = np.array([self.dfUser2019_Kepentingan.mean()[22], self.dfUser2019_Kepentingan.mean()[16], self.dfUser2019_Kepentingan.mean()[14],
+                                self.dfUser2019_Kepentingan.mean()[10], self.dfUser2019_Kepentingan.mean()[4], self.dfUser2019_Kepentingan.mean()[15],
+                                self.dfUser2019_Kepentingan.mean()[20]])
+
+            self.meansKepentingan2020 = np.array([self.dfUser2020_Kepentingan.mean()[22], self.dfUser2020_Kepentingan.mean()[16], self.dfUser2020_Kepentingan.mean()[14],
+                                self.dfUser2020_Kepentingan.mean()[10], self.dfUser2020_Kepentingan.mean()[4], self.dfUser2020_Kepentingan.mean()[15],
+                                self.dfUser2020_Kepentingan.mean()[20]])
+            self.meansKepentingan2021 = np.array([self.dfUser2021_Kepentingan.mean()[22], self.dfUser2021_Kepentingan.mean()[16], self.dfUser2021_Kepentingan.mean()[14],
+                                self.dfUser2021_Kepentingan.mean()[10], self.dfUser2021_Kepentingan.mean()[4], self.dfUser2021_Kepentingan.mean()[15],
+                                self.dfUser2021_Kepentingan.mean()[20]])
+            self.meansKepentingan2022= np.array([self.dfUser2022_Kepentingan.mean()[22], self.dfUser2022_Kepentingan.mean()[16], self.dfUser2022_Kepentingan.mean()[14],
+                                self.dfUser2022_Kepentingan.mean()[10], self.dfUser2022_Kepentingan.mean()[4], self.dfUser2022_Kepentingan.mean()[15],
+                                self.dfUser2022_Kepentingan.mean()[20]])
+            
+            print(self.meansKepentingan2018)
+        
+       
