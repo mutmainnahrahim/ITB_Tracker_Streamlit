@@ -7,6 +7,9 @@ import matplotlib
 from dataframeinitializer import DataframeTracerInitializer, DataframeUserInitializer
 import matplotlib.ticker as mtick
 import plotly.express as px
+import plotly.graph_objects as go
+import plotly.subplots as sp
+
 # matplotlib.use('TkAgg')  # or any other GUI backend of your choice
 
 class GrapherTracer(DataframeTracerInitializer):
@@ -1068,6 +1071,20 @@ class GrapherTracer(DataframeTracerInitializer):
 
         # show the plot
         st.pyplot(fig)
+    
+    def draw_bussiness_field_data(self):
+
+        dfbusfield = self.valueBussinessField_Prodi
+        dfbusfieldt = dfbusfield.T
+        dfbusfieldt["sum"] =dfbusfieldt.sum(axis =1)
+        #HITUNG PERSEN
+        percentbusfield = dfbusfieldt.div(dfbusfieldt["sum"], axis=0)*100 
+        percentbusfield.pop("sum")
+        figb = px.bar(percentbusfield, barmode='stack', title="Kategori Perusahaan (Wirausaha)")
+        fig2b = px.line(percentbusfield, title="Kategori Perusahaan (Wirausaha)")
+        st.plotly_chart(figb, use_container_width=True) 
+        st.plotly_chart(fig2b, use_container_width=True) 
+        print("bussiness field data drawn")
         
     def draw_company_field_data(self):
         
@@ -1081,18 +1098,58 @@ class GrapherTracer(DataframeTracerInitializer):
         fig2 = px.line(percentcomfield, title="Kategori Perusahaan (Bekerja)")
         st.plotly_chart(fig, use_container_width=True) 
         st.plotly_chart(fig2, use_container_width=True)
-        def draw_bussiness_field_data(self):
+        print("company field data drawn")
+
+    def draw_company_type_data(self):
+        #UNTUK PIE (DONUT)
+        pie18 =  self.valueCompanyType_Prodi1820
+        pie20 =  self.valueCompanyType_Prodi2122
+
+        # Subplot 1: 2018-2020
+        fig = sp.make_subplots(rows=1, cols=3, subplot_titles=['2018', '2019', '2020'], specs=[[{'type': 'pie'}, {'type': 'pie'}, {'type': 'pie'}]])
+
+        # Create the first donut graph using Plotly Express
+        donut1 = px.pie(values=pie18['2018'], names=pie18.index, hole=0.5)
+        fig.add_trace(donut1.data[0], row=1, col=1)
+
+        # Create the second donut graph using Plotly
+        donut2 = go.Pie(values=pie18['2019'], labels=pie18.index, hole=0.5)
+        fig.add_trace(donut2, row=1, col=2)
+
+        # Create the second donut graph using Plotly
+        donut3 = go.Pie(values=pie18['2020'], labels=pie18.index, hole=0.5)
+        fig.add_trace(donut3, row=1, col=3)
+
+        # Update the layout
+        fig.update_layout(showlegend=False)
+
+        fig2 = sp.make_subplots(rows=1, cols=2, subplot_titles=['2021', '2022'], specs=[[{'type': 'pie'}, {'type': 'pie'}]])
+       
+        donut4 = px.pie(values=pie20['2021'], names=pie20.index, hole=0.5)
+        fig2.add_trace(donut4.data[0], row=1, col=1)
+
+        donut5 = go.Pie(values=pie20['2022'], labels=pie20.index, hole=0.5)
+        fig2.add_trace(donut5, row=1, col=2)
+
+        #UNTUK STACKED BARPLOT
         
-            dfbusfield = self.valueBussinessField_Prodi
-            dfbusfieldt = dfbusfield.T
-            dfbusfieldt["sum"] =dfbusfieldt.sum(axis =1)
-            #HITUNG PERSEN
-            percentbusfield = dfbusfieldt.div(dfbusfieldt["sum"], axis=0)*100 
-            percentbusfield.pop("sum")
-            fig = px.bar(percentbusfield, barmode='stack', title="Kategori Perusahaan (Wirausaha)")
-            fig2 = px.line(percentbusfield, title="Kategori Perusahaan (Wirausaha)")
+        df =  self.valueCompanyType_Prodi
+        dft = df.T
+        dft["sum"] = dft.sum(axis=1)
+        percentdft = dft.div(dft["sum"], axis=0)*100
+        percentdft.pop("sum")
+        fig3 = px.bar(percentdft.round(1), barmode='stack', title="Jenis Perusahaan")
+        #MENGGUNAKAN TABBED UNTUK MENAMPILKAN GRAPH DONAT DAN GRAPH STACKED BARPLOT
+        
+        tab1, tab2 = st.tabs(["Diagram Lingkaran", "Diagram Batang"])
+        with tab1:
+            st.header("Diagram Lingkaran")
             st.plotly_chart(fig, use_container_width=True) 
             st.plotly_chart(fig2, use_container_width=True) 
+        with tab2:
+            st.header("Diagram Batang")
+            st.plotly_chart(fig3, use_container_width=True) 
+
 
 class GrapherUser(DataframeUserInitializer):
     def __init__(self, dfUser2018, dfUser2019, dfUser2020, dfUser2021, dfUser2022, prodi, fakultas):

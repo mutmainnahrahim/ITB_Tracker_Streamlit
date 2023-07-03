@@ -1088,6 +1088,53 @@ class DataframeTracerInitializer:
         self.ow20 = ow20
         self.ow21 = ow21
         self.ow22 = ow22
+
+    def init_company_type_data(self):
+            dfCompanyType2018_raw = self.df2018[[
+                "4. Program Studi", "42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
+            dfCompanyType2018 = dfCompanyType2018_raw.dropna(
+                subset=["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"])
+            
+            dfCompanyType2019_raw = self.df2019[[
+                "4. Program Studi", "42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
+            dfCompanyType2019 = dfCompanyType2019_raw.dropna(
+                subset=["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"])
+    
+
+            dfCompanyType2020_raw = self.df2020[[
+                "4. Program Studi", "42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
+            dfCompanyType2020 = dfCompanyType2020_raw.dropna(
+                subset=["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"])
+            
+            dfCompanyType2021_raw = self.df2021[[
+            "Program Studi", "Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
+            dfCompanyType2021 = dfCompanyType2021_raw.dropna(
+                subset=["Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"])
+
+            dfCompanyType2022_raw = self.df2022[[
+                "Program Studi", "Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
+            dfCompanyType2022 = dfCompanyType2022_raw.dropna(
+                subset=["Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"])
+
+            dfCompanyType2018_Prodi = dfCompanyType2018[dfCompanyType2018["4. Program Studi"] == self.prodi]
+            dfCompanyType2019_Prodi = dfCompanyType2019[dfCompanyType2019["4. Program Studi"] == self.prodi]
+            dfCompanyType2020_Prodi = dfCompanyType2020[dfCompanyType2020["4. Program Studi"] == self.prodi]
+            dfCompanyType2021_Prodi = dfCompanyType2021[dfCompanyType2021["Program Studi"] == self.prodi]
+            dfCompanyType2022_Prodi = dfCompanyType2022[dfCompanyType2022["Program Studi"] == self.prodi]
+
+            valueCompanyType2018_Prodi = dfCompanyType2018_Prodi["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
+            valueCompanyType2019_Prodi = dfCompanyType2019_Prodi["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
+            valueCompanyType2020_Prodi = dfCompanyType2020_Prodi["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
+            valueCompanyType2021_Prodi = dfCompanyType2021_Prodi["Bidang usaha wirausaha/wiraswasta"].value_counts(ascending= True).sort_index(ascending= True)
+            valueCompanyType2022_Prodi = dfCompanyType2022_Prodi["Bidang usaha wirausaha/wiraswasta"].value_counts(ascending= True).sort_index(ascending= True)
+            #UNTUK DONUT
+            self.valueCompanyType_Prodi1820 = pd.concat ([valueCompanyType2018_Prodi,valueCompanyType2019_Prodi,valueCompanyType2020_Prodi], axis =1)
+            self.valueCompanyType_Prodi1820.columns = ['2018', '2019', '2020']
+            self.valueCompanyType_Prodi2122 = pd.concat ([valueCompanyType2021_Prodi,valueCompanyType2022_Prodi], axis =1)
+            self.valueCompanyType_Prodi2122.columns = ['2021', '2022']
+            #UNTUK STACKED BARPLOT
+            self.valueCompanyType_Prodi = pd.concat ([valueCompanyType2018_Prodi,valueCompanyType2019_Prodi,valueCompanyType2020_Prodi, valueCompanyType2021_Prodi, valueCompanyType2022_Prodi], axis =1)
+            self.valueCompanyType_Prodi.columns = ['2018', '2019', '2020', '2021', '2022']
         
     def __filter_company_related_study(self, company_category_raw):
         companycat_filtered = np.array([0, 0])
