@@ -1,18 +1,26 @@
+
 import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 from dataframeinitializer import DataframeTracerInitializer, DataframeUserInitializer
+import matplotlib.ticker as mtick
+import plotly.express as px
 # matplotlib.use('TkAgg')  # or any other GUI backend of your choice
 
 class GrapherTracer(DataframeTracerInitializer):
     def __init__(self, df2018, df2019, df2020, df2021, df2022, prodi, fakultas):
         super().__init__(df2018, df2019, df2020, df2021, df2022, prodi, fakultas)
+        self.prodi = prodi
+        self.fakultas = fakultas
         self.modeProdi = True
         if prodi == "All":
             self.modeProdi = False
         # self.graph = graph
+        self.modeProdi = True
+        if prodi == "All":
+            self.modeProdi = False
 
     def draw_respondent_data(self):
         year = np.array(['2018', '2019', '2020', '2021', '2022'])
@@ -57,7 +65,7 @@ class GrapherTracer(DataframeTracerInitializer):
 
     def draw_competence_data(self, year):
 
-        if self.modeProdi:
+        if self.prodi != "All":
             if year == 2018:
                 competenceA = self.df2018_competenceA_Prodi
                 competenceB = self.df2018_competenceB_Prodi
@@ -83,7 +91,7 @@ class GrapherTracer(DataframeTracerInitializer):
                 competenceB = self.df2022_competenceB_Prodi
                 competenceC = self.df2022_competenceC_Prodi
                 competenciesLabel = self.competencies2022
-        else:
+        elif self.prodi == "All" and self.fakultas != "All":
             if year == 2018:
                 competenceA = self.df2018_competenceA_fakultas
                 competenceB = self.df2018_competenceB_fakultas
@@ -108,6 +116,32 @@ class GrapherTracer(DataframeTracerInitializer):
                 competenceA = self.df2022_competenceA_fakultas
                 competenceB = self.df2022_competenceB_fakultas
                 competenceC = self.df2022_competenceC_fakultas
+                competenciesLabel = self.competencies2022
+        else:
+            if year == 2018:
+                competenceA = self.df2018_competenceA
+                competenceB = self.df2018_competenceB
+                competenceC = self.df2018_competenceC
+                competenciesLabel = self.competencies2018
+            elif year == 2019:
+                competenceA = self.df2019_competenceA
+                competenceB = self.df2019_competenceB
+                competenceC = self.df2019_competenceC
+                competenciesLabel = self.competencies2019
+            elif year == 2020:
+                competenceA = self.df2020_competenceA
+                competenceB = self.df2020_competenceB
+                competenceC = self.df2020_competenceC
+                competenciesLabel = self.competencies2020
+            elif year == 2021:
+                competenceA = self.df2021_competenceA
+                competenceB = self.df2021_competenceB
+                competenceC = self.df2021_competenceC
+                competenciesLabel = self.competencies2021
+            elif year == 2022:
+                competenceA = self.df2022_competenceA
+                competenceB = self.df2022_competenceB
+                competenceC = self.df2022_competenceC
                 competenciesLabel = self.competencies2022
 
         # Extract Mean Of Competence Values
@@ -407,14 +441,12 @@ class GrapherTracer(DataframeTracerInitializer):
             valuesLokal = self.valueCompanyCat_Prodi.T[0]
             valuesInternasional = self.valueCompanyCat_Prodi.T[1]
             valuesNasional = self.valueCompanyCat_Prodi.T[2]
-            valuesLokal, valuesNasional, valuesInternasional = valuesLokal[::-
-                                                                        1], valuesNasional[::-1], valuesInternasional[::-1]
+            valuesLokal, valuesNasional, valuesInternasional = valuesLokal[::-1], valuesNasional[::-1], valuesInternasional[::-1]
         else:
             valuesLokal = self.valueCompanyCat_fakultas.T[0]
             valuesInternasional = self.valueCompanyCat_fakultas.T[1]
             valuesNasional = self.valueCompanyCat_fakultas.T[2]
-            valuesLokal, valuesNasional, valuesInternasional = valuesLokal[::-
-                                                                        1], valuesNasional[::-1], valuesInternasional[::-1]
+            valuesLokal, valuesNasional, valuesInternasional = valuesLokal[::-1], valuesNasional[::-1], valuesInternasional[::-1]
 
         # Calculate Percentage Relative to ALL CATEGORIES
         pvaluesLokal = []
@@ -999,40 +1031,155 @@ class GrapherTracer(DataframeTracerInitializer):
 
         plt.title('Omset Wirausaha')
         st.pyplot(fig6)
+        
+    def draw_company_related_study(self):
+        # create sample data
+        categoryCompany = ['Sesuai', 'Tidak Sesuai']
+        years = ['2018', '2019', '2020', '2021', '2022']
+
+    
+        valuesSesuai = self.valueCompanyRelated.T[0]
+        valuesTidakSesuai = self.valueCompanyRelated.T[1]
+        valuesSesuai, valuesTidakSesuai = valuesSesuai[::-1], valuesTidakSesuai[::-1]
+
+        # Calculate Percentage Relative to ALL CATEGORIES
+        pvaluesSesuai = []
+        pvaluesTidakSesuai = []
+        for i, (vs, vn) in enumerate(zip(valuesSesuai, valuesTidakSesuai)):
+            total = vs+vn
+            pvaluesSesuai.append(round(100*vs/total))
+            pvaluesTidakSesuai.append(round(100*vn/total))
+
+        fig, ax = plt.subplots(figsize=(10,4))
+        ax.plot(years, pvaluesSesuai, label="Sesuai", color='#4e81bd')
+        ax.plot(years, pvaluesTidakSesuai, label="Tidak Sesuai", color='#b94a48')
+
+
+        for i, year in enumerate(years):
+            ax.text(year, pvaluesSesuai[i], '[{:,.0f}];'.format(valuesSesuai[i])+'{}%'.format(pvaluesSesuai[i]), ha='center')
+            ax.text(year, pvaluesTidakSesuai[i], '[{:,.0f}];'.format(valuesTidakSesuai[i])+'{}%'.format(pvaluesTidakSesuai[i]), ha='center')
+
+
+
+        # add legend
+        ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1), ncol=2)
+        ax.grid(axis='y', linestyle='-', linewidth=0.3, color='gray', alpha=0.5)
+        ax.yaxis.set_major_formatter(mtick.PercentFormatter())
+
+        # show the plot
+        st.pyplot(fig)
+    
+    def draw_bussiness_field_data(self):
+
+        dfbusfield = self.valueBussinessField_Prodi
+        dfbusfieldt = dfbusfield.T
+        dfbusfieldt["sum"] =dfbusfieldt.sum(axis =1)
+        #HITUNG PERSEN
+        percentbusfield = dfbusfieldt.div(dfbusfieldt["sum"], axis=0)*100 
+        percentbusfield.pop("sum")
+        figb = px.bar(percentbusfield, barmode='stack', title="Kategori Perusahaan (Wirausaha)")
+        fig2b = px.line(percentbusfield, title="Kategori Perusahaan (Wirausaha)")
+        st.plotly_chart(figb, use_container_width=True) 
+        st.plotly_chart(fig2b, use_container_width=True) 
+        print("bussiness field data drawn")
+        
+    def draw_company_field_data(self):
+        
+        dfcomfield = self.valueCompanyField_Prodi
+        dfcomfieldt = dfcomfield.T
+        dfcomfieldt["sum"] =dfcomfieldt.sum(axis =1)
+        #HITUNG PERSEN
+        percentcomfield = dfcomfieldt.div(dfcomfieldt["sum"], axis=0)*100
+        percentcomfield.pop("sum")
+        fig = px.bar(percentcomfield, barmode='stack', title="Kategori Perusahaan (Bekerja)")
+        fig2 = px.line(percentcomfield, title="Kategori Perusahaan (Bekerja)")
+        st.plotly_chart(fig, use_container_width=True) 
+        st.plotly_chart(fig2, use_container_width=True)
+        print("company field data drawn")
+
 
 
 class GrapherUser(DataframeUserInitializer):
-    def __init__(self, dfUser2018, dfUser2019, dfUser2020, dfUser2021, dfUser2022, prodi):
+    def __init__(self, dfUser2018, dfUser2019, dfUser2020, dfUser2021, dfUser2022, prodi, fakultas):
         super().__init__(dfUser2018=dfUser2018,
                          dfUser2019=dfUser2019,
                          dfUser2020=dfUser2020,
                          dfUser2021=dfUser2021,
                          dfUser2022=dfUser2022,
-                         prodi=prodi)
+                         prodi=prodi,
+                         fakultas=fakultas)
         # self.graph = graph
 
     def draw_competence_data(self, year):
         # Extract Mean Of Competence Values
-        if year == 2018:
-            kepentingan = self.dfUser2018_Kepentingan_Prodi
-            kepuasan = self.dfUser2018_Kepuasan_Prodi
-            competencies = self.competencies2018
-        elif year == 2019:
-            kepentingan = self.dfUser2019_Kepentingan_Prodi
-            kepuasan = self.dfUser2019_Kepuasan_Prodi
-            competencies = self.competencies2019
-        elif year == 2020:
-            kepentingan = self.dfUser2020_Kepentingan_Prodi
-            kepuasan = self.dfUser2020_Kepuasan_Prodi
-            competencies = self.competencies2020
-        elif year == 2021:
-            kepentingan = self.dfUser2021_Kepentingan_Prodi
-            kepuasan = self.dfUser2021_Kepuasan_Prodi
-            competencies = self.competencies2021
-        elif year == 2022:
-            kepentingan = self.dfUser2021_Kepentingan_Prodi
-            kepuasan = self.dfUser2021_Kepuasan_Prodi
-            competencies = self.competencies2022
+        if self.prodi != "All":
+            if year == 2018:
+                kepentingan = self.dfUser2018_Kepentingan_Prodi
+                kepuasan = self.dfUser2018_Kepuasan_Prodi
+                competencies = self.competencies2018
+            elif year == 2019:
+                kepentingan = self.dfUser2019_Kepentingan_Prodi
+                kepuasan = self.dfUser2019_Kepuasan_Prodi
+                competencies = self.competencies2019
+            elif year == 2020:
+                kepentingan = self.dfUser2020_Kepentingan_Prodi
+                kepuasan = self.dfUser2020_Kepuasan_Prodi
+                competencies = self.competencies2020
+            elif year == 2021:
+                kepentingan = self.dfUser2021_Kepentingan_Prodi
+                kepuasan = self.dfUser2021_Kepuasan_Prodi
+                competencies = self.competencies2021
+            elif year == 2022:
+                kepentingan = self.dfUser2021_Kepentingan_Prodi
+                kepuasan = self.dfUser2021_Kepuasan_Prodi
+                competencies = self.competencies2022
+
+            
+        elif self.prodi == "All" and self.fakultas != "All":
+            if year == 2018:
+                kepentingan = self.dfUser2018_Kepentingan_fakultas
+                kepuasan = self.dfUser2018_Kepuasan_fakultas
+                competencies = self.competencies2018
+            elif year == 2019:
+                kepentingan = self.dfUser2019_Kepentingan_fakultas
+                kepuasan = self.dfUser2019_Kepuasan_fakultas
+                competencies = self.competencies2019
+            elif year == 2020:
+                kepentingan = self.dfUser2020_Kepentingan_fakultas
+                kepuasan = self.dfUser2020_Kepuasan_fakultas
+                competencies = self.competencies2020
+            elif year == 2021:
+                kepentingan = self.dfUser2021_Kepentingan_fakultas
+                kepuasan = self.dfUser2021_Kepuasan_fakultas
+                competencies = self.competencies2021
+            elif year == 2022:
+                kepentingan = self.dfUser2021_Kepentingan_fakultas
+                kepuasan = self.dfUser2021_Kepuasan_fakultas
+                competencies = self.competencies2022
+        
+        else:
+            if year == 2018:
+                kepentingan = self.dfUser2018_Kepentingan
+                kepuasan = self.dfUser2018_Kepuasan
+                competencies = self.competencies2018
+            elif year == 2019:
+                kepentingan = self.dfUser2019_Kepentingan
+                kepuasan = self.dfUser2019_Kepuasan
+                competencies = self.competencies2019
+            elif year == 2020:
+                kepentingan = self.dfUser2020_Kepentingan
+                kepuasan = self.dfUser2020_Kepuasan
+                competencies = self.competencies2020
+            elif year == 2021:
+                kepentingan = self.dfUser2021_Kepentingan
+                kepuasan = self.dfUser2021_Kepuasan
+                competencies = self.competencies2021
+            elif year == 2022:
+                kepentingan = self.dfUser2021_Kepentingan
+                kepuasan = self.dfUser2021_Kepuasan
+                competencies = self.competencies2022
+            
+
 
         arr_meanA = np.array(kepentingan.mean())
         arr_meanB = np.array(kepuasan.mean())
@@ -1082,3 +1229,110 @@ class GrapherUser(DataframeUserInitializer):
 
         # Show the plot
         st.pyplot(fig)
+
+    def draw_competence_trend_data(self, typeGraph):
+        if typeGraph == "Kepuasan":
+            categoriesTrend = ["Bahasa\nAsing", "pengetahuan dan\npenerapan bidang/\ndisiplin ilmu","etika dan tanggung\njawab keprofesian"
+                ,"kemampuan belajar\nsepanjang hayat","bekerja tim", "kemampuan\nberkomunikasi", "keterampilan\nmenggunakan\nteknologi informasi"]
+            # Plotting
+            plt.style.use('ggplot')
+
+            # Create Polar Axis
+            fig = plt.figure(figsize=(15,15))
+            ax = fig.add_subplot(111, polar=True)
+            ax.set_theta_zero_location('S',offset=77)
+            # Set the number of angles/coordinates to be used for the radar plot
+            angles = np.linspace(0, 2*np.pi, len(categoriesTrend), endpoint=False)
+            # angles = angles - 1.57
+            angles = np.concatenate((angles,[angles[0]]))
+            
+            # Plot the data
+            self.meansKepuasan2018 = np.concatenate((self.meansKepuasan2018,[self.meansKepuasan2018[0]]))
+            self.meansKepuasan2019 = np.concatenate((self.meansKepuasan2019,[self.meansKepuasan2019[0]]))
+            self.meansKepuasan2020 = np.concatenate((self.meansKepuasan2020,[self.meansKepuasan2020[0]]))
+            self.meansKepuasan2021 = np.concatenate((self.meansKepuasan2021,[self.meansKepuasan2021[0]]))
+            self.meansKepuasan2022 = np.concatenate((self.meansKepuasan2022,[self.meansKepuasan2022[0]]))
+
+            ax.plot(angles, self.meansKepuasan2018, 'o-', linewidth=4, label="2018",color='blue',markersize=12)
+            ax.plot(angles, self.meansKepuasan2019, 'o-', linewidth=4, label="2019",color='orange',markersize=12)
+            ax.plot(angles, self.meansKepuasan2020, 'o-', linewidth=4, label="2020",color='green',markersize=12)
+            ax.plot(angles, self.meansKepuasan2021, 'o-', linewidth=4, label="2021",color='purple',markersize=12)
+            ax.plot(angles, self.meansKepuasan2022, 'o-', linewidth=4, label="2022",color='red',markersize=12)
+
+            # Fill the area inside the plot (optional)
+            # ax.fill(angles, values, alpha=0.25)
+            
+            # Set Grids, and other parameters to make graph more neat
+            ax.set_thetagrids(angles[:-1] * 180/np.pi,categoriesTrend)
+            ax.set_xticks(angles[:-1],categoriesTrend, color='black', size=20)
+            ax.tick_params(axis='y',labelcolor='black',labelsize=25, grid_linestyle='--',grid_color='black', grid_alpha=0.5, grid_linewidth=1.5)
+            plt.yticks([0.0,1.0,2.0,3.0,4.0,5.0])
+            ax.tick_params(axis='x', grid_color='black',grid_alpha=0.4,grid_linestyle='-.',top=True,direction='out',pad=65)
+
+
+            # Set the plot title, and its margin y
+            plt.title("Tren Tingkat Kepuasan User\nTahun 2018-2022",loc='center',y=1.3,fontsize=30)
+
+            # Add a legend, bbox_to_anchor to make custom position
+            plt.legend(bbox_to_anchor=([0.2, 0.75,0.5,0.5]),loc='upper left',fontsize=20,ncol=3)
+
+            # Show the plot
+            st.pyplot(fig)
+            
+        
+        else:
+            categoriesTrend = ["Bahasa\nAsing", "pengetahuan dan\npenerapan bidang/\ndisiplin ilmu","etika dan tanggung\njawab keprofesian"
+                ,"kemampuan belajar\nsepanjang hayat","bekerja tim", "kemampuan\nberkomunikasi", "keterampilan\nmenggunakan\nteknologi informasi"]
+            # Plotting
+            plt.style.use('ggplot')
+
+            # Create Polar Axis
+            fig = plt.figure(figsize=(15,15))
+            ax = fig.add_subplot(111, polar=True)
+            ax.set_theta_zero_location('S',offset=77)
+            # Set the number of angles/coordinates to be used for the radar plot
+            angles = np.linspace(0, 2*np.pi, len(categoriesTrend), endpoint=False)
+            # angles = angles - 1.57
+            angles = np.concatenate((angles,[angles[0]]))
+            
+            # Plot the data
+            self.meansKepentingan2018 = np.concatenate((self.meansKepentingan2018,[self.meansKepentingan2018[0]]))
+            self.meansKepentingan2019 = np.concatenate((self.meansKepentingan2019,[self.meansKepentingan2019[0]]))
+            self.meansKepentingan2020 = np.concatenate((self.meansKepentingan2020,[self.meansKepentingan2020[0]]))
+            self.meansKepentingan2021 = np.concatenate((self.meansKepentingan2021,[self.meansKepentingan2021[0]]))
+            self.meansKepentingan2022 = np.concatenate((self.meansKepentingan2022,[self.meansKepentingan2022[0]]))
+
+            ax.plot(angles, self.meansKepentingan2018, 'o-', linewidth=4, label="2018",color='blue',markersize=12)
+            ax.plot(angles, self.meansKepentingan2019, 'o-', linewidth=4, label="2019",color='orange',markersize=12)
+            ax.plot(angles, self.meansKepentingan2020, 'o-', linewidth=4, label="2020",color='green',markersize=12)
+            ax.plot(angles, self.meansKepentingan2021, 'o-', linewidth=4, label="2021",color='purple',markersize=12)
+            ax.plot(angles, self.meansKepentingan2022, 'o-', linewidth=4, label="2022",color='red',markersize=12)
+
+            # Fill the area inside the plot (optional)
+            # ax.fill(angles, values, alpha=0.25)
+            
+            # Set Grids, and other parameters to make graph more neat
+            ax.set_thetagrids(angles[:-1] * 180/np.pi,categoriesTrend)
+            ax.set_xticks(angles[:-1],categoriesTrend, color='black', size=20)
+            ax.tick_params(axis='y',labelcolor='black',labelsize=25, grid_linestyle='--',grid_color='black', grid_alpha=0.5, grid_linewidth=1.5)
+            plt.yticks([0.0,1.0,2.0,3.0,4.0,5.0])
+            ax.tick_params(axis='x', grid_color='black',grid_alpha=0.4,grid_linestyle='-.',top=True,direction='out',pad=65)
+
+
+            # Set the plot title, and its margin y
+            plt.title("Tren Tingkat Kepentingan User\nTahun 2018-2022",loc='center',y=1.3,fontsize=30)
+
+            # Add a legend, bbox_to_anchor to make custom position
+            plt.legend(bbox_to_anchor=([0.2, 0.75,0.5,0.5]),loc='upper left',fontsize=20,ncol=3)
+
+            # Show the plot
+            st.pyplot(fig)
+# class GrapherUser(DataframeInitializer):
+#     def __init__(self, dfUser2018, dfUser2019, dfUser2020, dfUser2021, dfUser2022, prodi):
+#         super().__init__(dfUser2018=dfUser2018,
+#                          dfUser2019=dfUser2019,
+#                          dfUser2020=dfUser2020,
+#                          dfUser2021=dfUser2021,
+#                          dfUser2022=dfUser2022,
+#                          prodi=prodi)
+#         # self.graph = graph
