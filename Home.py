@@ -127,7 +127,21 @@ inputTahun = st.sidebar.radio("Tahun", (2018,2019,2020,2021,2022))
 with st.sidebar:
     requestGraph=option_menu(
             menu_title="Tampilan",
-            options=["Data Responden","Status Pekerjaan", "Kompetensi Alumni", "Tren Kompetensi Alumni", "Tingkat Kepentingan dan Kepuasan User", "Tren Penilaian Tingkat Kepentingan dan Kepuasan User", "Waktu Tunggu Mendapatkan Pekerjaan (Sebelum Lulus)", "Waktu Tunggu Mendapatkan Pekerjaan (Sesudah Lulus)", "Jenis Perusahaan", "Kategori Perusahaan", "Kategori Bidang Usaha (Bekerja)", "Kategori Bidang Usaha (Wirausaha)", "Kesesuaian Kuliah dengan Pekerjaan", "Penghasilan"],
+            options=[
+                    "Data Responden",
+                     "Status Pekerjaan", 
+                     "Kompetensi Alumni", 
+                     "Tren Kompetensi Alumni", 
+                     "Tingkat Kepentingan dan Kepuasan User", 
+                     "Tren Penilaian Tingkat Kepentingan User", 
+                     "Tren Penilaian Tingkat Kepuasan User", 
+                     "Waktu Tunggu Mendapatkan Pekerjaan (Sebelum Lulus)", 
+                     "Waktu Tunggu Mendapatkan Pekerjaan (Sesudah Lulus)", 
+                     "Jenis Perusahaan", "Kategori Perusahaan", 
+                     "Kategori Bidang Usaha (Bekerja)", 
+                     "Kategori Bidang Usaha (Wirausaha)", 
+                     "Kesesuaian Kuliah dengan Pekerjaan", 
+                     "Penghasilan"],
             menu_icon="cast",
             default_index=0
         )
@@ -135,7 +149,7 @@ with st.sidebar:
 gt = GrapherTracer(df2018, df2019, df2020, df2021,
                    df2022, inputProdi, inputFakultas)
 gu = GrapherUser(dfUser2018, dfUser2019, dfUser2020,
-                 dfUser2021, dfUser2022, inputProdi)
+                 dfUser2021, dfUser2022, inputProdi,inputFakultas)
 gt.cleanse_tracer_data()
 gu.cleanse_user_data()
 
@@ -163,12 +177,6 @@ elif requestGraph == "Kategori Perusahaan":
 elif requestGraph == "Tingkat Kepentingan dan Kepuasan User":
     gu.init_competence_data()
     gu.draw_competence_data(year=inputTahun)
-elif requestGraph == "Kategori Bidang Usaha (Bekerja)":
-    gt.init_company_field_data(status="Bekerja")
-    gt.draw_company_field_data()
-elif requestGraph == "Kategori Bidang Usaha (Wirausaha)":
-    gt.init_company_field_data(status="Wirausaha")
-    gt.draw_company_field_data()
 elif requestGraph == "Kesesuaian Kuliah dengan Pekerjaan":
     st.header("Bekerja")
     gt.init_company_related_study("Bekerja")
@@ -176,6 +184,23 @@ elif requestGraph == "Kesesuaian Kuliah dengan Pekerjaan":
     st.header("Wirausaha")
     gt.init_company_related_study("Wirausaha")
     gt.draw_company_related_study()
+elif requestGraph == "Penghasilan":
+    gt.init_revenue_data()
+    gt.draw_revenue()
+elif requestGraph == "Tren Penilaian Tingkat Kepentingan User":
+    gu.init_competence_data()
+    gu.draw_competence_trend_data(typeGraph="Kepentingan")
+elif requestGraph == "Tren Penilaian Tingkat Kepuasan User":
+    gu.init_competence_data()
+    gu.draw_competence_trend_data(typeGraph="Kepuasan")
+
+elif requestGraph == "Kategori Bidang Usaha (Bekerja)":
+    gt.init_company_field_data()
+    gt.draw_company_field_data()
+
+elif requestGraph == "Kategori Bidang Usaha (Wirausaha)":
+    gt.init_bussiness_field_data()
+    gt.draw_bussiness_field_data()
 
 
 
