@@ -202,5 +202,7 @@ elif requestGraph == "Kategori Bidang Usaha (Wirausaha)":
     gt.init_bussiness_field_data()
     gt.draw_bussiness_field_data()
 
-
+elif requestGraph ==  "Jenis Perusahaan" :
+    gt.init_company_type_data()
+    gt.draw_company_type_data()
 

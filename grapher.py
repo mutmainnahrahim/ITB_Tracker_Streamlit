@@ -7,6 +7,8 @@ import matplotlib
 from dataframeinitializer import DataframeTracerInitializer, DataframeUserInitializer
 import matplotlib.ticker as mtick
 import plotly.express as px
+import plotly.graph_objects as go
+import plotly.subplots as sp
 # matplotlib.use('TkAgg')  # or any other GUI backend of your choice
 
 class GrapherTracer(DataframeTracerInitializer):
@@ -84,6 +86,37 @@ class GrapherTracer(DataframeTracerInitializer):
                 height = rect.get_height()
                 ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,
                         "[{}]; {}%".format(Respondent_Fakultas[i], int(round(height, 0))), size=18,
+                        ha='center', va='bottom')
+                i += 1
+        
+        else:
+            # df2019_competenceA_EL.shape[0] # To search The num Of Rows.
+            Respondent = np.array([self.df2018_competenceA.shape[0],
+                                        self.df2019_competenceA.shape[0],
+                                        self.df2020_competenceA.shape[0],
+                                        self.df2021_competenceA.shape[0],
+                                        self.df2022_competenceA.shape[0]])
+
+            # Manually Inputted from Data responden 2018-2022.xlsx
+            PercentageRespondent = np.array([self.df2018_competenceA.shape[0]/153,
+                                                self.df2019_competenceA.shape[0]/141,
+                                                self.df2020_competenceA.shape[0]/136,
+                                                self.df2021_competenceA.shape[0]/145,
+                                                self.df2022_competenceA.shape[0]/94])
+
+            # convert to pandas
+            dfPercentage = pd.DataFrame(PercentageRespondent, index=year)
+
+            fig, ax = plt.subplots(figsize=(20, 10))
+            rects1 = ax.bar(year, PercentageRespondent*100,
+                        color=['blue', 'orange', 'green', 'purple', 'red'], width=0.3)
+
+            # Make description/annotation in above bar plots:
+            i = 0
+            for rect in rects1:
+                height = rect.get_height()
+                ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,
+                        "[{}]; {}%".format(Respondent[i], int(round(height, 0))), size=18,
                         ha='center', va='bottom')
                 i += 1
 
@@ -1129,6 +1162,64 @@ class GrapherTracer(DataframeTracerInitializer):
         st.plotly_chart(fig2, use_container_width=True)
         print("company field data drawn")
 
+    def draw_company_type_data(self):
+        #UNTUK PIE (DONUT)
+        pie18 =  self.valueCompanyType_Prodi1820
+        pie20 =  self.valueCompanyType_Prodi2122
+
+        # Subplot 1: 2018-2020
+        fig = sp.make_subplots(rows=1, cols=3, subplot_titles=['2018', '2019', '2020'], specs=[[{'type': 'pie'}, {'type': 'pie'}, {'type': 'pie'}]])
+
+        # Create the first donut graph using Plotly Express
+        donut1 = px.pie(values=pie18['2018'], names=pie18.index, hole=0.5)
+        fig.add_trace(donut1.data[0], row=1, col=1)
+
+        # Create the second donut graph using Plotly
+        donut2 = go.Pie(values=pie18['2019'], labels=pie18.index, hole=0.5)
+        fig.add_trace(donut2, row=1, col=2)
+
+        # Create the third donut graph using Plotly
+        donut3 = go.Pie(values=pie18['2020'], labels=pie18.index, hole=0.5)
+        fig.add_trace(donut3, row=1, col=3)
+
+        #update legend
+        fig.update_layout(legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.1,
+            xanchor="right",
+            x=1
+            ))
+        # Update the layout
+        
+
+        #second graph
+        fig2 = sp.make_subplots(rows=1, cols=2, subplot_titles=['2021', '2022'], specs=[[{'type': 'pie'}, {'type': 'pie'}]])
+       
+        donut4 = px.pie(values=pie20['2021'], names=pie20.index, hole=0.5)
+        fig2.add_trace(donut4.data[0], row=1, col=1)
+
+        donut5 = go.Pie(values=pie20['2022'], labels=pie20.index, hole=0.5)
+        fig2.add_trace(donut5, row=1, col=2)
+
+        #UNTUK STACKED BARPLOT
+        
+        df =  self.valueCompanyType_Prodi
+        dft = df.T
+        dft["sum"] = dft.sum(axis=1)
+        percentdft = dft.div(dft["sum"], axis=0)*100
+        percentdft.pop("sum")
+        fig3 = px.bar(percentdft.round(1), barmode='stack', title="Jenis Perusahaan")
+        #MENGGUNAKAN TABBED UNTUK MENAMPILKAN GRAPH DONAT DAN GRAPH STACKED BARPLOT
+        
+        tab1, tab2 = st.tabs(["Diagram Lingkaran", "Diagram Batang"])
+        with tab1:
+            
+            st.plotly_chart(fig, use_container_width=True) 
+            st.plotly_chart(fig2, use_container_width=True) 
+        with tab2:
+            
+            st.plotly_chart(fig3, use_container_width=True) 
 
 
 class GrapherUser(DataframeUserInitializer):
