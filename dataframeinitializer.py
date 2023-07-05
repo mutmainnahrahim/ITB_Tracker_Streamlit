@@ -861,11 +861,20 @@ class DataframeTracerInitializer:
                                          'Berapa omset rata-rata perbulan? (dalam Rupiah)']]
 
         # GET PRODI DATAFRAME
-        self.dfrevenue2018_Prodi = dfrevenue2018_raw[dfrevenue2018_raw['4. Program Studi'] == self.prodi]
-        self.dfrevenue2019_Prodi = dfrevenue2019_raw[dfrevenue2019_raw['4. Program Studi'] == self.prodi]
-        self.dfrevenue2020_Prodi = dfrevenue2020_raw[dfrevenue2020_raw['4. Program Studi'] == self.prodi]
-        self.dfrevenue2021_Prodi = dfrevenue2021_raw[dfrevenue2021_raw['Program Studi'] == self.prodi]
-        self.dfrevenue2022_Prodi = dfrevenue2022_raw[dfrevenue2022_raw['Program Studi'] == self.prodi]
+        if self.prodi == "All":
+            #Fakultas Revenue
+            self.dfrevenue2018_Prodi = dfrevenue2018_raw[dfrevenue2018_raw['Fakultas/Sekolah'] == self.fakultas]
+            self.dfrevenue2019_Prodi = dfrevenue2019_raw[dfrevenue2019_raw['Fakultas/Sekolah'] == self.fakultas]
+            self.dfrevenue2020_Prodi = dfrevenue2020_raw[dfrevenue2020_raw['Fakultas/Sekolah'] == self.fakultas]
+            self.dfrevenue2021_Prodi = dfrevenue2021_raw[dfrevenue2021_raw['Fakultas/Sekolah'] == self.fakultas]
+            self.dfrevenue2022_Prodi = dfrevenue2022_raw[dfrevenue2022_raw['Fakultas/Sekolah'] == self.fakultas]
+
+        else:
+            self.dfrevenue2018_Prodi = dfrevenue2018_raw[dfrevenue2018_raw['4. Program Studi'] == self.prodi]
+            self.dfrevenue2019_Prodi = dfrevenue2019_raw[dfrevenue2019_raw['4. Program Studi'] == self.prodi]
+            self.dfrevenue2020_Prodi = dfrevenue2020_raw[dfrevenue2020_raw['4. Program Studi'] == self.prodi]
+            self.dfrevenue2021_Prodi = dfrevenue2021_raw[dfrevenue2021_raw['Program Studi'] == self.prodi]
+            self.dfrevenue2022_Prodi = dfrevenue2022_raw[dfrevenue2022_raw['Program Studi'] == self.prodi]
         #pendapatan bekerja
         pb18 = []
         pb19 = []
