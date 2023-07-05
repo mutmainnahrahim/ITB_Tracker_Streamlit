@@ -18,38 +18,74 @@ class GrapherTracer(DataframeTracerInitializer):
         if prodi == "All":
             self.modeProdi = False
         # self.graph = graph
+        self.modeProdi = True
+        if prodi == "All":
+            self.modeProdi = False
 
     def draw_respondent_data(self):
         year = np.array(['2018', '2019', '2020', '2021', '2022'])
+        
+        if self.prodi != "All":
         # df2019_competenceA_EL.shape[0] # To search The num Of Rows.
-        Respondent_Prodi = np.array([self.df2018_competenceA_Prodi.shape[0],
-                                     self.df2019_competenceA_Prodi.shape[0],
-                                     self.df2020_competenceA_Prodi.shape[0],
-                                     self.df2021_competenceA_Prodi.shape[0],
-                                     self.df2022_competenceA_Prodi.shape[0]])
+            Respondent_Prodi = np.array([self.df2018_competenceA_Prodi.shape[0],
+                                        self.df2019_competenceA_Prodi.shape[0],
+                                        self.df2020_competenceA_Prodi.shape[0],
+                                        self.df2021_competenceA_Prodi.shape[0],
+                                        self.df2022_competenceA_Prodi.shape[0]])
 
-        # Manually Inputted from Data responden 2018-2022.xlsx
-        PercentageRespondent_Prodi = np.array([self.df2018_competenceA_Prodi.shape[0]/153,
-                                               self.df2019_competenceA_Prodi.shape[0]/141,
-                                               self.df2020_competenceA_Prodi.shape[0]/136,
-                                               self.df2021_competenceA_Prodi.shape[0]/145,
-                                               self.df2022_competenceA_Prodi.shape[0]/94])
+            # Manually Inputted from Data responden 2018-2022.xlsx
+            PercentageRespondent_Prodi = np.array([self.df2018_competenceA_Prodi.shape[0]/153,
+                                                self.df2019_competenceA_Prodi.shape[0]/141,
+                                                self.df2020_competenceA_Prodi.shape[0]/136,
+                                                self.df2021_competenceA_Prodi.shape[0]/145,
+                                                self.df2022_competenceA_Prodi.shape[0]/94])
 
-        # convert to pandas
-        dfPercentage = pd.DataFrame(PercentageRespondent_Prodi, index=year)
+            # convert to pandas
+            dfPercentage = pd.DataFrame(PercentageRespondent_Prodi, index=year)
 
-        fig, ax = plt.subplots(figsize=(20, 10))
-        rects1 = ax.bar(year, PercentageRespondent_Prodi*100,
+            fig, ax = plt.subplots(figsize=(20, 10))
+            rects1 = ax.bar(year, PercentageRespondent_Prodi*100,
+                            color=['blue', 'orange', 'green', 'purple', 'red'], width=0.3)
+
+            # Make description/annotation in above bar plots:
+            i = 0
+            for rect in rects1:
+                height = rect.get_height()
+                ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,
+                        "[{}]; {}%".format(Respondent_Prodi[i], int(round(height, 0))), size=18,
+                        ha='center', va='bottom')
+                i += 1
+        
+        elif self.prodi == "All" and self.fakultas != "All":
+            # df2019_competenceA_EL.shape[0] # To search The num Of Rows.
+            Respondent_Fakultas = np.array([self.df2018_competenceA_fakultas.shape[0],
+                                        self.df2019_competenceA_fakultas.shape[0],
+                                        self.df2020_competenceA_fakultas.shape[0],
+                                        self.df2021_competenceA_fakultas.shape[0],
+                                        self.df2022_competenceA_fakultas.shape[0]])
+
+            # Manually Inputted from Data responden 2018-2022.xlsx
+            PercentageRespondent_Fakultas = np.array([self.df2018_competenceA_fakultas.shape[0]/153,
+                                                self.df2019_competenceA_fakultas.shape[0]/141,
+                                                self.df2020_competenceA_fakultas.shape[0]/136,
+                                                self.df2021_competenceA_fakultas.shape[0]/145,
+                                                self.df2022_competenceA_fakultas.shape[0]/94])
+
+            # convert to pandas
+            dfPercentage = pd.DataFrame(PercentageRespondent_Fakultas, index=year)
+
+            fig, ax = plt.subplots(figsize=(20, 10))
+            rects1 = ax.bar(year, PercentageRespondent_Fakultas*100,
                         color=['blue', 'orange', 'green', 'purple', 'red'], width=0.3)
 
-        # Make description/annotation in above bar plots:
-        i = 0
-        for rect in rects1:
-            height = rect.get_height()
-            ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,
-                    "[{}]; {}%".format(Respondent_Prodi[i], int(round(height, 0))), size=18,
-                    ha='center', va='bottom')
-            i += 1
+            # Make description/annotation in above bar plots:
+            i = 0
+            for rect in rects1:
+                height = rect.get_height()
+                ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,
+                        "[{}]; {}%".format(Respondent_Fakultas[i], int(round(height, 0))), size=18,
+                        ha='center', va='bottom')
+                i += 1
 
         ax.set_ylabel('Persentase Mahasiswa\nMengisi Kuesioner (%)\n', size=20)
         ax.set_xlabel('Tahun', size=20)
@@ -1033,7 +1069,6 @@ class GrapherTracer(DataframeTracerInitializer):
         # create sample data
         categoryCompany = ['Sesuai', 'Tidak Sesuai']
         years = ['2018', '2019', '2020', '2021', '2022']
-
     
         valuesSesuai = self.valueCompanyRelated.T[0]
         valuesTidakSesuai = self.valueCompanyRelated.T[1]
@@ -1065,6 +1100,20 @@ class GrapherTracer(DataframeTracerInitializer):
 
         # show the plot
         st.pyplot(fig)
+    
+    def draw_bussiness_field_data(self):
+
+        dfbusfield = self.valueBussinessField_Prodi
+        dfbusfieldt = dfbusfield.T
+        dfbusfieldt["sum"] =dfbusfieldt.sum(axis =1)
+        #HITUNG PERSEN
+        percentbusfield = dfbusfieldt.div(dfbusfieldt["sum"], axis=0)*100 
+        percentbusfield.pop("sum")
+        figb = px.bar(percentbusfield, barmode='stack', title="Kategori Perusahaan (Wirausaha)")
+        fig2b = px.line(percentbusfield, title="Kategori Perusahaan (Wirausaha)")
+        st.plotly_chart(figb, use_container_width=True) 
+        st.plotly_chart(fig2b, use_container_width=True) 
+        print("bussiness field data drawn")
         
     def draw_company_field_data(self):
         
@@ -1077,7 +1126,9 @@ class GrapherTracer(DataframeTracerInitializer):
         fig = px.bar(percentcomfield, barmode='stack', title="Kategori Perusahaan (Bekerja)")
         fig2 = px.line(percentcomfield, title="Kategori Perusahaan (Bekerja)")
         st.plotly_chart(fig, use_container_width=True) 
-        st.plotly_chart(fig2, use_container_width=True) 
+        st.plotly_chart(fig2, use_container_width=True)
+        print("company field data drawn")
+
 
 
 class GrapherUser(DataframeUserInitializer):
@@ -1308,4 +1359,12 @@ class GrapherUser(DataframeUserInitializer):
 
             # Show the plot
             st.pyplot(fig)
-                
+# class GrapherUser(DataframeInitializer):
+#     def __init__(self, dfUser2018, dfUser2019, dfUser2020, dfUser2021, dfUser2022, prodi):
+#         super().__init__(dfUser2018=dfUser2018,
+#                          dfUser2019=dfUser2019,
+#                          dfUser2020=dfUser2020,
+#                          dfUser2021=dfUser2021,
+#                          dfUser2022=dfUser2022,
+#                          prodi=prodi)
+#         # self.graph = graph
