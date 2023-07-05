@@ -1125,8 +1125,8 @@ class DataframeTracerInitializer:
             valueCompanyType2018_Prodi = dfCompanyType2018_Prodi["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
             valueCompanyType2019_Prodi = dfCompanyType2019_Prodi["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
             valueCompanyType2020_Prodi = dfCompanyType2020_Prodi["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
-            valueCompanyType2021_Prodi = dfCompanyType2021_Prodi["Bidang usaha wirausaha/wiraswasta"].value_counts(ascending= True).sort_index(ascending= True)
-            valueCompanyType2022_Prodi = dfCompanyType2022_Prodi["Bidang usaha wirausaha/wiraswasta"].value_counts(ascending= True).sort_index(ascending= True)
+            valueCompanyType2021_Prodi = dfCompanyType2021_Prodi["Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
+            valueCompanyType2022_Prodi = dfCompanyType2022_Prodi["Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
             #UNTUK DONUT
             self.valueCompanyType_Prodi1820 = pd.concat ([valueCompanyType2018_Prodi,valueCompanyType2019_Prodi,valueCompanyType2020_Prodi], axis =1)
             self.valueCompanyType_Prodi1820.columns = ['2018', '2019', '2020']

@@ -1094,7 +1094,7 @@ class GrapherTracer(DataframeTracerInitializer):
         #HITUNG PERSEN
         percentcomfield = dfcomfieldt.div(dfcomfieldt["sum"], axis=0)*100
         percentcomfield.pop("sum")
-        fig = px.bar(percentcomfield, barmode='stack', title="Kategori Perusahaan (Bekerja)")
+        fig = px.bar (percentcomfield,barmode='stack', title="Kategori Perusahaan (Bekerja)")
         fig2 = px.line(percentcomfield, title="Kategori Perusahaan (Bekerja)")
         st.plotly_chart(fig, use_container_width=True) 
         st.plotly_chart(fig2, use_container_width=True)
@@ -1116,13 +1116,22 @@ class GrapherTracer(DataframeTracerInitializer):
         donut2 = go.Pie(values=pie18['2019'], labels=pie18.index, hole=0.5)
         fig.add_trace(donut2, row=1, col=2)
 
-        # Create the second donut graph using Plotly
+        # Create the third donut graph using Plotly
         donut3 = go.Pie(values=pie18['2020'], labels=pie18.index, hole=0.5)
         fig.add_trace(donut3, row=1, col=3)
 
+        #update legend
+        fig.update_layout(legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.1,
+            xanchor="right",
+            x=1
+            ))
         # Update the layout
-        fig.update_layout(showlegend=False)
+        
 
+        #second graph
         fig2 = sp.make_subplots(rows=1, cols=2, subplot_titles=['2021', '2022'], specs=[[{'type': 'pie'}, {'type': 'pie'}]])
        
         donut4 = px.pie(values=pie20['2021'], names=pie20.index, hole=0.5)
@@ -1143,11 +1152,11 @@ class GrapherTracer(DataframeTracerInitializer):
         
         tab1, tab2 = st.tabs(["Diagram Lingkaran", "Diagram Batang"])
         with tab1:
-            st.header("Diagram Lingkaran")
+            
             st.plotly_chart(fig, use_container_width=True) 
             st.plotly_chart(fig2, use_container_width=True) 
         with tab2:
-            st.header("Diagram Batang")
+            
             st.plotly_chart(fig3, use_container_width=True) 
 
 
