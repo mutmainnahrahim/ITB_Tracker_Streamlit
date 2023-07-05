@@ -206,5 +206,3 @@ elif requestGraph ==  "Jenis Perusahaan" :
     gt.init_company_type_data()
     gt.draw_company_type_data()
 
-
-
