@@ -243,7 +243,7 @@ class DataframeTracerInitializer:
                 self.df2022['Program Studi'] == self.prodi]
 
         # Filter Fakultas
-        else:
+        elif self.prodi == "All" and self.fakultas != "All":
             self.df2018_competenceA_fakultas = self.df2018_competenceA[
                 self.df2018['Fakultas/Sekolah'] == self.fakultas]
             self.df2018_competenceB_fakultas = self.df2018_competenceB[
@@ -521,73 +521,169 @@ class DataframeTracerInitializer:
                                          workstatus_2022/94])
 
     def init_timetogetwork_data(self):
+        if self.prodi != "All":
         # Drop the data points that contains no value - 2018
-        dfTTGWork2018_raw = self.df2018[["4. Program Studi", "37x. Kapankah Anda memperoleh pekerjaan pertama?",
-                                         "37ax. Berapa bulan waktu yang digunakan (sebelum kelulusan) untuk memperoleh pekerjaan pertama?", "37bx. Berapa bulan waktu yang digunakan (sesudah kelulusan) untuk memperoleh pekerjaan pertama?"]]
-        # If tidak bekerja, wirausaha,melanjutkan studi/bekerja but contains no value sesudah lulus atua sebelum lulus
-        dfTTGWork2018 = dfTTGWork2018_raw.dropna(
-            subset=['37x. Kapankah Anda memperoleh pekerjaan pertama?'])
+            dfTTGWork2018_raw = self.df2018[["4. Program Studi", "37x. Kapankah Anda memperoleh pekerjaan pertama?",
+                                            "37ax. Berapa bulan waktu yang digunakan (sebelum kelulusan) untuk memperoleh pekerjaan pertama?", "37bx. Berapa bulan waktu yang digunakan (sesudah kelulusan) untuk memperoleh pekerjaan pertama?"]]
+            # If tidak bekerja, wirausaha,melanjutkan studi/bekerja but contains no value sesudah lulus atua sebelum lulus
+            dfTTGWork2018 = dfTTGWork2018_raw.dropna(
+                subset=['37x. Kapankah Anda memperoleh pekerjaan pertama?'])
 
-        # Drop the data points that contains no value - 2019
-        dfTTGWork2019_raw = self.df2019[["4. Program Studi", "37x. Kapankah Anda memperoleh pekerjaan pertama?",
-                                         "37ax. Berapa bulan waktu yang digunakan (sebelum kelulusan) untuk memperoleh pekerjaan pertama?", "37bx. Berapa bulan waktu yang digunakan (sesudah kelulusan) untuk memperoleh pekerjaan pertama?"]]
-        # If tidak bekerja, wirausaha,melanjutkan studi/bekerja but contains no value sesudah lulus atua sebelum lulus
-        dfTTGWork2019 = dfTTGWork2019_raw.dropna(
-            subset=['37x. Kapankah Anda memperoleh pekerjaan pertama?'])
+            # Drop the data points that contains no value - 2019
+            dfTTGWork2019_raw = self.df2019[["4. Program Studi", "37x. Kapankah Anda memperoleh pekerjaan pertama?",
+                                            "37ax. Berapa bulan waktu yang digunakan (sebelum kelulusan) untuk memperoleh pekerjaan pertama?", "37bx. Berapa bulan waktu yang digunakan (sesudah kelulusan) untuk memperoleh pekerjaan pertama?"]]
+            # If tidak bekerja, wirausaha,melanjutkan studi/bekerja but contains no value sesudah lulus atua sebelum lulus
+            dfTTGWork2019 = dfTTGWork2019_raw.dropna(
+                subset=['37x. Kapankah Anda memperoleh pekerjaan pertama?'])
 
-        # Drop the data points that contains no value - 2019
-        dfTTGWork2020_raw = self.df2020[["4. Program Studi", "37x. Kapankah Anda memperoleh pekerjaan pertama?",
-                                         "37ax. Berapa bulan waktu yang digunakan (sebelum kelulusan) untuk memperoleh pekerjaan pertama?", "37bx. Berapa bulan waktu yang digunakan (sesudah kelulusan) untuk memperoleh pekerjaan pertama?"]]
-        # If tidak bekerja, wirausaha,melanjutkan studi/bekerja but contains no value sesudah lulus atua sebelum lulus
-        dfTTGWork2020 = dfTTGWork2020_raw.dropna(
-            subset=['37x. Kapankah Anda memperoleh pekerjaan pertama?'])
+            # Drop the data points that contains no value - 2019
+            dfTTGWork2020_raw = self.df2020[["4. Program Studi", "37x. Kapankah Anda memperoleh pekerjaan pertama?",
+                                            "37ax. Berapa bulan waktu yang digunakan (sebelum kelulusan) untuk memperoleh pekerjaan pertama?", "37bx. Berapa bulan waktu yang digunakan (sesudah kelulusan) untuk memperoleh pekerjaan pertama?"]]
+            # If tidak bekerja, wirausaha,melanjutkan studi/bekerja but contains no value sesudah lulus atua sebelum lulus
+            dfTTGWork2020 = dfTTGWork2020_raw.dropna(
+                subset=['37x. Kapankah Anda memperoleh pekerjaan pertama?'])
 
-        # Drop the data points that contains no value - 2019
-        dfTTGWork2021_raw = self.df2021[["Program Studi", "Kapankah Anda memperoleh pekerjaan pertama?",
-                                         "Berapa bulan waktu yang digunakan (sebelum kelulusan) untuk memperoleh pekerjaan pertama?", "Berapa bulan waktu yang digunakan (sesudah kelulusan) untuk memperoleh pekerjaan pertama?"]]
-        # If tidak bekerja, wirausaha,melanjutkan studi/bekerja but contains no value sesudah lulus atua sebelum lulus
-        dfTTGWork2021 = dfTTGWork2021_raw.dropna(
-            subset=['Kapankah Anda memperoleh pekerjaan pertama?'])
+            # Drop the data points that contains no value - 2019
+            dfTTGWork2021_raw = self.df2021[["Program Studi", "Kapankah Anda memperoleh pekerjaan pertama?",
+                                            "Berapa bulan waktu yang digunakan (sebelum kelulusan) untuk memperoleh pekerjaan pertama?", "Berapa bulan waktu yang digunakan (sesudah kelulusan) untuk memperoleh pekerjaan pertama?"]]
+            # If tidak bekerja, wirausaha,melanjutkan studi/bekerja but contains no value sesudah lulus atua sebelum lulus
+            dfTTGWork2021 = dfTTGWork2021_raw.dropna(
+                subset=['Kapankah Anda memperoleh pekerjaan pertama?'])
 
-        # Drop the data points that contains no value - 2019
-        dfTTGWork2022_raw = self.df2022[["Program Studi", "Kapankah Anda memperoleh pekerjaan pertama?",
-                                         "Berapa bulan waktu yang digunakan (sebelum kelulusan) untuk memperoleh pekerjaan pertama?", "Berapa bulan waktu yang digunakan (sesudah kelulusan) untuk memperoleh pekerjaan pertama?"]]
+            # Drop the data points that contains no value - 2019
+            dfTTGWork2022_raw = self.df2022[["Program Studi", "Kapankah Anda memperoleh pekerjaan pertama?",
+                                            "Berapa bulan waktu yang digunakan (sebelum kelulusan) untuk memperoleh pekerjaan pertama?", "Berapa bulan waktu yang digunakan (sesudah kelulusan) untuk memperoleh pekerjaan pertama?"]]
 
-        # If tidak bekerja, wirausaha,melanjutkan studi/bekerja but contains no value sesudah lulus atua sebelum lulus
-        dfTTGWork2022 = dfTTGWork2022_raw.dropna(
-            subset=['Kapankah Anda memperoleh pekerjaan pertama?'])
-        # dfTTGWork2018.iloc[230:330]
+            # If tidak bekerja, wirausaha,melanjutkan studi/bekerja but contains no value sesudah lulus atua sebelum lulus
+            dfTTGWork2022 = dfTTGWork2022_raw.dropna(
+                subset=['Kapankah Anda memperoleh pekerjaan pertama?'])
+            # dfTTGWork2018.iloc[230:330]
 
-        # GET PRODI DATAFRAME
-        dfTTGWork2018_Prodi = dfTTGWork2018[dfTTGWork2018['4. Program Studi'] == self.prodi]
-        self.dfTTGWork2018_Prodi_BeforeGrad = dfTTGWork2018_Prodi[dfTTGWork2018_Prodi[
-            "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sebelum lulus"]
-        self.dfTTGWork2018_Prodi_AfterGrad = dfTTGWork2018_Prodi[dfTTGWork2018_Prodi[
-            "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sesudah lulus"]
+            # GET PRODI DATAFRAME
+            dfTTGWork2018_Prodi = dfTTGWork2018[dfTTGWork2018['4. Program Studi'] == self.prodi]
+            self.dfTTGWork2018_Prodi_BeforeGrad = dfTTGWork2018_Prodi[dfTTGWork2018_Prodi[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sebelum lulus"]
+            self.dfTTGWork2018_Prodi_AfterGrad = dfTTGWork2018_Prodi[dfTTGWork2018_Prodi[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sesudah lulus"]
 
-        dfTTGWork2019_Prodi = dfTTGWork2019[dfTTGWork2019['4. Program Studi'] == self.prodi]
-        self.dfTTGWork2019_Prodi_BeforeGrad = dfTTGWork2019_Prodi[dfTTGWork2019_Prodi[
-            "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sebelum lulus"]
-        self.dfTTGWork2019_Prodi_AfterGrad = dfTTGWork2019_Prodi[dfTTGWork2019_Prodi[
-            "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sesudah lulus"]
+            dfTTGWork2019_Prodi = dfTTGWork2019[dfTTGWork2019['4. Program Studi'] == self.prodi]
+            self.dfTTGWork2019_Prodi_BeforeGrad = dfTTGWork2019_Prodi[dfTTGWork2019_Prodi[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sebelum lulus"]
+            self.dfTTGWork2019_Prodi_AfterGrad = dfTTGWork2019_Prodi[dfTTGWork2019_Prodi[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sesudah lulus"]
 
-        dfTTGWork2020_Prodi = dfTTGWork2020[dfTTGWork2020['4. Program Studi'] == self.prodi]
-        self.dfTTGWork2020_Prodi_BeforeGrad = dfTTGWork2020_Prodi[dfTTGWork2020_Prodi[
-            "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sebelum lulus"]
-        self.dfTTGWork2020_Prodi_AfterGrad = dfTTGWork2020_Prodi[dfTTGWork2020_Prodi[
-            "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sesudah lulus"]
+            dfTTGWork2020_Prodi = dfTTGWork2020[dfTTGWork2020['4. Program Studi'] == self.prodi]
+            self.dfTTGWork2020_Prodi_BeforeGrad = dfTTGWork2020_Prodi[dfTTGWork2020_Prodi[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sebelum lulus"]
+            self.dfTTGWork2020_Prodi_AfterGrad = dfTTGWork2020_Prodi[dfTTGWork2020_Prodi[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sesudah lulus"]
 
-        dfTTGWork2021_Prodi = dfTTGWork2021[dfTTGWork2021['Program Studi'] == self.prodi]
-        self.dfTTGWork2021_Prodi_BeforeGrad = dfTTGWork2021_Prodi[dfTTGWork2021_Prodi[
-            "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sebelum lulus"]
-        self.dfTTGWork2021_Prodi_AfterGrad = dfTTGWork2021_Prodi[dfTTGWork2021_Prodi[
-            "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sesudah lulus"]
+            dfTTGWork2021_Prodi = dfTTGWork2021[dfTTGWork2021['Program Studi'] == self.prodi]
+            self.dfTTGWork2021_Prodi_BeforeGrad = dfTTGWork2021_Prodi[dfTTGWork2021_Prodi[
+                "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sebelum lulus"]
+            self.dfTTGWork2021_Prodi_AfterGrad = dfTTGWork2021_Prodi[dfTTGWork2021_Prodi[
+                "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sesudah lulus"]
 
-        dfTTGWork2022_Prodi = dfTTGWork2022[dfTTGWork2022['Program Studi'] == self.prodi]
-        self.dfTTGWork2022_Prodi_BeforeGrad = dfTTGWork2022_Prodi[dfTTGWork2022_Prodi[
-            "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sebelum lulus"]
-        self.dfTTGWork2022_Prodi_AfterGrad = dfTTGWork2022_Prodi[dfTTGWork2022_Prodi[
-            "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sesudah lulus"]
+            dfTTGWork2022_Prodi = dfTTGWork2022[dfTTGWork2022['Program Studi'] == self.prodi]
+            self.dfTTGWork2022_Prodi_BeforeGrad = dfTTGWork2022_Prodi[dfTTGWork2022_Prodi[
+                "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sebelum lulus"]
+            self.dfTTGWork2022_Prodi_AfterGrad = dfTTGWork2022_Prodi[dfTTGWork2022_Prodi[
+                "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sesudah lulus"]
+
+        elif self.prodi == "All" and self.fakultas != "All":
+            # Drop the data points that contains no value - 2018
+            dfTTGWork2018_raw = self.df2018[["4. Program Studi","Fakultas/Sekolah", "37x. Kapankah Anda memperoleh pekerjaan pertama?",
+                                            "37ax. Berapa bulan waktu yang digunakan (sebelum kelulusan) untuk memperoleh pekerjaan pertama?", "37bx. Berapa bulan waktu yang digunakan (sesudah kelulusan) untuk memperoleh pekerjaan pertama?"]]
+            # If tidak bekerja, wirausaha,melanjutkan studi/bekerja but contains no value sesudah lulus atua sebelum lulus
+            dfTTGWork2018 = dfTTGWork2018_raw.dropna(
+                subset=['37x. Kapankah Anda memperoleh pekerjaan pertama?'])
+
+            # Drop the data points that contains no value - 2019
+            dfTTGWork2019_raw = self.df2019[["4. Program Studi", "Fakultas/Sekolah","37x. Kapankah Anda memperoleh pekerjaan pertama?",
+                                            "37ax. Berapa bulan waktu yang digunakan (sebelum kelulusan) untuk memperoleh pekerjaan pertama?", "37bx. Berapa bulan waktu yang digunakan (sesudah kelulusan) untuk memperoleh pekerjaan pertama?"]]
+            # If tidak bekerja, wirausaha,melanjutkan studi/bekerja but contains no value sesudah lulus atua sebelum lulus
+            dfTTGWork2019 = dfTTGWork2019_raw.dropna(
+                subset=['37x. Kapankah Anda memperoleh pekerjaan pertama?'])
+
+            # Drop the data points that contains no value - 2019
+            dfTTGWork2020_raw = self.df2020[["4. Program Studi", "Fakultas/Sekolah","37x. Kapankah Anda memperoleh pekerjaan pertama?",
+                                            "37ax. Berapa bulan waktu yang digunakan (sebelum kelulusan) untuk memperoleh pekerjaan pertama?", "37bx. Berapa bulan waktu yang digunakan (sesudah kelulusan) untuk memperoleh pekerjaan pertama?"]]
+            # If tidak bekerja, wirausaha,melanjutkan studi/bekerja but contains no value sesudah lulus atua sebelum lulus
+            dfTTGWork2020 = dfTTGWork2020_raw.dropna(
+                subset=['37x. Kapankah Anda memperoleh pekerjaan pertama?'])
+
+            # Drop the data points that contains no value - 2019
+            dfTTGWork2021_raw = self.df2021[["Program Studi", "Fakultas/Sekolah","Kapankah Anda memperoleh pekerjaan pertama?",
+                                            "Berapa bulan waktu yang digunakan (sebelum kelulusan) untuk memperoleh pekerjaan pertama?", "Berapa bulan waktu yang digunakan (sesudah kelulusan) untuk memperoleh pekerjaan pertama?"]]
+            # If tidak bekerja, wirausaha,melanjutkan studi/bekerja but contains no value sesudah lulus atua sebelum lulus
+            dfTTGWork2021 = dfTTGWork2021_raw.dropna(
+                subset=['Kapankah Anda memperoleh pekerjaan pertama?'])
+
+            # Drop the data points that contains no value - 2019
+            dfTTGWork2022_raw = self.df2022[["Program Studi", "Fakultas/Sekolah","Kapankah Anda memperoleh pekerjaan pertama?",
+                                            "Berapa bulan waktu yang digunakan (sebelum kelulusan) untuk memperoleh pekerjaan pertama?", "Berapa bulan waktu yang digunakan (sesudah kelulusan) untuk memperoleh pekerjaan pertama?"]]
+
+            # If tidak bekerja, wirausaha,melanjutkan studi/bekerja but contains no value sesudah lulus atua sebelum lulus
+            dfTTGWork2022 = dfTTGWork2022_raw.dropna(
+                subset=['Kapankah Anda memperoleh pekerjaan pertama?'])
+            # dfTTGWork2018.iloc[230:330]
+
+            # GET PRODI DATAFRAME
+            dfTTGWork2018_Prodi = dfTTGWork2018[dfTTGWork2018['Fakultas/Sekolah'] == self.fakultas]
+            self.dfTTGWork2018_Prodi_BeforeGrad = dfTTGWork2018_Prodi[dfTTGWork2018_Prodi[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sebelum lulus"]
+            self.dfTTGWork2018_Prodi_AfterGrad = dfTTGWork2018_Prodi[dfTTGWork2018_Prodi[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sesudah lulus"]
+
+            dfTTGWork2019_Prodi = dfTTGWork2019[dfTTGWork2019['Fakultas/Sekolah'] == self.fakultas]
+            self.dfTTGWork2019_Prodi_BeforeGrad = dfTTGWork2019_Prodi[dfTTGWork2019_Prodi[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sebelum lulus"]
+            self.dfTTGWork2019_Prodi_AfterGrad = dfTTGWork2019_Prodi[dfTTGWork2019_Prodi[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sesudah lulus"]
+
+            dfTTGWork2020_Prodi = dfTTGWork2020[dfTTGWork2020['Fakultas/Sekolah'] == self.fakultas]
+            self.dfTTGWork2020_Prodi_BeforeGrad = dfTTGWork2020_Prodi[dfTTGWork2020_Prodi[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sebelum lulus"]
+            self.dfTTGWork2020_Prodi_AfterGrad = dfTTGWork2020_Prodi[dfTTGWork2020_Prodi[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sesudah lulus"]
+
+            dfTTGWork2021_Prodi = dfTTGWork2021[dfTTGWork2021['Fakultas/Sekolah'] == self.fakultas]
+            self.dfTTGWork2021_Prodi_BeforeGrad = dfTTGWork2021_Prodi[dfTTGWork2021_Prodi[
+                "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sebelum lulus"]
+            self.dfTTGWork2021_Prodi_AfterGrad = dfTTGWork2021_Prodi[dfTTGWork2021_Prodi[
+                "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sesudah lulus"]
+
+            dfTTGWork2022_Prodi = dfTTGWork2022[dfTTGWork2022['Fakultas/Sekolah'] == self.fakultas]
+            self.dfTTGWork2022_Prodi_BeforeGrad = dfTTGWork2022_Prodi[dfTTGWork2022_Prodi[
+                "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sebelum lulus"]
+            self.dfTTGWork2022_Prodi_AfterGrad = dfTTGWork2022_Prodi[dfTTGWork2022_Prodi[
+                "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sesudah lulus"]
+
+        else:
+            self.dfTTGWork2018_Prodi_BeforeGrad = self.df2018[self.df2018[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sebelum lulus"]
+            self.dfTTGWork2018_Prodi_AfterGrad = self.df2018[self.df2018[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sesudah lulus"]
+
+            self.dfTTGWork2019_Prodi_BeforeGrad = self.df2019[self.df2019[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sebelum lulus"]
+            self.dfTTGWork2019_Prodi_AfterGrad = self.df2019[self.df2019[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sesudah lulus"]
+
+            self.dfTTGWork2020_Prodi_BeforeGrad = self.df2020[self.df2020[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sebelum lulus"]
+            self.dfTTGWork2020_Prodi_AfterGrad = self.df2020[self.df2020[
+                "37x. Kapankah Anda memperoleh pekerjaan pertama?"] == "sesudah lulus"]
+
+            self.dfTTGWork2021_Prodi_BeforeGrad = self.df2021[self.df2021[
+                "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sebelum lulus"]
+            self.dfTTGWork2021_Prodi_AfterGrad = self.df2021[self.df2021[
+                "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sesudah lulus"]
+
+            self.dfTTGWork2022_Prodi_BeforeGrad = self.df2022[self.df2022[
+                "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sebelum lulus"]
+            self.dfTTGWork2022_Prodi_AfterGrad = self.df2022[self.df2022[
+                "Kapankah Anda memperoleh pekerjaan pertama?"] == "Sesudah lulus"]
 
     def __filter_company_category_data(self, company_category_raw):
         companycat_filtered = np.array([0, 0, 0])
@@ -658,7 +754,7 @@ class DataframeTracerInitializer:
             valueCompanyCat2021_Prodi = self.__filter_company_category_datav2(dfCompanyCat2021_Prodi["Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
             valueCompanyCat2022_Prodi = self.__filter_company_category_datav2(dfCompanyCat2022_Prodi["Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
             self.valueCompanyCat_Prodi = np.array([valueCompanyCat2018_Prodi, valueCompanyCat2019_Prodi, valueCompanyCat2020_Prodi, valueCompanyCat2021_Prodi, valueCompanyCat2022_Prodi])
-        else:
+        elif self.prodi == "All" and self.fakultas != "All":
             print(dfCompanyCat2018)
             dfCompanyCat2018_fakultas = dfCompanyCat2018[dfCompanyCat2018["Fakultas/Sekolah"] == self.fakultas]
             dfCompanyCat2019_fakultas = dfCompanyCat2019[dfCompanyCat2019["Fakultas/Sekolah"] == self.fakultas]
@@ -673,7 +769,15 @@ class DataframeTracerInitializer:
             valueCompanyCat2022_fakultas = self.__filter_company_category_datav2(dfCompanyCat2022_fakultas["Apa kategori perusahaan tempat Anda bekerja?"].value_counts().sort_index())
             self.valueCompanyCat_fakultas = np.array([valueCompanyCat2018_fakultas, valueCompanyCat2019_fakultas, valueCompanyCat2020_fakultas, valueCompanyCat2021_fakultas, valueCompanyCat2022_fakultas])
 
-        
+        else:
+            valueCompanyCat2018_fakultas = self.__filter_company_category_data(self.df2018["A10. Apa kategori perusahaan tempat Anda bekerja?"].value_counts())
+            valueCompanyCat2019_fakultas = self.__filter_company_category_data(self.df2019["A10. Apa kategori perusahaan tempat Anda bekerja?"].value_counts())
+            valueCompanyCat2020_fakultas = self.__filter_company_category_data(self.df2020["A10. Apa kategori perusahaan tempat Anda bekerja?"].value_counts())
+            valueCompanyCat2021_fakultas = self.__filter_company_category_datav2(self.df2021["Apa kategori perusahaan tempat Anda bekerja?"].value_counts())
+            valueCompanyCat2022_fakultas = self.__filter_company_category_datav2(self.df2022["Apa kategori perusahaan tempat Anda bekerja?"].value_counts())
+            self.valueCompanyCat_fakultas = np.array([valueCompanyCat2018_fakultas, valueCompanyCat2019_fakultas, valueCompanyCat2020_fakultas, valueCompanyCat2021_fakultas, valueCompanyCat2022_fakultas])
+
+
     def __insert_missing_index (self,missingdf):
         field =['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U']
         zeros = [0]*len(field)
@@ -1108,118 +1212,271 @@ class DataframeTracerInitializer:
         return companycat_filtered
             
     def init_company_related_study(self, status):
+        #define faculty in 2018-2020
+        self.df2018['Fakultas/Sekolah'] = self.df2018['4. Program Studi'].apply(
+            self.__lookup_faculty_from_major)
+        self.df2019['Fakultas/Sekolah'] = self.df2019['4. Program Studi'].apply(
+            self.__lookup_faculty_from_major)
+        self.df2020['Fakultas/Sekolah'] = self.df2020['4. Program Studi'].apply(
+            self.__lookup_faculty_from_major)
+            
+        
         if status == "Bekerja":
-            dfCompanyRelated2018_rawA = self.df2018[[
-                "4. Program Studi", "A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
-            dfCompanyRelated2018A = dfCompanyRelated2018_rawA.dropna(
-                subset=["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
-            dfCompanyRelated2018_rawB = self.df2018[[
-                "4. Program Studi", "B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
-            dfCompanyRelated2018B = dfCompanyRelated2018_rawB.dropna(
-                subset=["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
+            if self.prodi != "All":
+                dfCompanyRelated2018_rawA = self.df2018[[
+                    "4. Program Studi", "A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2018A = dfCompanyRelated2018_rawA.dropna(
+                    subset=["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
+                dfCompanyRelated2018_rawB = self.df2018[[
+                    "4. Program Studi", "B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2018B = dfCompanyRelated2018_rawB.dropna(
+                    subset=["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
+                
+                dfCompanyRelated2019_rawA = self.df2019[[
+                    "4. Program Studi", "A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2019A = dfCompanyRelated2019_rawA.dropna(
+                    subset=["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
+                dfCompanyRelated2019_rawB = self.df2019[[
+                    "4. Program Studi", "B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2019B= dfCompanyRelated2019_rawB.dropna(
+                    subset=["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
+
+                dfCompanyRelated2020_rawA = self.df2020[[
+                    "4. Program Studi", "A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2020A = dfCompanyRelated2020_rawA.dropna(
+                    subset=["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
+                dfCompanyRelated2020_rawB = self.df2020[[
+                    "4. Program Studi", "B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2020B = dfCompanyRelated2020_rawB.dropna(
+                    subset= ["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
+                
+                dfCompanyRelated2021_raw = self.df2021[[
+                    "Program Studi", "Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2021 = dfCompanyRelated2021_raw.dropna(
+                    subset=["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"])
+
+                dfCompanyRelated2022_raw = self.df2022[[
+                    "Program Studi", "Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2022 = dfCompanyRelated2022_raw.dropna(
+                    subset=["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"])
+
+                dfCompanyRelated2018A_Prodi = dfCompanyRelated2018A[dfCompanyRelated2018A["4. Program Studi"] == self.prodi]
+                dfCompanyRelated2018B_Prodi = dfCompanyRelated2018B[dfCompanyRelated2018B["4. Program Studi"] == self.prodi]
+                dfCompanyRelated2019A_Prodi = dfCompanyRelated2019A[dfCompanyRelated2019A["4. Program Studi"] == self.prodi]
+                dfCompanyRelated2019B_Prodi = dfCompanyRelated2019B[dfCompanyRelated2019B["4. Program Studi"] == self.prodi]
+                dfCompanyRelated2020A_Prodi = dfCompanyRelated2020A[dfCompanyRelated2020A["4. Program Studi"] == self.prodi]
+                dfCompanyRelated2020B_Prodi = dfCompanyRelated2020B[dfCompanyRelated2020B["4. Program Studi"] == self.prodi]
+                dfCompanyRelated2021_Prodi = dfCompanyRelated2021[dfCompanyRelated2021["Program Studi"] == self.prodi]
+                dfCompanyRelated2022_Prodi = dfCompanyRelated2022[dfCompanyRelated2022["Program Studi"] == self.prodi]
+
+                valueCompanyRelated2018A = self.__filter_company_related_study(dfCompanyRelated2018A_Prodi["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2018B = self.__filter_company_related_study(dfCompanyRelated2018B_Prodi["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2019A = self.__filter_company_related_study(dfCompanyRelated2019A_Prodi["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2019B = self.__filter_company_related_study(dfCompanyRelated2019B_Prodi["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2020A = self.__filter_company_related_study(dfCompanyRelated2020A_Prodi["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2020B = self.__filter_company_related_study(dfCompanyRelated2020B_Prodi["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+
+                valueCompanyRelated2018 = valueCompanyRelated2018A + valueCompanyRelated2018B
+                valueCompanyRelated2019 = valueCompanyRelated2019A + valueCompanyRelated2019B
+                valueCompanyRelated2020 = valueCompanyRelated2020A + valueCompanyRelated2020B
+                #valueCompanyField2018_Prodi = valueCompanyField2018A_Prodi.add(valueCompanyField2018B_Prodi, fill_value = 0 )
+                #valueCompanyField2019_Prodi = valueCompanyField2019A_Prodi.add(valueCompanyField2019B_Prodi, fill_value = 0 )
+                #valueCompanyField2020_Prodi = valueCompanyField2020A_Prodi.add(valueCompanyField2020B_Prodi, fill_value = 0 )
+
+                valueCompanyRelated2021 = self.__filter_company_related_study(dfCompanyRelated2021_Prodi["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts(
+                ).sort_index())
+                valueCompanyRelated2022 = self.__filter_company_related_study(dfCompanyRelated2022_Prodi["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts(
+                ).sort_index())
+
+                self.valueCompanyRelated = np.array([valueCompanyRelated2018,valueCompanyRelated2019,valueCompanyRelated2020, valueCompanyRelated2021, valueCompanyRelated2022])
             
-            dfCompanyRelated2019_rawA = self.df2019[[
-                "4. Program Studi", "A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
-            dfCompanyRelated2019A = dfCompanyRelated2019_rawA.dropna(
-                subset=["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
-            dfCompanyRelated2019_rawB = self.df2019[[
-                "4. Program Studi", "B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
-            dfCompanyRelated2019B= dfCompanyRelated2019_rawB.dropna(
-                subset=["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
-
-            dfCompanyRelated2020_rawA = self.df2020[[
-                "4. Program Studi", "A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
-            dfCompanyRelated2020A = dfCompanyRelated2020_rawA.dropna(
-                subset=["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
-            dfCompanyRelated2020_rawB = self.df2020[[
-                "4. Program Studi", "B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
-            dfCompanyRelated2020B = dfCompanyRelated2020_rawB.dropna(
-                subset= ["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
+            elif self.prodi == "All" and self.fakultas != "All":
+                dfCompanyRelated2018_rawA = self.df2018[[
+                    "4. Program Studi","Fakultas/Sekolah", "A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2018A = dfCompanyRelated2018_rawA.dropna(
+                    subset=["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
+                dfCompanyRelated2018_rawB = self.df2018[[
+                    "4. Program Studi", "Fakultas/Sekolah","B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2018B = dfCompanyRelated2018_rawB.dropna(
+                    subset=["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
             
-            dfCompanyRelated2021_raw = self.df2021[[
-                "Program Studi", "Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"]]
-            dfCompanyRelated2021 = dfCompanyRelated2021_raw.dropna(
-                subset=["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"])
+                dfCompanyRelated2019_rawA = self.df2019[[
+                    "4. Program Studi", "Fakultas/Sekolah","A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2019A = dfCompanyRelated2019_rawA.dropna(
+                    subset=["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
+                dfCompanyRelated2019_rawB = self.df2019[[
+                    "4. Program Studi", "Fakultas/Sekolah","B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2019B= dfCompanyRelated2019_rawB.dropna(
+                    subset=["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
 
-            dfCompanyRelated2022_raw = self.df2022[[
-                "Program Studi", "Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"]]
-            dfCompanyRelated2022 = dfCompanyRelated2022_raw.dropna(
-                subset=["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"])
+                dfCompanyRelated2020_rawA = self.df2020[[
+                    "4. Program Studi", "Fakultas/Sekolah","A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2020A = dfCompanyRelated2020_rawA.dropna(
+                    subset=["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
+                dfCompanyRelated2020_rawB = self.df2020[[
+                    "4. Program Studi", "Fakultas/Sekolah","B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2020B = dfCompanyRelated2020_rawB.dropna(
+                    subset= ["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"])
+            
+                dfCompanyRelated2021_raw = self.df2021[[
+                    "Program Studi", "Fakultas/Sekolah","Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2021 = dfCompanyRelated2021_raw.dropna(
+                    subset=["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"])
 
-            dfCompanyRelated2018A_Prodi = dfCompanyRelated2018A[dfCompanyRelated2018A["4. Program Studi"] == self.prodi]
-            dfCompanyRelated2018B_Prodi = dfCompanyRelated2018B[dfCompanyRelated2018B["4. Program Studi"] == self.prodi]
-            dfCompanyRelated2019A_Prodi = dfCompanyRelated2019A[dfCompanyRelated2019A["4. Program Studi"] == self.prodi]
-            dfCompanyRelated2019B_Prodi = dfCompanyRelated2019B[dfCompanyRelated2019B["4. Program Studi"] == self.prodi]
-            dfCompanyRelated2020A_Prodi = dfCompanyRelated2020A[dfCompanyRelated2020A["4. Program Studi"] == self.prodi]
-            dfCompanyRelated2020B_Prodi = dfCompanyRelated2020B[dfCompanyRelated2020B["4. Program Studi"] == self.prodi]
-            dfCompanyRelated2021_Prodi = dfCompanyRelated2021[dfCompanyRelated2021["Program Studi"] == self.prodi]
-            dfCompanyRelated2022_Prodi = dfCompanyRelated2022[dfCompanyRelated2022["Program Studi"] == self.prodi]
+                dfCompanyRelated2022_raw = self.df2022[[
+                    "Program Studi", "Fakultas/Sekolah","Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2022 = dfCompanyRelated2022_raw.dropna(
+                    subset=["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"])
 
-            valueCompanyRelated2018A = self.__filter_company_related_study(dfCompanyRelated2018A_Prodi["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
-            valueCompanyRelated2018B = self.__filter_company_related_study(dfCompanyRelated2018B_Prodi["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
-            valueCompanyRelated2019A = self.__filter_company_related_study(dfCompanyRelated2019A_Prodi["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
-            valueCompanyRelated2019B = self.__filter_company_related_study(dfCompanyRelated2019B_Prodi["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
-            valueCompanyRelated2020A = self.__filter_company_related_study(dfCompanyRelated2020A_Prodi["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
-            valueCompanyRelated2020B = self.__filter_company_related_study(dfCompanyRelated2020B_Prodi["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                dfCompanyRelated2018A_Prodi = dfCompanyRelated2018A[dfCompanyRelated2018A["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyRelated2018B_Prodi = dfCompanyRelated2018B[dfCompanyRelated2018B["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyRelated2019A_Prodi = dfCompanyRelated2019A[dfCompanyRelated2019A["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyRelated2019B_Prodi = dfCompanyRelated2019B[dfCompanyRelated2019B["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyRelated2020A_Prodi = dfCompanyRelated2020A[dfCompanyRelated2020A["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyRelated2020B_Prodi = dfCompanyRelated2020B[dfCompanyRelated2020B["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyRelated2021_Prodi = dfCompanyRelated2021[dfCompanyRelated2021["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyRelated2022_Prodi = dfCompanyRelated2022[dfCompanyRelated2022["Fakultas/Sekolah"] == self.fakultas]
 
-            valueCompanyRelated2018 = valueCompanyRelated2018A + valueCompanyRelated2018B
-            valueCompanyRelated2019 = valueCompanyRelated2019A + valueCompanyRelated2019B
-            valueCompanyRelated2020 = valueCompanyRelated2020A + valueCompanyRelated2020B
+                valueCompanyRelated2018A = self.__filter_company_related_study(dfCompanyRelated2018A_Prodi["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2018B = self.__filter_company_related_study(dfCompanyRelated2018B_Prodi["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2019A = self.__filter_company_related_study(dfCompanyRelated2019A_Prodi["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2019B = self.__filter_company_related_study(dfCompanyRelated2019B_Prodi["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2020A = self.__filter_company_related_study(dfCompanyRelated2020A_Prodi["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2020B = self.__filter_company_related_study(dfCompanyRelated2020B_Prodi["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+
+                valueCompanyRelated2018 = valueCompanyRelated2018A + valueCompanyRelated2018B
+                valueCompanyRelated2019 = valueCompanyRelated2019A + valueCompanyRelated2019B
+                valueCompanyRelated2020 = valueCompanyRelated2020A + valueCompanyRelated2020B
             #valueCompanyField2018_Prodi = valueCompanyField2018A_Prodi.add(valueCompanyField2018B_Prodi, fill_value = 0 )
             #valueCompanyField2019_Prodi = valueCompanyField2019A_Prodi.add(valueCompanyField2019B_Prodi, fill_value = 0 )
             #valueCompanyField2020_Prodi = valueCompanyField2020A_Prodi.add(valueCompanyField2020B_Prodi, fill_value = 0 )
 
-            valueCompanyRelated2021 = self.__filter_company_related_study(dfCompanyRelated2021_Prodi["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts(
-            ).sort_index())
-            valueCompanyRelated2022 = self.__filter_company_related_study(dfCompanyRelated2022_Prodi["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts(
-            ).sort_index())
+                valueCompanyRelated2021 = self.__filter_company_related_study(dfCompanyRelated2021_Prodi["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts(
+                ).sort_index())
+                valueCompanyRelated2022 = self.__filter_company_related_study(dfCompanyRelated2022_Prodi["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts(
+                ).sort_index())
 
-            self.valueCompanyRelated = np.array([valueCompanyRelated2018,valueCompanyRelated2019,valueCompanyRelated2020, valueCompanyRelated2021, valueCompanyRelated2022])
+                self.valueCompanyRelated = np.array([valueCompanyRelated2018,valueCompanyRelated2019,valueCompanyRelated2020, valueCompanyRelated2021, valueCompanyRelated2022])
+                
+            else:
+                valueCompanyRelated2018A = self.__filter_company_related_study(self.df2018["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts())
+                valueCompanyRelated2018B = self.__filter_company_related_study(self.df2018["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts())
+                valueCompanyRelated2019A = self.__filter_company_related_study(self.df2019["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts())
+                valueCompanyRelated2019B = self.__filter_company_related_study(self.df2019["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts())
+                valueCompanyRelated2020A = self.__filter_company_related_study(self.df2020["A11. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts())
+                valueCompanyRelated2020B = self.__filter_company_related_study(self.df2020["B22. Apakah pekerjaan Anda saat ini sesuai dengan bidang kuliah?"].value_counts())
+
+                valueCompanyRelated2018 = valueCompanyRelated2018A + valueCompanyRelated2018B
+                valueCompanyRelated2019 = valueCompanyRelated2019A + valueCompanyRelated2019B
+                valueCompanyRelated2020 = valueCompanyRelated2020A + valueCompanyRelated2020B
+            #valueCompanyField2018_Prodi = valueCompanyField2018A_Prodi.add(valueCompanyField2018B_Prodi, fill_value = 0 )
+            #valueCompanyField2019_Prodi = valueCompanyField2019A_Prodi.add(valueCompanyField2019B_Prodi, fill_value = 0 )
+            #valueCompanyField2020_Prodi = valueCompanyField2020A_Prodi.add(valueCompanyField2020B_Prodi, fill_value = 0 )
+
+                valueCompanyRelated2021 = self.__filter_company_related_study(self.df2021["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts())
+                valueCompanyRelated2022 = self.__filter_company_related_study(self.df2022["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts())
+
+                self.valueCompanyRelated = np.array([valueCompanyRelated2018,valueCompanyRelated2019,valueCompanyRelated2020, valueCompanyRelated2021, valueCompanyRelated2022])
+                    
 
         elif status == "Wirausaha":
-            dfCompanyRelated2018_rawC = self.df2018[[
-                "4. Program Studi", "C14. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"]]
-            dfCompanyRelated2018C = dfCompanyRelated2018_rawC.dropna(
-                subset=["C14. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"])
+            if self.prodi != "All":
+                dfCompanyRelated2018_rawC = self.df2018[[
+                    "4. Program Studi", "C14. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2018C = dfCompanyRelated2018_rawC.dropna(
+                    subset=["C14. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"])
+                
+                dfCompanyRelated2019_rawC = self.df2019[[
+                    "4. Program Studi", "C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2019C = dfCompanyRelated2019_rawC.dropna(
+                    subset=["C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"])
+
+                dfCompanyRelated2020_rawC = self.df2020[[
+                    "4. Program Studi", "C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2020C = dfCompanyRelated2020_rawC.dropna(
+                    subset=["C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"])
+                
+                dfCompanyRelated2021_raw = self.df2021[[
+                    "Program Studi", "Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2021 = dfCompanyRelated2021_raw.dropna(
+                    subset=["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"])
+
+                dfCompanyRelated2022_raw = self.df2022[[
+                    "Program Studi", "Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2022 = dfCompanyRelated2022_raw.dropna(
+                    subset=["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"])
+
+                dfCompanyRelated2018_Prodi = dfCompanyRelated2018C[dfCompanyRelated2018C["4. Program Studi"] == self.prodi]
+                dfCompanyRelated2019_Prodi = dfCompanyRelated2019C[dfCompanyRelated2019C["4. Program Studi"] == self.prodi]
+                dfCompanyRelated2020_Prodi = dfCompanyRelated2020C[dfCompanyRelated2020C["4. Program Studi"] == self.prodi]
+                dfCompanyRelated2021_Prodi = dfCompanyRelated2021[dfCompanyRelated2021["Program Studi"] == self.prodi]
+                dfCompanyRelated2022_Prodi = dfCompanyRelated2022[dfCompanyRelated2022["Program Studi"] == self.prodi]
+
+                valueCompanyRelated2018 = self.__filter_company_related_study(dfCompanyRelated2018_Prodi["C14. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2019 = self.__filter_company_related_study(dfCompanyRelated2019_Prodi["C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2020 = self.__filter_company_related_study(dfCompanyRelated2020_Prodi["C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2021 = self.__filter_company_related_study(dfCompanyRelated2021_Prodi["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts(
+                ).sort_index())
+                valueCompanyRelated2022 = self.__filter_company_related_study(dfCompanyRelated2022_Prodi["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts(
+                ).sort_index())
+
+                self.valueCompanyRelated = np.array([valueCompanyRelated2018,valueCompanyRelated2019,valueCompanyRelated2020, valueCompanyRelated2021, valueCompanyRelated2022])
             
-            dfCompanyRelated2019_rawC = self.df2019[[
-                "4. Program Studi", "C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"]]
-            dfCompanyRelated2019C = dfCompanyRelated2019_rawC.dropna(
-                subset=["C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"])
-
-            dfCompanyRelated2020_rawC = self.df2020[[
-                "4. Program Studi", "C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"]]
-            dfCompanyRelated2020C = dfCompanyRelated2020_rawC.dropna(
-                subset=["C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"])
+            elif self.prodi == "All" and self.fakultas != "All":
+                dfCompanyRelated2018_rawC = self.df2018[[
+                    "4. Program Studi", "Fakultas/Sekolah", "C14. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2018C = dfCompanyRelated2018_rawC.dropna(
+                    subset=["C14. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"])
             
-            dfCompanyRelated2021_raw = self.df2021[[
-                "Program Studi", "Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"]]
-            dfCompanyRelated2021 = dfCompanyRelated2021_raw.dropna(
-                subset=["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"])
+                dfCompanyRelated2019_rawC = self.df2019[[
+                    "4. Program Studi", "Fakultas/Sekolah", "C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2019C = dfCompanyRelated2019_rawC.dropna(
+                    subset=["C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"])
 
-            dfCompanyRelated2022_raw = self.df2022[[
-                "Program Studi", "Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"]]
-            dfCompanyRelated2022 = dfCompanyRelated2022_raw.dropna(
-                subset=["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"])
+                dfCompanyRelated2020_rawC = self.df2020[[
+                    "4. Program Studi", "Fakultas/Sekolah","C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2020C = dfCompanyRelated2020_rawC.dropna(
+                    subset=["C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"])
+            
+                dfCompanyRelated2021_raw = self.df2021[[
+                    "Program Studi", "Fakultas/Sekolah","Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2021 = dfCompanyRelated2021_raw.dropna(
+                    subset=["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"])
 
-            dfCompanyRelated2018_Prodi = dfCompanyRelated2018C[dfCompanyRelated2018C["4. Program Studi"] == self.prodi]
-            dfCompanyRelated2019_Prodi = dfCompanyRelated2019C[dfCompanyRelated2019C["4. Program Studi"] == self.prodi]
-            dfCompanyRelated2020_Prodi = dfCompanyRelated2020C[dfCompanyRelated2020C["4. Program Studi"] == self.prodi]
-            dfCompanyRelated2021_Prodi = dfCompanyRelated2021[dfCompanyRelated2021["Program Studi"] == self.prodi]
-            dfCompanyRelated2022_Prodi = dfCompanyRelated2022[dfCompanyRelated2022["Program Studi"] == self.prodi]
+                dfCompanyRelated2022_raw = self.df2022[[
+                    "Program Studi", "Fakultas/Sekolah","Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"]]
+                dfCompanyRelated2022 = dfCompanyRelated2022_raw.dropna(
+                    subset=["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"])
 
-            valueCompanyRelated2018 = self.__filter_company_related_study(dfCompanyRelated2018_Prodi["C14. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
-            valueCompanyRelated2019 = self.__filter_company_related_study(dfCompanyRelated2019_Prodi["C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
-            valueCompanyRelated2020 = self.__filter_company_related_study(dfCompanyRelated2020_Prodi["C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
-            valueCompanyRelated2021 = self.__filter_company_related_study(dfCompanyRelated2021_Prodi["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts(
-            ).sort_index())
-            valueCompanyRelated2022 = self.__filter_company_related_study(dfCompanyRelated2022_Prodi["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts(
-            ).sort_index())
+                dfCompanyRelated2018_Prodi = dfCompanyRelated2018C[dfCompanyRelated2018C["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyRelated2019_Prodi = dfCompanyRelated2019C[dfCompanyRelated2019C["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyRelated2020_Prodi = dfCompanyRelated2020C[dfCompanyRelated2020C["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyRelated2021_Prodi = dfCompanyRelated2021[dfCompanyRelated2021["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyRelated2022_Prodi = dfCompanyRelated2022[dfCompanyRelated2022["Fakultas/Sekolah"] == self.fakultas]
 
-            self.valueCompanyRelated = np.array([valueCompanyRelated2018,valueCompanyRelated2019,valueCompanyRelated2020, valueCompanyRelated2021, valueCompanyRelated2022])
-        
+                valueCompanyRelated2018 = self.__filter_company_related_study(dfCompanyRelated2018_Prodi["C14. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2019 = self.__filter_company_related_study(dfCompanyRelated2019_Prodi["C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2020 = self.__filter_company_related_study(dfCompanyRelated2020_Prodi["C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2021 = self.__filter_company_related_study(dfCompanyRelated2021_Prodi["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts(
+                ).sort_index())
+                valueCompanyRelated2022 = self.__filter_company_related_study(dfCompanyRelated2022_Prodi["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts(
+                ).sort_index())
 
-        
+                self.valueCompanyRelated = np.array([valueCompanyRelated2018,valueCompanyRelated2019,valueCompanyRelated2020, valueCompanyRelated2021, valueCompanyRelated2022])
+
+            else:
+                valueCompanyRelated2018 = self.__filter_company_related_study(self.df2018["C14. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2019 = self.__filter_company_related_study(self.df2019["C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2020 = self.__filter_company_related_study(self.df2020["C13. Apakah pekerjaan/usaha Anda saat ini sesuai dengan bidang kuliah?"].value_counts().sort_index())
+                valueCompanyRelated2021 = self.__filter_company_related_study(self.df2021["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts(
+                ).sort_index())
+                valueCompanyRelated2022 = self.__filter_company_related_study(self.df2022["Apakah pekerjaan yang Anda lakukan di tempat bekerja sesuai dengan bidang kuliah?"].value_counts(
+                ).sort_index())
+
+                self.valueCompanyRelated = np.array([valueCompanyRelated2018,valueCompanyRelated2019,valueCompanyRelated2020, valueCompanyRelated2021, valueCompanyRelated2022])
+
+
+
 
 class DataframeUserInitializer():
     def __init__(self, dfUser2018, dfUser2019, dfUser2020, dfUser2021, dfUser2022, prodi,fakultas):
