@@ -789,98 +789,198 @@ class DataframeTracerInitializer:
         return result
 
     def init_company_field_data(self, status="Bekerja"):
-        #KARENA DATA 2018-2020 MEMISAHKAN ANTARA KATEGORI A (BEKERJA) DAN B (BEKERJA DAN WIRAUSAHA), MAKA HARUS DIGABUNGKAN
-            dfCompanyField2018_rawA = self.df2018[[
-                "4. Program Studi", "A2. Bidang Usaha"]]
-            dfCompanyField2018A = dfCompanyField2018_rawA.dropna(
-                subset=["A2. Bidang Usaha"])
-            dfCompanyField2018_rawB = self.df2018[[
-                "4. Program Studi", "B2. Bidang Usaha"]]
-            dfCompanyField2018B = dfCompanyField2018_rawB.dropna(
-                subset=["B2. Bidang Usaha"])
-            
-            dfCompanyField2019_rawA = self.df2019[[
-                "4. Program Studi", "A2. Bidang Usaha"]]
-            dfCompanyField2019A = dfCompanyField2019_rawA.dropna(
-                subset=["A2. Bidang Usaha"])
-            dfCompanyField2019_rawB = self.df2019[[
-                "4. Program Studi", "B2. Bidang Usaha"]]
-            dfCompanyField2019B= dfCompanyField2019_rawB.dropna(
-                subset=["B2. Bidang Usaha"])        
-
-            dfCompanyField2020_rawA = self.df2020[[
-                "4. Program Studi", "A2. Bidang Usaha"]]
-            dfCompanyField2020A = dfCompanyField2020_rawA.dropna(
-                subset=["A2. Bidang Usaha"])
-            dfCompanyField2020_rawB = self.df2020[[
-                "4. Program Studi", "B2. Bidang Usaha"]]
-            dfCompanyField2020B = dfCompanyField2020_rawB.dropna(
-                subset= ["B2. Bidang Usaha"])
-            
-            dfCompanyField2021_raw = self.df2021[[
-                "Program Studi", "Bidang usaha bekerja"]]
-            dfCompanyField2021 = dfCompanyField2021_raw.dropna(
-                subset=["Bidang usaha bekerja"])
-            dfCompanyField2020_rawA = self.df2020[[
-                "4. Program Studi", "A2. Bidang Usaha"]]
-            dfCompanyField2020A = dfCompanyField2020_rawA.dropna(
-                subset=["A2. Bidang Usaha"])
-            dfCompanyField2020_rawB = self.df2020[[
-                "4. Program Studi", "B2. Bidang Usaha"]]
-            dfCompanyField2020B = dfCompanyField2020_rawB.dropna(
-                subset= ["B2. Bidang Usaha"])
-            
-            dfCompanyField2021_raw = self.df2021[[
-                "Program Studi", "Bidang usaha bekerja"]]
-            dfCompanyField2021 = dfCompanyField2021_raw.dropna(
-                subset=["Bidang usaha bekerja"])
-
-            dfCompanyField2022_raw = self.df2022[[
-                "Program Studi", "Bidang usaha bekerja"]]
-            dfCompanyField2022 = dfCompanyField2022_raw.dropna(
-                subset=["Bidang usaha bekerja"])
         
+
+        # for PER PRODI
+        if self.prodi != "All":
+        #KARENA DATA 2018-2020 MEMISAHKAN ANTARA KATEGORI A (BEKERJA) DAN B (BEKERJA DAN WIRAUSAHA), MAKA HARUS DIGABUNGKAN
+                dfCompanyField2018_rawA = self.df2018[[
+                    "4. Program Studi", "A2. Bidang Usaha"]]
+                dfCompanyField2018A = dfCompanyField2018_rawA.dropna(
+                    subset=["A2. Bidang Usaha"])
+                dfCompanyField2018_rawB = self.df2018[[
+                    "4. Program Studi", "B2. Bidang Usaha"]]
+                dfCompanyField2018B = dfCompanyField2018_rawB.dropna(
+                    subset=["B2. Bidang Usaha"])
+                
+                dfCompanyField2019_rawA = self.df2019[[
+                    "4. Program Studi", "A2. Bidang Usaha"]]
+                dfCompanyField2019A = dfCompanyField2019_rawA.dropna(
+                    subset=["A2. Bidang Usaha"])
+                dfCompanyField2019_rawB = self.df2019[[
+                    "4. Program Studi", "B2. Bidang Usaha"]]
+                dfCompanyField2019B= dfCompanyField2019_rawB.dropna(
+                    subset=["B2. Bidang Usaha"])        
+
+                dfCompanyField2020_rawA = self.df2020[[
+                    "4. Program Studi", "A2. Bidang Usaha"]]
+                dfCompanyField2020A = dfCompanyField2020_rawA.dropna(
+                    subset=["A2. Bidang Usaha"])
+                dfCompanyField2020_rawB = self.df2020[[
+                    "4. Program Studi", "B2. Bidang Usaha"]]
+                dfCompanyField2020B = dfCompanyField2020_rawB.dropna(
+                    subset= ["B2. Bidang Usaha"])
+                
+                dfCompanyField2021_raw = self.df2021[[
+                    "Program Studi", "Bidang usaha bekerja"]]
+                dfCompanyField2021 = dfCompanyField2021_raw.dropna(
+                    subset=["Bidang usaha bekerja"])
+                dfCompanyField2020_rawA = self.df2020[[
+                    "4. Program Studi", "A2. Bidang Usaha"]]
+                dfCompanyField2020A = dfCompanyField2020_rawA.dropna(
+                    subset=["A2. Bidang Usaha"])
+                dfCompanyField2020_rawB = self.df2020[[
+                    "4. Program Studi", "B2. Bidang Usaha"]]
+                dfCompanyField2020B = dfCompanyField2020_rawB.dropna(
+                    subset= ["B2. Bidang Usaha"])
+                
+                dfCompanyField2021_raw = self.df2021[[
+                    "Program Studi", "Bidang usaha bekerja"]]
+                dfCompanyField2021 = dfCompanyField2021_raw.dropna(
+                    subset=["Bidang usaha bekerja"])
+
+                dfCompanyField2022_raw = self.df2022[[
+                    "Program Studi", "Bidang usaha bekerja"]]
+                dfCompanyField2022 = dfCompanyField2022_raw.dropna(
+                    subset=["Bidang usaha bekerja"])
             
-            dfCompanyField2018A_Prodi = dfCompanyField2018A[dfCompanyField2018A["4. Program Studi"] == self.prodi]
-            dfCompanyField2018B_Prodi = dfCompanyField2018B[dfCompanyField2018B["4. Program Studi"] == self.prodi]
-            dfCompanyField2019A_Prodi = dfCompanyField2019A[dfCompanyField2019A["4. Program Studi"] == self.prodi]
-            dfCompanyField2019B_Prodi = dfCompanyField2019B[dfCompanyField2019B["4. Program Studi"] == self.prodi]
-            dfCompanyField2020A_Prodi = dfCompanyField2020A[dfCompanyField2020A["4. Program Studi"] == self.prodi]
-            dfCompanyField2020B_Prodi = dfCompanyField2020B[dfCompanyField2020B["4. Program Studi"] == self.prodi]
-            dfCompanyField2021_Prodi = dfCompanyField2021[dfCompanyField2021["Program Studi"] == self.prodi]
-            dfCompanyField2022_Prodi = dfCompanyField2022[dfCompanyField2022["Program Studi"] == self.prodi]
+                
+                dfCompanyField2018A_Prodi = dfCompanyField2018A[dfCompanyField2018A["4. Program Studi"] == self.prodi]
+                dfCompanyField2018B_Prodi = dfCompanyField2018B[dfCompanyField2018B["4. Program Studi"] == self.prodi]
+                dfCompanyField2019A_Prodi = dfCompanyField2019A[dfCompanyField2019A["4. Program Studi"] == self.prodi]
+                dfCompanyField2019B_Prodi = dfCompanyField2019B[dfCompanyField2019B["4. Program Studi"] == self.prodi]
+                dfCompanyField2020A_Prodi = dfCompanyField2020A[dfCompanyField2020A["4. Program Studi"] == self.prodi]
+                dfCompanyField2020B_Prodi = dfCompanyField2020B[dfCompanyField2020B["4. Program Studi"] == self.prodi]
+                dfCompanyField2021_Prodi = dfCompanyField2021[dfCompanyField2021["Program Studi"] == self.prodi]
+                dfCompanyField2022_Prodi = dfCompanyField2022[dfCompanyField2022["Program Studi"] == self.prodi]
 
-        #valuecounts
-            valueCompanyField2018A_Prodi = dfCompanyField2018A_Prodi["A2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
-            valueCompanyField2018B_Prodi = dfCompanyField2018B_Prodi["B2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
-            valueCompanyField2019A_Prodi = dfCompanyField2019A_Prodi["A2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
-            valueCompanyField2019B_Prodi = dfCompanyField2019B_Prodi["B2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
-            valueCompanyField2020A_Prodi = dfCompanyField2020A_Prodi["A2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
-            valueCompanyField2020B_Prodi = dfCompanyField2020B_Prodi["B2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+            #valuecounts
+                valueCompanyField2018A_Prodi = dfCompanyField2018A_Prodi["A2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+                valueCompanyField2018B_Prodi = dfCompanyField2018B_Prodi["B2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+                valueCompanyField2019A_Prodi = dfCompanyField2019A_Prodi["A2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+                valueCompanyField2019B_Prodi = dfCompanyField2019B_Prodi["B2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+                valueCompanyField2020A_Prodi = dfCompanyField2020A_Prodi["A2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+                valueCompanyField2020B_Prodi = dfCompanyField2020B_Prodi["B2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
 
 
-            valueCompanyField2018_Prodi = valueCompanyField2018A_Prodi.add(valueCompanyField2018B_Prodi, fill_value = 0 )
-            valueCompanyField2019_Prodi = valueCompanyField2019A_Prodi.add(valueCompanyField2019B_Prodi, fill_value = 0 )
-            valueCompanyField2020_Prodi = valueCompanyField2020A_Prodi.add(valueCompanyField2020B_Prodi, fill_value = 0 )
-            valueCompanyField2021_Prodi = dfCompanyField2021_Prodi["Bidang usaha bekerja"].value_counts(ascending= True).sort_index(ascending= True)
-            valueCompanyField2022_Prodi = dfCompanyField2022_Prodi["Bidang usaha bekerja"].value_counts(ascending= True).sort_index(ascending= True)
-        #menyamakan indeks dengan insert_missing)_index
-            valueCompanyField2018_Prodi = self.__insert_missing_index(valueCompanyField2018_Prodi.astype(np.int64))
-         
-            valueCompanyField2019_Prodi = self.__insert_missing_index(valueCompanyField2019_Prodi.astype(np.int64))
-          
-            valueCompanyField2020_Prodi = self.__insert_missing_index(valueCompanyField2020_Prodi.astype(np.int64))
-           
-            valueCompanyField2021_Prodi = self.__insert_missing_index(valueCompanyField2021_Prodi.astype(np.int64)).drop(0, axis = 1)
-            valueCompanyField2022_Prodi = self.__insert_missing_index(valueCompanyField2022_Prodi.astype(np.int64)).drop(0, axis = 1)
-
-        #baru diadd utk 2018-2020
+                valueCompanyField2018_Prodi = valueCompanyField2018A_Prodi.add(valueCompanyField2018B_Prodi, fill_value = 0 )
+                valueCompanyField2019_Prodi = valueCompanyField2019A_Prodi.add(valueCompanyField2019B_Prodi, fill_value = 0 )
+                valueCompanyField2020_Prodi = valueCompanyField2020A_Prodi.add(valueCompanyField2020B_Prodi, fill_value = 0 )
+                valueCompanyField2021_Prodi = dfCompanyField2021_Prodi["Bidang usaha bekerja"].value_counts(ascending= True).sort_index(ascending= True)
+                valueCompanyField2022_Prodi = dfCompanyField2022_Prodi["Bidang usaha bekerja"].value_counts(ascending= True).sort_index(ascending= True)
+            #menyamakan indeks dengan insert_missing)_index
+                valueCompanyField2018_Prodi = self.__insert_missing_index(valueCompanyField2018_Prodi.astype(np.int64))
             
+                valueCompanyField2019_Prodi = self.__insert_missing_index(valueCompanyField2019_Prodi.astype(np.int64))
+            
+                valueCompanyField2020_Prodi = self.__insert_missing_index(valueCompanyField2020_Prodi.astype(np.int64))
+            
+                valueCompanyField2021_Prodi = self.__insert_missing_index(valueCompanyField2021_Prodi.astype(np.int64)).drop(0, axis = 1)
+                valueCompanyField2022_Prodi = self.__insert_missing_index(valueCompanyField2022_Prodi.astype(np.int64)).drop(0, axis = 1)
 
-            self.valueCompanyField_Prodi = pd.concat ([valueCompanyField2018_Prodi,valueCompanyField2019_Prodi,valueCompanyField2020_Prodi, valueCompanyField2021_Prodi, valueCompanyField2022_Prodi], axis =1)
-            self.valueCompanyField_Prodi.columns = ['2018', '2019', '2020', '2021', '2022']
+            #baru diadd utk 2018-2020
+                
+
+                self.valueCompanyField_Prodi = pd.concat ([valueCompanyField2018_Prodi,valueCompanyField2019_Prodi,valueCompanyField2020_Prodi, valueCompanyField2021_Prodi, valueCompanyField2022_Prodi], axis =1)
+                self.valueCompanyField_Prodi.columns = ['2018', '2019', '2020', '2021', '2022']
+
+        #for PER FAKULTAS
+        # 
+        elif self.prodi == "All" and self.fakultas != "All":
+                #KARENA DATA 2018-2020 MEMISAHKAN ANTARA KATEGORI A (BEKERJA) DAN B (BEKERJA DAN WIRAUSAHA), MAKA HARUS DIGABUNGKAN
+                dfCompanyField2018_rawA = self.df2018[[
+                    "Fakultas/Sekolah", "A2. Bidang Usaha"]]
+                dfCompanyField2018A = dfCompanyField2018_rawA.dropna(
+                    subset=["A2. Bidang Usaha"])
+                dfCompanyField2018_rawB = self.df2018[[
+                    "Fakultas/Sekolah", "B2. Bidang Usaha"]]
+                dfCompanyField2018B = dfCompanyField2018_rawB.dropna(
+                    subset=["B2. Bidang Usaha"])
+                
+                dfCompanyField2019_rawA = self.df2019[[
+                    "Fakultas/Sekolah", "A2. Bidang Usaha"]]
+                dfCompanyField2019A = dfCompanyField2019_rawA.dropna(
+                    subset=["A2. Bidang Usaha"])
+                dfCompanyField2019_rawB = self.df2019[[
+                    "Fakultas/Sekolah", "B2. Bidang Usaha"]]
+                dfCompanyField2019B= dfCompanyField2019_rawB.dropna(
+                    subset=["B2. Bidang Usaha"])        
+
+                dfCompanyField2020_rawA = self.df2020[[
+                    "Fakultas/Sekolah", "A2. Bidang Usaha"]]
+                dfCompanyField2020A = dfCompanyField2020_rawA.dropna(
+                    subset=["A2. Bidang Usaha"])
+                dfCompanyField2020_rawB = self.df2020[[
+                    "Fakultas/Sekolah", "B2. Bidang Usaha"]]
+                dfCompanyField2020B = dfCompanyField2020_rawB.dropna(
+                    subset= ["B2. Bidang Usaha"])
+                
+                dfCompanyField2021_raw = self.df2021[[
+                    "Fakultas/Sekolah", "Bidang usaha bekerja"]]
+                dfCompanyField2021 = dfCompanyField2021_raw.dropna(
+                    subset=["Bidang usaha bekerja"])
+                dfCompanyField2020_rawA = self.df2020[[
+                    "Fakultas/Sekolah", "A2. Bidang Usaha"]]
+                dfCompanyField2020A = dfCompanyField2020_rawA.dropna(
+                    subset=["A2. Bidang Usaha"])
+                dfCompanyField2020_rawB = self.df2020[[
+                    "Fakultas/Sekolah", "B2. Bidang Usaha"]]
+                dfCompanyField2020B = dfCompanyField2020_rawB.dropna(
+                    subset= ["B2. Bidang Usaha"])
+                
+                dfCompanyField2021_raw = self.df2021[[
+                    "Fakultas/Sekolah", "Bidang usaha bekerja"]]
+                dfCompanyField2021 = dfCompanyField2021_raw.dropna(
+                    subset=["Bidang usaha bekerja"])
+
+                dfCompanyField2022_raw = self.df2022[[
+                    "Fakultas/Sekolah", "Bidang usaha bekerja"]]
+                dfCompanyField2022 = dfCompanyField2022_raw.dropna(
+                    subset=["Bidang usaha bekerja"])
+            
+                
+                dfCompanyField2018A_Fakultas = dfCompanyField2018A[dfCompanyField2018A["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyField2018B_Fakultas = dfCompanyField2018B[dfCompanyField2018B["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyField2019A_Fakultas = dfCompanyField2019A[dfCompanyField2019A["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyField2019B_Fakultas = dfCompanyField2019B[dfCompanyField2019B["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyField2020A_Fakultas = dfCompanyField2020A[dfCompanyField2020A["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyField2020B_Fakultas = dfCompanyField2020B[dfCompanyField2020B["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyField2021_Fakultas = dfCompanyField2021[dfCompanyField2021["Fakultas/Sekolah"] == self.fakultas]
+                dfCompanyField2022_Fakultas = dfCompanyField2022[dfCompanyField2022["Fakultas/Sekolah"] == self.fakultas]
+
+            #valuecounts
+                valueCompanyField2018A_Fakultas = dfCompanyField2018A_Fakultas["A2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+                valueCompanyField2018B_Fakultas = dfCompanyField2018B_Fakultas["B2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+                valueCompanyField2019A_Fakultas = dfCompanyField2019A_Fakultas["A2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+                valueCompanyField2019B_Fakultas = dfCompanyField2019B_Fakultas["B2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+                valueCompanyField2020A_Fakultas = dfCompanyField2020A_Fakultas["A2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+                valueCompanyField2020B_Fakultas = dfCompanyField2020B_Fakultas["B2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+
+
+                valueCompanyField2018_Fakultas = valueCompanyField2018A_Fakultas.add(valueCompanyField2018B_Fakultas, fill_value = 0 )
+                valueCompanyField2019_Fakultas = valueCompanyField2019A_Fakultas.add(valueCompanyField2019B_Fakultas, fill_value = 0 )
+                valueCompanyField2020_Fakultas = valueCompanyField2020A_Fakultas.add(valueCompanyField2020B_Fakultas, fill_value = 0 )
+                valueCompanyField2021_Fakultas = dfCompanyField2021_Fakultas["Bidang usaha bekerja"].value_counts(ascending= True).sort_index(ascending= True)
+                valueCompanyField2022_Fakultas = dfCompanyField2022_Fakultas["Bidang usaha bekerja"].value_counts(ascending= True).sort_index(ascending= True)
+            #menyamakan indeks dengan insert_missing)_index
+                valueCompanyField2018_Fakultas = self.__insert_missing_index(valueCompanyField2018_Fakultas.astype(np.int64))
+            
+                valueCompanyField2019_Fakultas = self.__insert_missing_index(valueCompanyField2019_Fakultas.astype(np.int64))
+            
+                valueCompanyField2020_Fakultas = self.__insert_missing_index(valueCompanyField2020_Fakultas.astype(np.int64))
+            
+                valueCompanyField2021_Fakultas = self.__insert_missing_index(valueCompanyField2021_Fakultas.astype(np.int64)).drop(0, axis = 1)
+                valueCompanyField2022_Fakultas = self.__insert_missing_index(valueCompanyField2022_Fakultas.astype(np.int64)).drop(0, axis = 1)
+
+            #baru diadd utk 2018-2020
+                
+
+                self.valueCompanyField_Fakultas = pd.concat ([valueCompanyField2018_Fakultas,valueCompanyField2019_Fakultas,valueCompanyField2020_Fakultas, valueCompanyField2021_Fakultas, valueCompanyField2022_Fakultas], axis =1)
+                self.valueCompanyField_Fakultas.columns = ['2018', '2019', '2020', '2021', '2022']
             
     def init_bussiness_field_data(self):
+        
+        if self.prodi != "All":
             
             dfBussinessField2018_raw = self.df2018[[
                 "4. Program Studi", "C2. Bidang Usaha"]]
@@ -928,6 +1028,54 @@ class DataframeTracerInitializer:
 
             self.valueBussinessField_Prodi = pd.concat ([valueBussinessField2018_Prodi,valueBussinessField2019_Prodi,valueBussinessField2020_Prodi, valueBussinessField2021_Prodi, valueBussinessField2022_Prodi], axis =1)
             self.valueBussinessField_Prodi.columns = ['2018', '2019', '2020', '2021', '2022']
+        elif self.prodi == "All" and self.fakultas != "All":
+            
+            dfBussinessField2018_raw = self.df2018[[
+                "Fakultas/Sekolah", "C2. Bidang Usaha"]]
+            dfBussinessField2018 = dfBussinessField2018_raw.dropna(
+                subset=["C2. Bidang Usaha"])
+            
+            dfBussinessField2019_raw = self.df2019[[
+                "Fakultas/Sekolah", "C2. Bidang Usaha"]]
+            dfBussinessField2019 = dfBussinessField2019_raw.dropna(
+                subset=["C2. Bidang Usaha"])
+    
+
+            dfBussinessField2020_raw = self.df2020[[
+                "Fakultas/Sekolah", "C2. Bidang Usaha"]]
+            dfBussinessField2020 = dfBussinessField2020_raw.dropna(
+                subset=["C2. Bidang Usaha"])
+            
+            dfBussinessField2021_raw = self.df2021[[
+            "Fakultas/Sekolah", "Bidang usaha wirausaha/wiraswasta"]]
+            dfBussinessField2021 = dfBussinessField2021_raw.dropna(
+                subset=["Bidang usaha wirausaha/wiraswasta"])
+
+            dfBussinessField2022_raw = self.df2022[[
+                "Fakultas/Sekolah", "Bidang usaha wirausaha/wiraswasta"]]
+            dfBussinessField2022 = dfBussinessField2022_raw.dropna(
+                subset=["Bidang usaha wirausaha/wiraswasta"])
+
+            dfBussinessField2018_fakultas = dfBussinessField2018[dfBussinessField2018["Fakultas/Sekolah"] == self.fakultas]
+            dfBussinessField2019_fakultas = dfBussinessField2019[dfBussinessField2019["Fakultas/Sekolah"] == self.fakultas]
+            dfBussinessField2020_fakultas = dfBussinessField2020[dfBussinessField2020["Fakultas/Sekolah"] == self.fakultas]
+            dfBussinessField2021_fakultas = dfBussinessField2021[dfBussinessField2021["Fakultas/Sekolah"] == self.fakultas]
+            dfBussinessField2022_fakultas = dfBussinessField2022[dfBussinessField2022["Fakultas/Sekolah"] == self.fakultas]
+
+            valueBussinessField2018_fakultas = dfBussinessField2018_fakultas["C2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+            valueBussinessField2019_fakultas = dfBussinessField2019_fakultas["C2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+            valueBussinessField2020_fakultas = dfBussinessField2020_fakultas["C2. Bidang Usaha"].value_counts(ascending= True).sort_index(ascending= True)
+            valueBussinessField2021_fakultas = dfBussinessField2021_fakultas["Bidang usaha wirausaha/wiraswasta"].value_counts(ascending= True).sort_index(ascending= True)
+            valueBussinessField2022_fakultas = dfBussinessField2022_fakultas["Bidang usaha wirausaha/wiraswasta"].value_counts(ascending= True).sort_index(ascending= True)
+
+            valueBussinessField2018_fakultas = self.__insert_missing_index(valueBussinessField2018_fakultas.astype(np.int64)).drop(0, axis = 1)
+            valueBussinessField2019_fakultas = self.__insert_missing_index(valueBussinessField2019_fakultas.astype(np.int64)).drop(0, axis = 1)
+            valueBussinessField2020_fakultas = self.__insert_missing_index(valueBussinessField2020_fakultas.astype(np.int64)).drop(0, axis = 1)
+            valueBussinessField2021_fakultas = self.__insert_missing_index(valueBussinessField2021_fakultas.astype(np.int64)).drop(0, axis = 1)
+            valueBussinessField2022_fakultas = self.__insert_missing_index(valueBussinessField2022_fakultas.astype(np.int64)).drop(0, axis = 1)
+
+            self.valueBussinessField_fakultas = pd.concat ([valueBussinessField2018_fakultas,valueBussinessField2019_fakultas,valueBussinessField2020_fakultas, valueBussinessField2021_fakultas, valueBussinessField2022_fakultas], axis =1)
+            self.valueBussinessField_fakultas.columns = ['2018', '2019', '2020', '2021', '2022']
 
     def init_revenue_data(self):
         # Get the raw data
@@ -1476,6 +1624,7 @@ class DataframeTracerInitializer:
                 self.valueCompanyRelated = np.array([valueCompanyRelated2018,valueCompanyRelated2019,valueCompanyRelated2020, valueCompanyRelated2021, valueCompanyRelated2022])
 
     def init_company_type_data(self):
+        if self.prodi != "All":
             dfCompanyType2018_raw = self.df2018[[
                 "4. Program Studi", "42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
             dfCompanyType2018 = dfCompanyType2018_raw.dropna(
@@ -1521,6 +1670,52 @@ class DataframeTracerInitializer:
             #UNTUK STACKED BARPLOT
             self.valueCompanyType_Prodi = pd.concat ([valueCompanyType2018_Prodi,valueCompanyType2019_Prodi,valueCompanyType2020_Prodi, valueCompanyType2021_Prodi, valueCompanyType2022_Prodi], axis =1)
             self.valueCompanyType_Prodi.columns = ['2018', '2019', '2020', '2021', '2022']       
+        elif self.prodi == "All" and self.fakultas != "All":
+            dfCompanyType2018_raw = self.df2018[[
+                "Fakultas/Sekolah", "42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
+            dfCompanyType2018 = dfCompanyType2018_raw.dropna(
+                subset=["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"])
+            
+            dfCompanyType2019_raw = self.df2019[[
+                "Fakultas/Sekolah", "42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
+            dfCompanyType2019 = dfCompanyType2019_raw.dropna(
+                subset=["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"])
+    
+
+            dfCompanyType2020_raw = self.df2020[[
+                "Fakultas/Sekolah", "42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
+            dfCompanyType2020 = dfCompanyType2020_raw.dropna(
+                subset=["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"])
+            
+            dfCompanyType2021_raw = self.df2021[[
+            "Fakultas/Sekolah", "Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
+            dfCompanyType2021 = dfCompanyType2021_raw.dropna(
+                subset=["Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"])
+
+            dfCompanyType2022_raw = self.df2022[[
+                "Fakultas/Sekolah", "Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
+            dfCompanyType2022 = dfCompanyType2022_raw.dropna(
+                subset=["Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"])
+
+            dfCompanyType2018_fakultas = dfCompanyType2018[dfCompanyType2018["Fakultas/Sekolah"] == self.fakultas]
+            dfCompanyType2019_fakultas = dfCompanyType2019[dfCompanyType2019["Fakultas/Sekolah"] == self.fakultas]
+            dfCompanyType2020_fakultas = dfCompanyType2020[dfCompanyType2020["Fakultas/Sekolah"] == self.fakultas]
+            dfCompanyType2021_fakultas = dfCompanyType2021[dfCompanyType2021["Fakultas/Sekolah"] == self.fakultas]
+            dfCompanyType2022_fakultas = dfCompanyType2022[dfCompanyType2022["Fakultas/Sekolah"] == self.fakultas]
+
+            valueCompanyType2018_fakultas = dfCompanyType2018_fakultas["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
+            valueCompanyType2019_fakultas = dfCompanyType2019_fakultas["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
+            valueCompanyType2020_fakultas = dfCompanyType2020_fakultas["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
+            valueCompanyType2021_fakultas = dfCompanyType2021_fakultas["Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
+            valueCompanyType2022_fakultas = dfCompanyType2022_fakultas["Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
+            #UNTUK DONUT
+            self.valueCompanyType_fakultas1820 = pd.concat ([valueCompanyType2018_fakultas,valueCompanyType2019_fakultas,valueCompanyType2020_fakultas], axis =1)
+            self.valueCompanyType_fakultas1820.columns = ['2018', '2019', '2020']
+            self.valueCompanyType_fakultas2122 = pd.concat ([valueCompanyType2021_fakultas,valueCompanyType2022_fakultas], axis =1)
+            self.valueCompanyType_fakultas2122.columns = ['2021', '2022']
+            #UNTUK STACKED BARPLOT
+            self.valueCompanyType_fakultas = pd.concat ([valueCompanyType2018_fakultas,valueCompanyType2019_fakultas,valueCompanyType2020_fakultas, valueCompanyType2021_fakultas, valueCompanyType2022_fakultas], axis =1)
+            self.valueCompanyType_fakultas.columns = ['2018', '2019', '2020', '2021', '2022']
 
 
 class DataframeUserInitializer():
