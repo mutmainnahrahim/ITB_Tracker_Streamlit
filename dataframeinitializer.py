@@ -938,7 +938,7 @@ class DataframeTracerInitializer:
                                               'B9. Berapa bonus rata-rata per tahun (Jika ada)? (dalam Rupiah)', 
                                          'C8. Berapa rata-rata penghasilan per bulan saat ini di luar bonus? (dalam Rupiah)',
                                               'C9. Berapa bonus rata-rata per tahun (Jika ada)? (dalam Rupiah)',
-                                         'C13. Berapa omset rata-rata perbulan? (dalam Rupiah)']]
+                                         'C13. Berapa omset rata-rata perbulan? (dalam Rupiah)','Fakultas/Sekolah']]
         dfrevenue2019_raw = self.df2019[['4. Program Studi', '33. Pekerjaan utama saat ini?', 
                                          'A8. Berapa gaji per bulan saat ini di luar bonus? (dalam Rupiah)',
                                               'A9. Berapa bonus rata-rata per tahun (Jika ada)? (dalam Rupiah)',
@@ -946,7 +946,7 @@ class DataframeTracerInitializer:
                                               'B9. Berapa bonus rata-rata per tahun (Jika ada)? (dalam Rupiah)',
                                          'C7. Berapa rata-rata penghasilan per bulan saat ini di luar bonus? (dalam Rupiah)',
                                               'C8. Berapa bonus rata-rata per tahun (Jika ada)? (dalam Rupiah)',
-                                         'C12. Berapa omset rata-rata perbulan? (dalam Rupiah)']]
+                                         'C12. Berapa omset rata-rata perbulan? (dalam Rupiah)','Fakultas/Sekolah']]
         dfrevenue2020_raw = self.df2020[['4. Program Studi', '33. Pekerjaan utama saat ini?', 
                                          'A8. Berapa gaji per bulan saat ini di luar bonus? (dalam Rupiah)',
                                               'A9. Berapa bonus rata-rata per tahun (Jika ada)? (dalam Rupiah)',
@@ -954,16 +954,16 @@ class DataframeTracerInitializer:
                                               'B9. Berapa bonus rata-rata per tahun (Jika ada)? (dalam Rupiah)',
                                          'C7. Berapa rata-rata penghasilan per bulan saat ini di luar bonus? (dalam Rupiah)',
                                               'C8. Berapa bonus rata-rata per tahun (Jika ada)? (dalam Rupiah)',
-                                         'C12. Berapa omset rata-rata perbulan? (dalam Rupiah)']]
+                                         'C12. Berapa omset rata-rata perbulan? (dalam Rupiah)','Fakultas/Sekolah']]
         dfrevenue2021_raw = self.df2021[['Program Studi', 'Pekerjaan utama saat ini?', 
                                          'Berapa gaji per bulan saat ini di luar bonus? (dalam Rupiah)', 
                                          'Berapa bonus rata-rata per tahun (Jika ada)? (dalam Rupiah)',
-                                         'Berapa omset rata-rata perbulan? (dalam Rupiah)']]
+                                         'Berapa omset rata-rata perbulan? (dalam Rupiah)','Fakultas/Sekolah']]
         dfrevenue2022_raw = self.df2022[['Program Studi', 'Pekerjaan utama saat ini?', 
                                          'Berapa gaji per bulan saat ini di luar bonus? (dalam Rupiah)', 
                                          'Berapa bonus rata-rata per tahun (Jika ada)? (dalam Rupiah)',
-                                         'Berapa omset rata-rata perbulan? (dalam Rupiah)']]
-
+                                         'Berapa omset rata-rata perbulan? (dalam Rupiah)','Fakultas/Sekolah']]
+        
         # GET PRODI DATAFRAME
         if self.prodi == "All":
             #Fakultas Revenue
@@ -1475,7 +1475,52 @@ class DataframeTracerInitializer:
 
                 self.valueCompanyRelated = np.array([valueCompanyRelated2018,valueCompanyRelated2019,valueCompanyRelated2020, valueCompanyRelated2021, valueCompanyRelated2022])
 
+    def init_company_type_data(self):
+            dfCompanyType2018_raw = self.df2018[[
+                "4. Program Studi", "42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
+            dfCompanyType2018 = dfCompanyType2018_raw.dropna(
+                subset=["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"])
+            
+            dfCompanyType2019_raw = self.df2019[[
+                "4. Program Studi", "42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
+            dfCompanyType2019 = dfCompanyType2019_raw.dropna(
+                subset=["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"])
+    
 
+            dfCompanyType2020_raw = self.df2020[[
+                "4. Program Studi", "42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
+            dfCompanyType2020 = dfCompanyType2020_raw.dropna(
+                subset=["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"])
+            
+            dfCompanyType2021_raw = self.df2021[[
+            "Program Studi", "Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
+            dfCompanyType2021 = dfCompanyType2021_raw.dropna(
+                subset=["Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"])
+
+            dfCompanyType2022_raw = self.df2022[[
+                "Program Studi", "Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"]]
+            dfCompanyType2022 = dfCompanyType2022_raw.dropna(
+                subset=["Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"])
+
+            dfCompanyType2018_Prodi = dfCompanyType2018[dfCompanyType2018["4. Program Studi"] == self.prodi]
+            dfCompanyType2019_Prodi = dfCompanyType2019[dfCompanyType2019["4. Program Studi"] == self.prodi]
+            dfCompanyType2020_Prodi = dfCompanyType2020[dfCompanyType2020["4. Program Studi"] == self.prodi]
+            dfCompanyType2021_Prodi = dfCompanyType2021[dfCompanyType2021["Program Studi"] == self.prodi]
+            dfCompanyType2022_Prodi = dfCompanyType2022[dfCompanyType2022["Program Studi"] == self.prodi]
+
+            valueCompanyType2018_Prodi = dfCompanyType2018_Prodi["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
+            valueCompanyType2019_Prodi = dfCompanyType2019_Prodi["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
+            valueCompanyType2020_Prodi = dfCompanyType2020_Prodi["42. Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
+            valueCompanyType2021_Prodi = dfCompanyType2021_Prodi["Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
+            valueCompanyType2022_Prodi = dfCompanyType2022_Prodi["Apa jenis perusahaan / instansi / institusi tempat Anda bekerja sekarang?"].value_counts(ascending= True).sort_index(ascending= True)
+            #UNTUK DONUT
+            self.valueCompanyType_Prodi1820 = pd.concat ([valueCompanyType2018_Prodi,valueCompanyType2019_Prodi,valueCompanyType2020_Prodi], axis =1)
+            self.valueCompanyType_Prodi1820.columns = ['2018', '2019', '2020']
+            self.valueCompanyType_Prodi2122 = pd.concat ([valueCompanyType2021_Prodi,valueCompanyType2022_Prodi], axis =1)
+            self.valueCompanyType_Prodi2122.columns = ['2021', '2022']
+            #UNTUK STACKED BARPLOT
+            self.valueCompanyType_Prodi = pd.concat ([valueCompanyType2018_Prodi,valueCompanyType2019_Prodi,valueCompanyType2020_Prodi, valueCompanyType2021_Prodi, valueCompanyType2022_Prodi], axis =1)
+            self.valueCompanyType_Prodi.columns = ['2018', '2019', '2020', '2021', '2022']       
 
 
 class DataframeUserInitializer():
