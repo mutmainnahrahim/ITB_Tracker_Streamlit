@@ -88,37 +88,6 @@ class GrapherTracer(DataframeTracerInitializer):
                         "[{}]; {}%".format(Respondent_Fakultas[i], int(round(height, 0))), size=18,
                         ha='center', va='bottom')
                 i += 1
-        
-        else:
-            # df2019_competenceA_EL.shape[0] # To search The num Of Rows.
-            Respondent = np.array([self.df2018_competenceA.shape[0],
-                                        self.df2019_competenceA.shape[0],
-                                        self.df2020_competenceA.shape[0],
-                                        self.df2021_competenceA.shape[0],
-                                        self.df2022_competenceA.shape[0]])
-
-            # Manually Inputted from Data responden 2018-2022.xlsx
-            PercentageRespondent = np.array([self.df2018_competenceA.shape[0]/153,
-                                                self.df2019_competenceA.shape[0]/141,
-                                                self.df2020_competenceA.shape[0]/136,
-                                                self.df2021_competenceA.shape[0]/145,
-                                                self.df2022_competenceA.shape[0]/94])
-
-            # convert to pandas
-            dfPercentage = pd.DataFrame(PercentageRespondent, index=year)
-
-            fig, ax = plt.subplots(figsize=(20, 10))
-            rects1 = ax.bar(year, PercentageRespondent*100,
-                        color=['blue', 'orange', 'green', 'purple', 'red'], width=0.3)
-
-            # Make description/annotation in above bar plots:
-            i = 0
-            for rect in rects1:
-                height = rect.get_height()
-                ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,
-                        "[{}]; {}%".format(Respondent[i], int(round(height, 0))), size=18,
-                        ha='center', va='bottom')
-                i += 1
 
         ax.set_ylabel('Persentase Mahasiswa\nMengisi Kuesioner (%)\n', size=20)
         ax.set_xlabel('Tahun', size=20)
@@ -1135,92 +1104,178 @@ class GrapherTracer(DataframeTracerInitializer):
         st.pyplot(fig)
     
     def draw_bussiness_field_data(self):
+        if self.prodi != "All":
+            dfbusfield = self.valueBussinessField_Prodi
+            dfbusfieldt = dfbusfield.T
+            dfbusfieldt["sum"] =dfbusfieldt.sum(axis =1)
+            #HITUNG PERSEN
+            percentbusfield = dfbusfieldt.div(dfbusfieldt["sum"], axis=0)*100 
+            percentbusfield.pop("sum")
+            figb = px.bar(percentbusfield, barmode='stack', title="Kategori Perusahaan (Wirausaha)")
+            fig2b = px.line(percentbusfield, title="Kategori Perusahaan (Wirausaha)")
+            st.plotly_chart(figb, use_container_width=True) 
+            st.plotly_chart(fig2b, use_container_width=True) 
+            print("bussiness field data drawn")
 
-        dfbusfield = self.valueBussinessField_Prodi
-        dfbusfieldt = dfbusfield.T
-        dfbusfieldt["sum"] =dfbusfieldt.sum(axis =1)
-        #HITUNG PERSEN
-        percentbusfield = dfbusfieldt.div(dfbusfieldt["sum"], axis=0)*100 
-        percentbusfield.pop("sum")
-        figb = px.bar(percentbusfield, barmode='stack', title="Kategori Perusahaan (Wirausaha)")
-        fig2b = px.line(percentbusfield, title="Kategori Perusahaan (Wirausaha)")
-        st.plotly_chart(figb, use_container_width=True) 
-        st.plotly_chart(fig2b, use_container_width=True) 
-        print("bussiness field data drawn")
+        elif self.prodi == "All" and self.fakultas != "All":
+            dfbusfield = self.valueBussinessField_fakultas
+            dfbusfieldt = dfbusfield.T
+            dfbusfieldt["sum"] =dfbusfieldt.sum(axis =1)
+            #HITUNG PERSEN
+            percentbusfield = dfbusfieldt.div(dfbusfieldt["sum"], axis=0)*100 
+            percentbusfield.pop("sum")
+            figb = px.bar(percentbusfield, barmode='stack', title="Kategori Perusahaan (Wirausaha)")
+            fig2b = px.line(percentbusfield, title="Kategori Perusahaan (Wirausaha)")
+            st.plotly_chart(figb, use_container_width=True) 
+            st.plotly_chart(fig2b, use_container_width=True) 
+            print("bussiness field data drawn")
         
     def draw_company_field_data(self):
-        
-        dfcomfield = self.valueCompanyField_Prodi
-        dfcomfieldt = dfcomfield.T
-        dfcomfieldt["sum"] =dfcomfieldt.sum(axis =1)
-        #HITUNG PERSEN
-        percentcomfield = dfcomfieldt.div(dfcomfieldt["sum"], axis=0)*100
-        percentcomfield.pop("sum")
-        fig = px.bar(percentcomfield, barmode='stack', title="Kategori Perusahaan (Bekerja)")
-        fig2 = px.line(percentcomfield, title="Kategori Perusahaan (Bekerja)")
-        st.plotly_chart(fig, use_container_width=True) 
-        st.plotly_chart(fig2, use_container_width=True)
-        print("company field data drawn")
+        if self.prodi != "All" and self.fakultas != "All":
+
+            dfcomfield = self.valueCompanyField_Prodi
+
+            dfcomfieldt = dfcomfield.T
+            dfcomfieldt["sum"] =dfcomfieldt.sum(axis =1)
+            #HITUNG PERSEN
+            percentcomfield = dfcomfieldt.div(dfcomfieldt["sum"], axis=0)*100
+            percentcomfield.pop("sum")
+            fig = px.bar(percentcomfield, barmode='stack', title="Kategori Perusahaan (Bekerja)")
+            fig2 = px.line(percentcomfield, title="Kategori Perusahaan (Bekerja)")
+            st.plotly_chart(fig, use_container_width=True) 
+            st.plotly_chart(fig2, use_container_width=True)
+
+        elif self.prodi == "All" and self.fakultas != "All":
+
+            dfcomfield = self.valueCompanyField_Fakultas
+
+            dfcomfieldt = dfcomfield.T
+            dfcomfieldt["sum"] =dfcomfieldt.sum(axis =1)
+            #HITUNG PERSEN
+            percentcomfield = dfcomfieldt.div(dfcomfieldt["sum"], axis=0)*100
+            percentcomfield.pop("sum")
+            fig = px.bar(percentcomfield, barmode='stack', title="Kategori Perusahaan (Bekerja)")
+            fig2 = px.line(percentcomfield, title="Kategori Perusahaan (Bekerja)")
+            st.plotly_chart(fig, use_container_width=True) 
+            st.plotly_chart(fig2, use_container_width=True)
+            
 
     def draw_company_type_data(self):
-        #UNTUK PIE (DONUT)
-        pie18 =  self.valueCompanyType_Prodi1820
-        pie20 =  self.valueCompanyType_Prodi2122
+        if self.prodi != "All":
+            #UNTUK PIE (DONUT)
+            pie18 =  self.valueCompanyType_Prodi1820
+            pie20 =  self.valueCompanyType_Prodi2122
 
-        # Subplot 1: 2018-2020
-        fig = sp.make_subplots(rows=1, cols=3, subplot_titles=['2018', '2019', '2020'], specs=[[{'type': 'pie'}, {'type': 'pie'}, {'type': 'pie'}]])
+            # Subplot 1: 2018-2020
+            fig = sp.make_subplots(rows=1, cols=3, subplot_titles=['2018', '2019', '2020'], specs=[[{'type': 'pie'}, {'type': 'pie'}, {'type': 'pie'}]])
 
-        # Create the first donut graph using Plotly Express
-        donut1 = px.pie(values=pie18['2018'], names=pie18.index, hole=0.5)
-        fig.add_trace(donut1.data[0], row=1, col=1)
+            # Create the first donut graph using Plotly Express
+            donut1 = px.pie(values=pie18['2018'], names=pie18.index, hole=0.5)
+            fig.add_trace(donut1.data[0], row=1, col=1)
 
-        # Create the second donut graph using Plotly
-        donut2 = go.Pie(values=pie18['2019'], labels=pie18.index, hole=0.5)
-        fig.add_trace(donut2, row=1, col=2)
+            # Create the second donut graph using Plotly
+            donut2 = go.Pie(values=pie18['2019'], labels=pie18.index, hole=0.5)
+            fig.add_trace(donut2, row=1, col=2)
 
-        # Create the third donut graph using Plotly
-        donut3 = go.Pie(values=pie18['2020'], labels=pie18.index, hole=0.5)
-        fig.add_trace(donut3, row=1, col=3)
+            # Create the third donut graph using Plotly
+            donut3 = go.Pie(values=pie18['2020'], labels=pie18.index, hole=0.5)
+            fig.add_trace(donut3, row=1, col=3)
 
-        #update legend
-        fig.update_layout(legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1.1,
-            xanchor="right",
-            x=1
-            ))
-        # Update the layout
-        
-
-        #second graph
-        fig2 = sp.make_subplots(rows=1, cols=2, subplot_titles=['2021', '2022'], specs=[[{'type': 'pie'}, {'type': 'pie'}]])
-       
-        donut4 = px.pie(values=pie20['2021'], names=pie20.index, hole=0.5)
-        fig2.add_trace(donut4.data[0], row=1, col=1)
-
-        donut5 = go.Pie(values=pie20['2022'], labels=pie20.index, hole=0.5)
-        fig2.add_trace(donut5, row=1, col=2)
-
-        #UNTUK STACKED BARPLOT
-        
-        df =  self.valueCompanyType_Prodi
-        dft = df.T
-        dft["sum"] = dft.sum(axis=1)
-        percentdft = dft.div(dft["sum"], axis=0)*100
-        percentdft.pop("sum")
-        fig3 = px.bar(percentdft.round(1), barmode='stack', title="Jenis Perusahaan")
-        #MENGGUNAKAN TABBED UNTUK MENAMPILKAN GRAPH DONAT DAN GRAPH STACKED BARPLOT
-        
-        tab1, tab2 = st.tabs(["Diagram Lingkaran", "Diagram Batang"])
-        with tab1:
+            #update legend
+            fig.update_layout(legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.1,
+                xanchor="right",
+                x=1
+                ))
+            # Update the layout
             
-            st.plotly_chart(fig, use_container_width=True) 
-            st.plotly_chart(fig2, use_container_width=True) 
-        with tab2:
-            
-            st.plotly_chart(fig3, use_container_width=True) 
 
+            #second graph
+            fig2 = sp.make_subplots(rows=1, cols=2, subplot_titles=['2021', '2022'], specs=[[{'type': 'pie'}, {'type': 'pie'}]])
+        
+            donut4 = px.pie(values=pie20['2021'], names=pie20.index, hole=0.5)
+            fig2.add_trace(donut4.data[0], row=1, col=1)
+
+            donut5 = go.Pie(values=pie20['2022'], labels=pie20.index, hole=0.5)
+            fig2.add_trace(donut5, row=1, col=2)
+
+            #UNTUK STACKED BARPLOT
+            
+            df =  self.valueCompanyType_Prodi
+            dft = df.T
+            dft["sum"] = dft.sum(axis=1)
+            percentdft = dft.div(dft["sum"], axis=0)*100
+            percentdft.pop("sum")
+            fig3 = px.bar(percentdft.round(1), barmode='stack', title="Jenis Perusahaan")
+            #MENGGUNAKAN TABBED UNTUK MENAMPILKAN GRAPH DONAT DAN GRAPH STACKED BARPLOT
+            
+            tab1, tab2 = st.tabs(["Diagram Lingkaran", "Diagram Batang"])
+            with tab1:
+                
+                st.plotly_chart(fig, use_container_width=True) 
+                st.plotly_chart(fig2, use_container_width=True) 
+            with tab2:
+                
+                st.plotly_chart(fig3, use_container_width=True) 
+        elif self.prodi == "All" and self.fakultas != "All":
+            pie18 =  self.valueCompanyType_fakultas1820
+            pie20 =  self.valueCompanyType_fakultas2122
+
+            # Subplot 1: 2018-2020
+            fig = sp.make_subplots(rows=1, cols=3, subplot_titles=['2018', '2019', '2020'], specs=[[{'type': 'pie'}, {'type': 'pie'}, {'type': 'pie'}]])
+
+            # Create the first donut graph using Plotly Express
+            donut1 = px.pie(values=pie18['2018'], names=pie18.index, hole=0.5)
+            fig.add_trace(donut1.data[0], row=1, col=1)
+
+            # Create the second donut graph using Plotly
+            donut2 = go.Pie(values=pie18['2019'], labels=pie18.index, hole=0.5)
+            fig.add_trace(donut2, row=1, col=2)
+
+            # Create the third donut graph using Plotly
+            donut3 = go.Pie(values=pie18['2020'], labels=pie18.index, hole=0.5)
+            fig.add_trace(donut3, row=1, col=3)
+
+            #update legend
+            fig.update_layout(legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.1,
+                xanchor="right",
+                x=1
+                ))
+            # Update the layout
+            
+
+            #second graph
+            fig2 = sp.make_subplots(rows=1, cols=2, subplot_titles=['2021', '2022'], specs=[[{'type': 'pie'}, {'type': 'pie'}]])
+        
+            donut4 = px.pie(values=pie20['2021'], names=pie20.index, hole=0.5)
+            fig2.add_trace(donut4.data[0], row=1, col=1)
+
+            donut5 = go.Pie(values=pie20['2022'], labels=pie20.index, hole=0.5)
+            fig2.add_trace(donut5, row=1, col=2)
+
+            #UNTUK STACKED BARPLOT
+            
+            df =  self.valueCompanyType_fakultas
+            dft = df.T
+            dft["sum"] = dft.sum(axis=1)
+            percentdft = dft.div(dft["sum"], axis=0)*100
+            percentdft.pop("sum")
+            fig3 = px.bar(percentdft.round(1), barmode='stack', title="Jenis Perusahaan")
+            #MENGGUNAKAN TABBED UNTUK MENAMPILKAN GRAPH DONAT DAN GRAPH STACKED BARPLOT
+            
+            tab1, tab2 = st.tabs(["Diagram Lingkaran", "Diagram Batang"])
+            with tab1:
+                
+                st.plotly_chart(fig, use_container_width=True) 
+                st.plotly_chart(fig2, use_container_width=True) 
+            with tab2:
+                
+                st.plotly_chart(fig3, use_container_width=True) 
 
 class GrapherUser(DataframeUserInitializer):
     def __init__(self, dfUser2018, dfUser2019, dfUser2020, dfUser2021, dfUser2022, prodi, fakultas):
